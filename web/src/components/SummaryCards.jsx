@@ -4,12 +4,12 @@ function countSeverity(findings, severity) {
   return findings.filter((finding) => finding.severity === severity).length;
 }
 
-export default function SummaryCards({ summary, findings, scenarios }) {
+export default function SummaryCards({ findings, scenarios }) {
   const mapped = findings.filter((finding) => finding.mapped).length;
   const unmapped = findings.length - mapped;
   const toolsReporting = new Set(findings.map((finding) => finding.tool)).size;
   const coveredScenarios = new Set(findings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId)).size;
-  const totalScenarios = summary?.totalScenarios || scenarios.length || 10;
+  const totalScenarios = scenarios.length;
   const coverage = totalScenarios ? Math.round((coveredScenarios / totalScenarios) * 1000) / 10 : 0;
 
   const cards = [

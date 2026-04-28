@@ -18,7 +18,6 @@ set +e
 grype "dir:$PROJECT_DIR" \
   -o json \
   --exclude "./results" \
-  --exclude "./node_modules" \
   --exclude "./web/node_modules" \
   >"$RAW_FILE" 2>"$LOG_FILE"
 CODE=$?

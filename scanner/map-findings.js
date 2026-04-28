@@ -17,6 +17,10 @@ function toRepoRelative(file, projectDir) {
     return normalized.slice(normalizedProject.length + 1);
   }
 
+  if (normalized.startsWith("/scenarios/")) {
+    return normalized.slice(1);
+  }
+
   if (path.isAbsolute(file || "")) {
     return normalizePath(path.relative(projectDir, file));
   }

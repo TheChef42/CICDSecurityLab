@@ -74,6 +74,38 @@ export default function App() {
   }, []);
 
   const filteredFindings = useMemo(() => applyFilters(findings, filters), [findings, filters]);
+  const filteredTools = useMemo(
+    () => (filters.tool === "all" ? TOOLS : TOOLS.filter((tool) => tool === filters.tool)),
+    [filters.tool]
+  );
+  const filteredScenarioIds = useMemo(() => {
+    const hasFindingScopedFilter =
+      filters.tool !== "all" ||
+      filters.severity !== "all" ||
+      filters.mapped !== "all";
+    const detectedScenarioIds = new Set(filteredFindings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId));
+
+    return new Set(
+      scenarios
+        .filter((scenario) => {
+          if (filters.scenarioId !== "all" && scenario.id !== filters.scenarioId) return false;
+          if (filters.cwe !== "all" && scenario.cwe !== filters.cwe) return false;
+          if (filters.owaspCategory !== "all" && scenario.owaspCategory !== filters.owaspCategory) return false;
+          if (filters.mapped === "unmapped") return false;
+          if (hasFindingScopedFilter && !detectedScenarioIds.has(scenario.id)) return false;
+          return true;
+        })
+        .map((scenario) => scenario.id)
+    );
+  }, [filteredFindings, filters, scenarios]);
+  const filteredScenarios = useMemo(
+    () => scenarios.filter((scenario) => filteredScenarioIds.has(scenario.id)),
+    [filteredScenarioIds, scenarios]
+  );
+  const filteredDiagnostics = useMemo(
+    () => (filters.tool === "all" ? diagnostics : diagnostics.filter((item) => item.tool === filters.tool)),
+    [diagnostics, filters.tool]
+  );
 
   const options = useMemo(
     () => ({
@@ -103,7 +135,7 @@ export default function App() {
         </div>
       </header>
 
-      <SummaryCards summary={summary} findings={findings} scenarios={scenarios} />
+      <SummaryCards findings={filteredFindings} scenarios={filteredScenarios} />
 
       <section className="toolbar" aria-label="Finding filters">
         <div className="toolbar-title">
@@ -179,10 +211,10 @@ export default function App() {
             <span>{tabs.find((tab) => tab.id === activeTab)?.label}</span>
           </div>
           {activeTab === "findings" && <RawFindings findings={filteredFindings} />}
-          {activeTab === "matrix" && <ToolScenarioMatrix findings={findings} scenarios={scenarios} tools={TOOLS} />}
-          {activeTab === "catalog" && <ScenarioCatalog scenarios={scenarios} />}
-          {activeTab === "coverage" && <CombinedCoverage findings={findings} scenarios={scenarios} tools={TOOLS} />}
-          {activeTab === "diagnostics" && <ToolDiagnostics diagnostics={diagnostics} />}
+          {activeTab === "matrix" && <ToolScenarioMatrix findings={filteredFindings} scenarios={filteredScenarios} tools={filteredTools} />}
+          {activeTab === "catalog" && <ScenarioCatalog scenarios={filteredScenarios} />}
+          {activeTab === "coverage" && <CombinedCoverage findings={filteredFindings} scenarios={filteredScenarios} tools={filteredTools} />}
+          {activeTab === "diagnostics" && <ToolDiagnostics diagnostics={filteredDiagnostics} />}
         </section>
       )}
     </main>

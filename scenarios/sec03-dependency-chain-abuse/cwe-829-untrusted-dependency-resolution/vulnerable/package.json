@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "is-number": "^7.0.0"
+    "lodash": "^4.17.20"
   },
   "scripts": {
     "build": "node -e \"console.log('safe local build')\""
