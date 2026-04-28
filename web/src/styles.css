@@ -19,6 +19,40 @@ body {
     #090b10;
 }
 
+.boot-fallback {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  color: #edf2f7;
+  background: #090b10;
+}
+
+.boot-fallback section {
+  width: min(620px, 100%);
+  border: 1px solid #263142;
+  border-radius: 8px;
+  background: #101722;
+  padding: 22px;
+}
+
+.boot-fallback p {
+  margin: 0 0 8px;
+  color: #8fd4ff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.boot-fallback h1 {
+  margin: 0 0 12px;
+  font-size: 2rem;
+}
+
+.boot-fallback span {
+  color: #bac6d8;
+}
+
 button,
 select,
 input {
