@@ -20,11 +20,19 @@ if ! command -v snyk >/dev/null 2>&1; then
 fi
 
 set +e
+SNYK_ARGS=(
+  --all-projects
+  --detection-depth=8
+  --exclude=results,node_modules,web/node_modules
+  --json-file-output="$RAW_FILE"
+)
+
+if [ -n "${SNYK_ORG:-}" ]; then
+  SNYK_ARGS+=(--org="$SNYK_ORG")
+fi
+
 snyk test "$PROJECT_DIR" \
-  --all-projects \
-  --detection-depth=8 \
-  --exclude=results,node_modules,web/node_modules \
-  --json-file-output="$RAW_FILE" >"$LOG_FILE" 2>&1
+  "${SNYK_ARGS[@]}" >"$LOG_FILE" 2>&1
 CODE=$?
 set -u
 

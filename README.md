@@ -15,6 +15,14 @@ The lab treats all scanners equally. Every selected tool scans the full project 
 
 Snyk runs only when `SNYK_TOKEN` is available. If no token is set, the scan continues and a warning diagnostic is written.
 
+If you need to scope Snyk to a specific organization, set `SNYK_ORG` to the organization ID. For example:
+
+```sh
+SNYK_ORG=c7449d76-810c-4a87-976e-c496b7ed5c29
+```
+
+This is separate from `SNYK_TOKEN`. The org ID is not the authentication token.
+
 ## OWASP/CWE Mapping
 
 The lab uses exactly ten stable scenario IDs:

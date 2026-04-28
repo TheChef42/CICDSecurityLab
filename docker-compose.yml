@@ -17,6 +17,7 @@ services:
       - .:/workspace
     environment:
       SNYK_TOKEN: ${SNYK_TOKEN:-}
+      SNYK_ORG: ${SNYK_ORG:-}
       PROJECT_DIR: /workspace
       RESULTS_DIR: /workspace/results
     command: ["bash", "/workspace/scanner/run-all.sh"]
