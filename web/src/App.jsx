@@ -27,6 +27,51 @@ const tabs = [
   { id: "diagnostics", label: "Tool Diagnostics", icon: Activity }
 ];
 
+const mappedOptions = [
+  { value: "mapped", label: "Mapped" },
+  { value: "unmapped", label: "Unmapped" }
+];
+
+function MultiSelectFilter({ label, options, selected, onChange }) {
+  const selectedSet = new Set(selected);
+  const summary = selected.length === 0
+    ? `All ${label.toLowerCase()}`
+    : selected.length === 1
+      ? options.find((option) => option.value === selected[0])?.label || selected[0]
+      : `${selected.length} selected`;
+
+  function toggle(value) {
+    if (selectedSet.has(value)) {
+      onChange(selected.filter((item) => item !== value));
+      return;
+    }
+    onChange([...selected, value]);
+  }
+
+  return (
+    <details className="multi-select">
+      <summary>
+        <span>{summary}</span>
+      </summary>
+      <div className="multi-select-menu">
+        <button type="button" className="clear-filter" onClick={() => onChange([])}>
+          All {label.toLowerCase()}
+        </button>
+        {options.map((option) => (
+          <label key={option.value} className="multi-option">
+            <input
+              type="checkbox"
+              checked={selectedSet.has(option.value)}
+              onChange={() => toggle(option.value)}
+            />
+            <span>{option.label}</span>
+          </label>
+        ))}
+      </div>
+    </details>
+  );
+}
+
 async function fetchJson(path, fallback) {
   try {
     const response = await fetch(path, { cache: "no-store" });
@@ -75,23 +120,23 @@ export default function App() {
 
   const filteredFindings = useMemo(() => applyFilters(findings, filters), [findings, filters]);
   const filteredTools = useMemo(
-    () => (filters.tool === "all" ? TOOLS : TOOLS.filter((tool) => tool === filters.tool)),
+    () => (filters.tool.length ? TOOLS.filter((tool) => filters.tool.includes(tool)) : TOOLS),
     [filters.tool]
   );
   const filteredScenarioIds = useMemo(() => {
     const hasFindingScopedFilter =
-      filters.tool !== "all" ||
-      filters.severity !== "all" ||
-      filters.mapped !== "all";
+      filters.tool.length > 0 ||
+      filters.severity.length > 0 ||
+      filters.mapped.length > 0;
     const detectedScenarioIds = new Set(filteredFindings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId));
 
     return new Set(
       scenarios
         .filter((scenario) => {
-          if (filters.scenarioId !== "all" && scenario.id !== filters.scenarioId) return false;
-          if (filters.cwe !== "all" && scenario.cwe !== filters.cwe) return false;
-          if (filters.owaspCategory !== "all" && scenario.owaspCategory !== filters.owaspCategory) return false;
-          if (filters.mapped === "unmapped") return false;
+          if (filters.scenarioId.length && !filters.scenarioId.includes(scenario.id)) return false;
+          if (filters.cwe.length && !filters.cwe.includes(scenario.cwe)) return false;
+          if (filters.owaspCategory.length && !filters.owaspCategory.includes(scenario.owaspCategory)) return false;
+          if (filters.mapped.length === 1 && filters.mapped.includes("unmapped")) return false;
           if (hasFindingScopedFilter && !detectedScenarioIds.has(scenario.id)) return false;
           return true;
         })
@@ -103,7 +148,7 @@ export default function App() {
     [filteredScenarioIds, scenarios]
   );
   const filteredDiagnostics = useMemo(
-    () => (filters.tool === "all" ? diagnostics : diagnostics.filter((item) => item.tool === filters.tool)),
+    () => (filters.tool.length ? diagnostics.filter((item) => filters.tool.includes(item.tool)) : diagnostics),
     [diagnostics, filters.tool]
   );
 
@@ -142,41 +187,42 @@ export default function App() {
           <ListFilter size={18} />
           <span>Filters</span>
         </div>
-        <select value={filters.tool} onChange={(event) => setFilters({ ...filters, tool: event.target.value })}>
-          <option value="all">All tools</option>
-          {options.tools.map((tool) => (
-            <option key={tool} value={tool}>{tool}</option>
-          ))}
-        </select>
-        <select value={filters.severity} onChange={(event) => setFilters({ ...filters, severity: event.target.value })}>
-          <option value="all">All severities</option>
-          {options.severities.map((severity) => (
-            <option key={severity} value={severity}>{severity}</option>
-          ))}
-        </select>
-        <select value={filters.owaspCategory} onChange={(event) => setFilters({ ...filters, owaspCategory: event.target.value })}>
-          <option value="all">All OWASP categories</option>
-          {options.owaspCategories.map((category) => (
-            <option key={category} value={category}>{category}</option>
-          ))}
-        </select>
-        <select value={filters.cwe} onChange={(event) => setFilters({ ...filters, cwe: event.target.value })}>
-          <option value="all">All CWEs</option>
-          {options.cwes.map((cwe) => (
-            <option key={cwe} value={cwe}>{cwe}</option>
-          ))}
-        </select>
-        <select value={filters.scenarioId} onChange={(event) => setFilters({ ...filters, scenarioId: event.target.value })}>
-          <option value="all">All scenarios</option>
-          {options.scenarios.map((scenarioId) => (
-            <option key={scenarioId} value={scenarioId}>{scenarioId}</option>
-          ))}
-        </select>
-        <select value={filters.mapped} onChange={(event) => setFilters({ ...filters, mapped: event.target.value })}>
-          <option value="all">Mapped and unmapped</option>
-          <option value="mapped">Mapped only</option>
-          <option value="unmapped">Unmapped only</option>
-        </select>
+        <MultiSelectFilter
+          label="Tools"
+          options={options.tools.map((tool) => ({ value: tool, label: tool }))}
+          selected={filters.tool}
+          onChange={(tool) => setFilters({ ...filters, tool })}
+        />
+        <MultiSelectFilter
+          label="Severities"
+          options={options.severities.map((severity) => ({ value: severity, label: severity }))}
+          selected={filters.severity}
+          onChange={(severity) => setFilters({ ...filters, severity })}
+        />
+        <MultiSelectFilter
+          label="OWASP categories"
+          options={options.owaspCategories.map((category) => ({ value: category, label: category }))}
+          selected={filters.owaspCategory}
+          onChange={(owaspCategory) => setFilters({ ...filters, owaspCategory })}
+        />
+        <MultiSelectFilter
+          label="CWEs"
+          options={options.cwes.map((cwe) => ({ value: cwe, label: cwe }))}
+          selected={filters.cwe}
+          onChange={(cwe) => setFilters({ ...filters, cwe })}
+        />
+        <MultiSelectFilter
+          label="Scenarios"
+          options={options.scenarios.map((scenarioId) => ({ value: scenarioId, label: scenarioId }))}
+          selected={filters.scenarioId}
+          onChange={(scenarioId) => setFilters({ ...filters, scenarioId })}
+        />
+        <MultiSelectFilter
+          label="Mapping states"
+          options={mappedOptions}
+          selected={filters.mapped}
+          onChange={(mapped) => setFilters({ ...filters, mapped })}
+        />
       </section>
 
       <nav className="tabs" aria-label="Dashboard tabs">

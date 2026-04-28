@@ -1,21 +1,25 @@
 export const EMPTY_FILTERS = {
-  tool: "all",
-  severity: "all",
-  owaspCategory: "all",
-  cwe: "all",
-  scenarioId: "all",
-  mapped: "all"
+  tool: [],
+  severity: [],
+  owaspCategory: [],
+  cwe: [],
+  scenarioId: [],
+  mapped: []
 };
+
+function matchesSelected(value, selected) {
+  return !selected.length || selected.includes(value);
+}
 
 export function applyFilters(findings, filters) {
   return findings.filter((finding) => {
-    if (filters.tool !== "all" && finding.tool !== filters.tool) return false;
-    if (filters.severity !== "all" && finding.severity !== filters.severity) return false;
-    if (filters.owaspCategory !== "all" && finding.owaspCategory !== filters.owaspCategory) return false;
-    if (filters.cwe !== "all" && finding.cwe !== filters.cwe) return false;
-    if (filters.scenarioId !== "all" && finding.scenarioId !== filters.scenarioId) return false;
-    if (filters.mapped === "mapped" && !finding.mapped) return false;
-    if (filters.mapped === "unmapped" && finding.mapped) return false;
+    if (!matchesSelected(finding.tool, filters.tool)) return false;
+    if (!matchesSelected(finding.severity, filters.severity)) return false;
+    if (!matchesSelected(finding.owaspCategory, filters.owaspCategory)) return false;
+    if (!matchesSelected(finding.cwe, filters.cwe)) return false;
+    if (!matchesSelected(finding.scenarioId, filters.scenarioId)) return false;
+    if (filters.mapped.length === 1 && filters.mapped.includes("mapped") && !finding.mapped) return false;
+    if (filters.mapped.length === 1 && filters.mapped.includes("unmapped") && finding.mapped) return false;
     return true;
   });
 }
