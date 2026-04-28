@@ -23,7 +23,7 @@ set +e
 SNYK_ARGS=(
   --all-projects
   --detection-depth=8
-  --exclude=results,node_modules,web/node_modules
+  --exclude=results,node_modules
   --json-file-output="$RAW_FILE"
 )
 
