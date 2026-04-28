@@ -1,0 +1,26 @@
+{
+  "id": "SEC07-CWE16",
+  "title": "Insecure Container Default",
+  "owaspCategory": "CICD-SEC-07: Insecure System Configuration",
+  "cwe": "CWE-16",
+  "cweTitle": "Configuration",
+  "description": "CI/build container Dockerfile lacks a USER directive, so it runs as root by default.",
+  "vulnerableFiles": [
+    "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/vulnerable/Dockerfile"
+  ],
+  "fixedFiles": [
+    "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/fixed/Dockerfile"
+  ],
+  "remediation": "Create and use a non-root user in build and runner containers.",
+  "mappingHints": {
+    "keywords": [
+      "missing user",
+      "root",
+      "dockerfile",
+      "container default"
+    ],
+    "filePatterns": [
+      "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/**"
+    ]
+  }
+}

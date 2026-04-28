@@ -1,0 +1,29 @@
+{
+  "id": "SEC03-CWE829",
+  "title": "Untrusted Dependency Resolution",
+  "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
+  "cwe": "CWE-829",
+  "cweTitle": "Inclusion of Functionality from Untrusted Control Sphere",
+  "description": "Pipeline dependency installation resolves packages without a deterministic lockfile.",
+  "vulnerableFiles": [
+    "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/package.json",
+    "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/install-dependencies.sh"
+  ],
+  "fixedFiles": [
+    "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/package.json",
+    "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/package-lock.json",
+    "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/install-dependencies.sh"
+  ],
+  "remediation": "Commit lockfiles, pin versions, and use deterministic installers such as npm ci.",
+  "mappingHints": {
+    "keywords": [
+      "package-lock",
+      "npm install",
+      "dependency resolution",
+      "lockfile"
+    ],
+    "filePatterns": [
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/**"
+    ]
+  }
+}

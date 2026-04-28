@@ -1,0 +1,26 @@
+{
+  "id": "SEC04-CWE269",
+  "title": "Token Over-privilege",
+  "owaspCategory": "CICD-SEC-04: Poisoned Pipeline Execution",
+  "cwe": "CWE-269",
+  "cweTitle": "Improper Privilege Management",
+  "description": "GitHub Actions workflow grants unnecessary write-all token permissions during build/test.",
+  "vulnerableFiles": [
+    "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/vulnerable/build.yml"
+  ],
+  "fixedFiles": [
+    "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/fixed/build.yml"
+  ],
+  "remediation": "Use least-privilege workflow permissions such as contents: read.",
+  "mappingHints": {
+    "keywords": [
+      "write-all",
+      "permissions",
+      "token",
+      "least privilege"
+    ],
+    "filePatterns": [
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/**"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "subject": {
+    "name": "artifact.txt",
+    "sha256": "dce93e546d8fafb2d420aac117968560ec6a2c26f302a040a5ca238cb3729b70"
+  },
+  "builder": {
+    "id": "https://ci.example.invalid/trusted-builder"
+  },
+  "predicateType": "https://slsa.dev/provenance/v1"
+}

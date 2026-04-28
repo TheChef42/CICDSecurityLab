@@ -1,0 +1,4 @@
+services:
+  app:
+    image: node:latest
+    command: ["node", "-e", "console.log('mutable image tag example')"]

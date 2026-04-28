@@ -1,0 +1,28 @@
+{
+  "id": "SEC09-CWE345-A",
+  "title": "Mutable Image Tags",
+  "owaspCategory": "CICD-SEC-09: Improper Artifact Integrity Validation",
+  "cwe": "CWE-345",
+  "cweTitle": "Insufficient Verification of Data Authenticity",
+  "description": "Build or deployment configuration references container images by mutable tags such as latest instead of immutable digests.",
+  "vulnerableFiles": [
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/vulnerable/Dockerfile",
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/vulnerable/docker-compose.yml"
+  ],
+  "fixedFiles": [
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/Dockerfile",
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/docker-compose.yml"
+  ],
+  "remediation": "Pin container images by immutable SHA-256 digest instead of mutable tags.",
+  "mappingHints": {
+    "keywords": [
+      "latest",
+      "mutable image",
+      "sha256",
+      "digest"
+    ],
+    "filePatterns": [
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/**"
+    ]
+  }
+}

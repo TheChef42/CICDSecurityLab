@@ -1,0 +1,37 @@
+services:
+  results-init:
+    image: node:20-alpine
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      PROJECT_DIR: /workspace
+      RESULTS_DIR: /workspace/results
+    command: ["node", "scanner/init-results.js"]
+
+  scanner:
+    build:
+      context: ./scanner
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      SNYK_TOKEN: ${SNYK_TOKEN:-}
+      PROJECT_DIR: /workspace
+      RESULTS_DIR: /workspace/results
+    command: ["bash", "/workspace/scanner/run-all.sh"]
+
+  web:
+    build:
+      context: ./web
+    working_dir: /app
+    volumes:
+      - ./results:/app/public/results:ro
+    ports:
+      - "5173:5173"
+    depends_on:
+      results-init:
+        condition: service_completed_successfully
+      scanner:
+        condition: service_started
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]

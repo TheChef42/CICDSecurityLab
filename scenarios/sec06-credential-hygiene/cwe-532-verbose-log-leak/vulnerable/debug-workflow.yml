@@ -1,0 +1,17 @@
+name: vulnerable verbose logging
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    env:
+      FAKE_DEPLOY_TOKEN: ghp_FAKE1234567890abcdefghijklmnop
+    steps:
+      - name: Dump environment
+        run: |
+          set -x
+          printenv
+          env
+          echo "debug complete"

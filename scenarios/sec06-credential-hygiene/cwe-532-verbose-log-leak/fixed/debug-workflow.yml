@@ -1,0 +1,16 @@
+name: fixed controlled logging
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    env:
+      FAKE_DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+    steps:
+      - name: Log safe metadata
+        run: |
+          set +x
+          echo "::add-mask::$FAKE_DEPLOY_TOKEN"
+          echo "debug mode enabled without dumping environment variables"

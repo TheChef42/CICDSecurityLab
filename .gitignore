@@ -1,0 +1,19 @@
+# Dependencies and build output
+node_modules/
+web/node_modules/
+web/dist/
+dist/
+
+# Generated scanner output
+results/raw/*
+!results/raw/.gitkeep
+results/normalized/*
+!results/normalized/.gitkeep
+results/summary.json
+results/diagnostics.json
+
+# Local temporary files
+.tmp-empty-results/
+*.log
+.DS_Store
+Thumbs.db

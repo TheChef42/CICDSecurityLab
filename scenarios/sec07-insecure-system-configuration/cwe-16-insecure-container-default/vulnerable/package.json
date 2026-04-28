@@ -1,0 +1,8 @@
+{
+  "name": "sec07-cwe16-vulnerable",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node -e \"console.log('safe container placeholder')\""
+  }
+}

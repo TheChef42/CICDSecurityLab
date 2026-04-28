@@ -1,0 +1,26 @@
+{
+  "id": "SEC04-CWE78",
+  "title": "Tainted Command Injection",
+  "owaspCategory": "CICD-SEC-04: Poisoned Pipeline Execution",
+  "cwe": "CWE-78",
+  "cweTitle": "Improper Neutralization of Special Elements used in an OS Command",
+  "description": "Untrusted CI event context is interpolated directly into a shell command.",
+  "vulnerableFiles": [
+    "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/vulnerable/issue-title-search.yml"
+  ],
+  "fixedFiles": [
+    "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/fixed/issue-title-search.yml"
+  ],
+  "remediation": "Pass untrusted values through environment variables, validate input, quote safely, or avoid shell interpolation.",
+  "mappingHints": {
+    "keywords": [
+      "github.event.issue.title",
+      "shell command",
+      "command injection",
+      "interpolated"
+    ],
+    "filePatterns": [
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/**"
+    ]
+  }
+}

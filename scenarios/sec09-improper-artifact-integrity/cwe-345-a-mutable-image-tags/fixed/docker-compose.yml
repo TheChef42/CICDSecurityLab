@@ -1,0 +1,4 @@
+services:
+  app:
+    image: node@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    command: ["node", "-e", "console.log('digest-pinned image example')"]

@@ -1,0 +1,21 @@
+name: fixed issue title search
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Search docs using validated title
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          case "$ISSUE_TITLE" in
+            (*[!a-zA-Z0-9._ -]*)
+              echo "Issue title contains unsupported characters."
+              exit 1
+              ;;
+          esac
+          grep -R -- "$ISSUE_TITLE" docs || true

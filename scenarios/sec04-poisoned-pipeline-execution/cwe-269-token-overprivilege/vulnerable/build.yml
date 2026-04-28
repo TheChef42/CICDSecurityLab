@@ -1,0 +1,12 @@
+name: vulnerable overprivileged build
+
+on:
+  pull_request:
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "safe build placeholder"

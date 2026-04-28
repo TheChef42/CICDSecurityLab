@@ -1,0 +1,30 @@
+{
+  "id": "SEC03-CWE494",
+  "title": "Integrity Omission",
+  "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
+  "cwe": "CWE-494",
+  "cweTitle": "Download of Code Without Integrity Check",
+  "description": "Pipeline downloads or executes code without validating checksum, digest, or signature.",
+  "vulnerableFiles": [
+    "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/vulnerable/install-unverified.sh",
+    "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/vulnerable/remote-install-example.sh"
+  ],
+  "fixedFiles": [
+    "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/install-verified.sh",
+    "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/trusted-install.sh",
+    "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/trusted-install.sh.sha256"
+  ],
+  "remediation": "Pin versions and verify checksums, signatures, or digests before execution.",
+  "mappingHints": {
+    "keywords": [
+      "curl | sh",
+      "curl",
+      "checksum",
+      "integrity verification",
+      "download without integrity"
+    ],
+    "filePatterns": [
+      "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/**"
+    ]
+  }
+}

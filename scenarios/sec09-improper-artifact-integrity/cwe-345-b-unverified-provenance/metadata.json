@@ -1,0 +1,30 @@
+{
+  "id": "SEC09-CWE345-B",
+  "title": "Unverified Provenance",
+  "owaspCategory": "CICD-SEC-09: Improper Artifact Integrity Validation",
+  "cwe": "CWE-345",
+  "cweTitle": "Insufficient Verification of Data Authenticity",
+  "description": "Deployment logic accepts artifacts without requiring or verifying provenance, signature, attestation, or trusted builder identity.",
+  "vulnerableFiles": [
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/vulnerable/deploy-artifact.sh",
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/vulnerable/artifact.txt"
+  ],
+  "fixedFiles": [
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/deploy-artifact.sh",
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/artifact.txt",
+    "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/provenance.json"
+  ],
+  "remediation": "Require provenance or signature verification and fail closed when verification is missing or invalid.",
+  "mappingHints": {
+    "keywords": [
+      "provenance",
+      "attestation",
+      "signature",
+      "trusted builder",
+      "ALLOW_MISSING_PROVENANCE"
+    ],
+    "filePatterns": [
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/**"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+name: vulnerable issue title search
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Search docs using untrusted title
+        run: |
+          echo "Searching for ${{ github.event.issue.title }}"
+          grep -R "${{ github.event.issue.title }}" docs || true

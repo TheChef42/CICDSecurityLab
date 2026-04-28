@@ -1,0 +1,28 @@
+{
+  "id": "SEC06-CWE798",
+  "title": "Hardcoded Secret",
+  "owaspCategory": "CICD-SEC-06: Insufficient Credential Hygiene",
+  "cwe": "CWE-798",
+  "cweTitle": "Use of Hard-coded Credentials",
+  "description": "High-entropy fake credentials are committed in CI/CD scripts or configuration.",
+  "vulnerableFiles": [
+    "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh",
+    "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/app.env"
+  ],
+  "fixedFiles": [
+    "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/fixed/deploy.sh",
+    "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/fixed/app.env.example"
+  ],
+  "remediation": "Store secrets in environment variables or a secret manager and never commit credential values.",
+  "mappingHints": {
+    "keywords": [
+      "AKIAIOSFODNN7EXAMPLE",
+      "ghp_FAKE",
+      "sk_test_FAKE",
+      "hardcoded secret"
+    ],
+    "filePatterns": [
+      "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/**"
+    ]
+  }
+}

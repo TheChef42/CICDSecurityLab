@@ -1,0 +1,11 @@
+{
+  "name": "cicd-security-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Docker-based CI/CD and software supply chain security lab.",
+  "scripts": {
+    "init-results": "node scanner/init-results.js",
+    "normalize": "node scanner/normalize-results.js",
+    "scan:local": "bash scanner/run-all.sh"
+  }
+}

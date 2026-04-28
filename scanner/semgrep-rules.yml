@@ -1,0 +1,81 @@
+rules:
+  - id: cicd.curl-pipe-shell
+    message: Code is downloaded and piped directly to a shell without integrity verification.
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: 'curl\s+[^|]+\|\s*(sh|bash)'
+
+  - id: cicd.npm-install-without-ci
+    message: CI dependency installation uses npm install instead of deterministic npm ci.
+    severity: WARNING
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: '\bnpm\s+install\b'
+
+  - id: cicd.github-context-shell-interpolation
+    message: Untrusted GitHub event context is interpolated directly into a shell command.
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: '\$\{\{\s*github\.event\.[^}]+\}\}'
+
+  - id: cicd.github-actions-write-all
+    message: GitHub Actions workflow grants write-all token permissions.
+    severity: WARNING
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: 'permissions:\s*write-all'
+
+  - id: cicd.fake-hardcoded-secret
+    message: A fake test credential is hardcoded in a repository file.
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: '(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk_test_[A-Za-z0-9_]{16,})'
+
+  - id: cicd.verbose-secret-logging
+    message: Debug logging can print sensitive environment variables into build logs.
+    severity: WARNING
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: '(^|\s)(set\s+-x|printenv|env)\b'
+
+  - id: cicd.administrator-access-policy
+    message: CI/CD identity uses AdministratorAccess instead of least privilege.
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: 'AdministratorAccess'
+
+  - id: cicd.mutable-image-tag
+    message: Container image is referenced with a mutable latest tag.
+    severity: WARNING
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: '(^|\s)(FROM\s+\S+:latest|image:\s+\S+:latest|\S+:latest)'
+
+  - id: cicd.missing-provenance-verification
+    message: Artifact deployment allows missing provenance verification.
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - '**/scenarios/**/vulnerable/**'
+    pattern-regex: '(ALLOW_MISSING_PROVENANCE|SKIP_PROVENANCE_CHECK|without provenance)'

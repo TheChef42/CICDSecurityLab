@@ -1,0 +1,11 @@
+{
+  "name": "sec03-cwe829-vulnerable",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "is-number": "^7.0.0"
+  },
+  "scripts": {
+    "build": "node -e \"console.log('safe local build')\""
+  }
+}
