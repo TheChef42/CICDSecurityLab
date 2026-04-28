@@ -123,29 +123,14 @@ export default function App() {
     () => (filters.tool.length ? TOOLS.filter((tool) => filters.tool.includes(tool)) : TOOLS),
     [filters.tool]
   );
-  const filteredScenarioIds = useMemo(() => {
-    const hasFindingScopedFilter =
-      filters.tool.length > 0 ||
-      filters.severity.length > 0 ||
-      filters.mapped.length > 0;
-    const detectedScenarioIds = new Set(filteredFindings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId));
-
-    return new Set(
-      scenarios
-        .filter((scenario) => {
-          if (filters.scenarioId.length && !filters.scenarioId.includes(scenario.id)) return false;
-          if (filters.cwe.length && !filters.cwe.includes(scenario.cwe)) return false;
-          if (filters.owaspCategory.length && !filters.owaspCategory.includes(scenario.owaspCategory)) return false;
-          if (filters.mapped.length === 1 && filters.mapped.includes("unmapped")) return false;
-          if (hasFindingScopedFilter && !detectedScenarioIds.has(scenario.id)) return false;
-          return true;
-        })
-        .map((scenario) => scenario.id)
-    );
-  }, [filteredFindings, filters, scenarios]);
   const filteredScenarios = useMemo(
-    () => scenarios.filter((scenario) => filteredScenarioIds.has(scenario.id)),
-    [filteredScenarioIds, scenarios]
+    () => scenarios.filter((scenario) => {
+      if (filters.scenarioId.length && !filters.scenarioId.includes(scenario.id)) return false;
+      if (filters.cwe.length && !filters.cwe.includes(scenario.cwe)) return false;
+      if (filters.owaspCategory.length && !filters.owaspCategory.includes(scenario.owaspCategory)) return false;
+      return true;
+    }),
+    [filters.cwe, filters.owaspCategory, filters.scenarioId, scenarios]
   );
   const filteredDiagnostics = useMemo(
     () => (filters.tool.length ? diagnostics.filter((item) => filters.tool.includes(item.tool)) : diagnostics),

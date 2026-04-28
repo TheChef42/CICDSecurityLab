@@ -1,8 +1,14 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { combinedCoverage } from "../utils/coverage.js";
 
 export default function CombinedCoverage({ findings, scenarios, tools }) {
   const [selectedTools, setSelectedTools] = useState(tools);
+  const toolKey = tools.join("|");
+
+  useEffect(() => {
+    setSelectedTools(tools);
+  }, [toolKey, tools]);
+
   const coverage = useMemo(
     () => combinedCoverage(findings, scenarios, selectedTools),
     [findings, scenarios, selectedTools]
