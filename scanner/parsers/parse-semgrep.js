@@ -1,10 +1,10 @@
 const { asArray, cleanText, firstLine, normalizeSeverity } = require("./parser-utils");
 
-function parse(data) {
+function parse(data, tool = "semgrep") {
   return asArray(data.results).map((finding) => {
     const extra = finding.extra || {};
     return {
-      tool: "semgrep",
+      tool,
       title: cleanText(extra.metadata && extra.metadata.title, finding.check_id || "Semgrep finding"),
       severity: normalizeSeverity(extra.severity),
       file: finding.path || "",

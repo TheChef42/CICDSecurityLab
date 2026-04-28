@@ -3,7 +3,7 @@ const path = require("path");
 
 const loadScenarios = require("./load-scenarios");
 
-const TOOLS = ["gitleaks", "checkov", "semgrep", "trivy", "grype", "snyk"];
+const TOOLS = ["gitleaks", "checkov", "semgrep-default", "semgrep-custom", "trivy", "grype", "snyk"];
 const SEVERITIES = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO", "UNKNOWN"];
 
 const projectDir = process.env.PROJECT_DIR || process.cwd();

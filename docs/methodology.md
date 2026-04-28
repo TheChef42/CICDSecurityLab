@@ -6,6 +6,8 @@ The CWE mapping is not an official one-to-one OWASP mapping. OWASP CI/CD categor
 
 All tools are treated equally. The scanner container runs every available tool against the full lab. Expected coverage is not used to decide scanner execution, parsing, finding mapping, suppression, or scoring.
 
+Semgrep is represented as two tool configurations: `semgrep-default` and `semgrep-custom`. The default entry uses Semgrep's public default ruleset. The custom entry uses local lab rules designed to express CI/CD policy checks. This separation avoids presenting tailored policy-as-code results as out-of-the-box scanner behavior.
+
 Actual scanner output is the only source of coverage. A scenario is covered by a tool only when that tool emits at least one finding that maps to the scenario. If a finding cannot be mapped, it remains visible as `UNMAPPED`.
 
 Results depend on tool version, rule configuration, scan target, network availability for vulnerability databases, and parser quality. The dashboard separates raw findings, mapped findings, coverage, and diagnostics so those influences remain visible.

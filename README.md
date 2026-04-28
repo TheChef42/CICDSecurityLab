@@ -8,12 +8,15 @@ The lab treats all scanners equally. Every selected tool scans the full project 
 
 - Trivy
 - Snyk
-- Semgrep
+- Semgrep default rules
+- Semgrep custom lab rules
 - Gitleaks
 - Checkov
 - Grype
 
 Snyk runs only when `SNYK_TOKEN` is available. If no token is set, the scan continues and a warning diagnostic is written.
+
+Semgrep is reported in two separate dashboard columns: `semgrep-default` for Semgrep's public default rules and `semgrep-custom` for the lab's local CI/CD policy rules. This keeps the comparison honest: custom rules show what policy-as-code can detect, while default rules show less tailored coverage.
 
 If you need to scope Snyk to a specific organization, set `SNYK_ORG` to the organization ID. For example:
 

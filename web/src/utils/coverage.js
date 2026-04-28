@@ -1,4 +1,4 @@
-export const TOOLS = ["gitleaks", "checkov", "semgrep", "trivy", "grype", "snyk"];
+export const TOOLS = ["gitleaks", "checkov", "semgrep-default", "semgrep-custom", "trivy", "grype", "snyk"];
 
 export const SEVERITIES = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO", "UNKNOWN"];
 

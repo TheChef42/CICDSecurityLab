@@ -8,13 +8,14 @@ const { mapFinding } = require("./map-findings");
 const parsers = {
   trivy: require("./parsers/parse-trivy"),
   snyk: require("./parsers/parse-snyk"),
-  semgrep: require("./parsers/parse-semgrep"),
+  "semgrep-default": (raw) => require("./parsers/parse-semgrep")(raw, "semgrep-default"),
+  "semgrep-custom": (raw) => require("./parsers/parse-semgrep")(raw, "semgrep-custom"),
   gitleaks: require("./parsers/parse-gitleaks"),
   checkov: require("./parsers/parse-checkov"),
   grype: require("./parsers/parse-grype")
 };
 
-const TOOLS = ["gitleaks", "checkov", "semgrep", "trivy", "grype", "snyk"];
+const TOOLS = ["gitleaks", "checkov", "semgrep-default", "semgrep-custom", "trivy", "grype", "snyk"];
 const SEVERITIES = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO", "UNKNOWN"];
 
 const projectDir = process.env.PROJECT_DIR || process.cwd();
@@ -53,8 +54,10 @@ function findingId(finding, index) {
 function loadDiagnostics() {
   const diagnostics = [];
   if (fs.existsSync(diagnosticsDir)) {
+    const allowedDiagnostics = new Set(TOOLS.map((tool) => `${tool}.json`));
     for (const entry of fs.readdirSync(diagnosticsDir)) {
       if (!entry.endsWith(".json")) continue;
+      if (!allowedDiagnostics.has(entry)) continue;
       try {
         diagnostics.push(readJson(path.join(diagnosticsDir, entry)));
       } catch (error) {
