@@ -13,6 +13,9 @@ results/summary.json
 results/diagnostics.json
 
 # Local temporary files
+.env
+.env.*
+!.env.example
 .tmp-empty-results/
 *.log
 .DS_Store
