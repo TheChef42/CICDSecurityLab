@@ -9,14 +9,20 @@ RAW_FILE="$RAW_DIR/semgrep-custom.json"
 LOG_FILE="$LOG_DIR/semgrep-custom.log"
 RAW_REF="results/raw/semgrep-custom.json"
 LOCAL_RULES="$PROJECT_DIR/scanner/semgrep-rules.yml"
+SEMGREP_BIN="$(command -v semgrep || true)"
 
-if ! command -v semgrep >/dev/null 2>&1; then
+if [ -z "$SEMGREP_BIN" ] && [ -x /opt/semgrep/bin/semgrep ]; then
+  SEMGREP_BIN="/opt/semgrep/bin/semgrep"
+fi
+
+if [ -z "$SEMGREP_BIN" ]; then
+  printf '{"version":"unknown","results":[],"errors":[]}\n' >"$RAW_FILE"
   write_diag "$TOOL" "ERROR" "Semgrep is not installed in the scanner image." "" ""
   exit 0
 fi
 
 set +e
-semgrep scan \
+"$SEMGREP_BIN" scan \
   --metrics=off \
   --config "$LOCAL_RULES" \
   --json \

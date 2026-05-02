@@ -1,81 +1,78 @@
 rules:
-  - id: cicd.curl-pipe-shell
-    message: Code is downloaded and piped directly to a shell without integrity verification.
+  - id: cicd.download-execute-pipe-shell
+    message: Downloaded content is piped directly to a shell. Verify integrity before execution.
     severity: ERROR
     languages: [generic]
     paths:
       include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: 'curl\s+[^|]+\|\s*(sh|bash)'
+        - "**/*.sh"
+        - "**/*.yml"
+        - "**/*.yaml"
+      exclude:
+        - "/scanner/semgrep-rules.yml"
+    pattern-regex: '\b(curl|wget)\b[^|;\n]+\|\s*(sh|bash)\b'
 
-  - id: cicd.npm-install-without-ci
-    message: CI dependency installation uses npm install instead of deterministic npm ci.
+  - id: cicd.github-event-context-in-shell
+    message: GitHub event context is interpolated into a workflow shell command. Pass untrusted values through environment variables and quote them safely.
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - "**/*.yml"
+        - "**/*.yaml"
+      exclude:
+        - "/scanner/semgrep-rules.yml"
+    pattern-regex: '(?s)run:\s*\|[^\n]*(?:\n\s+[^\n]*)*\$\{\{\s*github\.event\.[^}]+\}\}'
+
+  - id: cicd.github-actions-write-all-permissions
+    message: GitHub Actions workflow grants write-all token permissions. Prefer least-privilege permissions.
     severity: WARNING
     languages: [generic]
     paths:
       include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: '\bnpm\s+install\b'
+        - "**/*.yml"
+        - "**/*.yaml"
+      exclude:
+        - "/scanner/semgrep-rules.yml"
+    pattern-regex: '(?im)^\s*permissions:\s*write-all\s*$'
 
-  - id: cicd.github-context-shell-interpolation
-    message: Untrusted GitHub event context is interpolated directly into a shell command.
-    severity: ERROR
-    languages: [generic]
-    paths:
-      include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: '\$\{\{\s*github\.event\.[^}]+\}\}'
-
-  - id: cicd.github-actions-write-all
-    message: GitHub Actions workflow grants write-all token permissions.
+  - id: cicd.workflow-debug-env-dump
+    message: Workflow or script may dump environment variables to logs. Avoid printing secrets and disable shell tracing around sensitive steps.
     severity: WARNING
     languages: [generic]
     paths:
       include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: 'permissions:\s*write-all'
+        - "**/*.sh"
+        - "**/*.yml"
+        - "**/*.yaml"
+      exclude:
+        - "/scanner/semgrep-rules.yml"
+    pattern-regex: '(?m)^\s*(-\s*)?(set\s+-x|printenv|env)\s*$'
 
-  - id: cicd.fake-hardcoded-secret
-    message: A fake test credential is hardcoded in a repository file.
+  - id: cicd.iam-administrator-access
+    message: CI/CD infrastructure grants AdministratorAccess. Use scoped IAM permissions.
     severity: ERROR
     languages: [generic]
     paths:
       include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: '(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk_test_[A-Za-z0-9_]{16,})'
+        - "**/*.tf"
+        - "**/*policy*.json"
+        - "**/*.yml"
+        - "**/*.yaml"
+      exclude:
+        - "/scanner/semgrep-rules.yml"
+        - "**/metadata.json"
+    pattern-regex: '\bAdministratorAccess\b'
 
-  - id: cicd.verbose-secret-logging
-    message: Debug logging can print sensitive environment variables into build logs.
+  - id: cicd.container-image-latest-tag
+    message: Container image uses the mutable latest tag. Pin images by version or digest.
     severity: WARNING
     languages: [generic]
     paths:
       include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: '(^|\s)(set\s+-x|printenv|env)\b'
-
-  - id: cicd.administrator-access-policy
-    message: CI/CD identity uses AdministratorAccess instead of least privilege.
-    severity: ERROR
-    languages: [generic]
-    paths:
-      include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: 'AdministratorAccess'
-
-  - id: cicd.mutable-image-tag
-    message: Container image is referenced with a mutable latest tag.
-    severity: WARNING
-    languages: [generic]
-    paths:
-      include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: '(^|\s)(FROM\s+\S+:latest|image:\s+\S+:latest|\S+:latest)'
-
-  - id: cicd.missing-provenance-verification
-    message: Artifact deployment allows missing provenance verification.
-    severity: ERROR
-    languages: [generic]
-    paths:
-      include:
-        - '**/scenarios/**/vulnerable/**'
-    pattern-regex: '(ALLOW_MISSING_PROVENANCE|SKIP_PROVENANCE_CHECK|without provenance)'
+        - "**/Dockerfile"
+        - "**/*.yml"
+        - "**/*.yaml"
+      exclude:
+        - "/scanner/semgrep-rules.yml"
+    pattern-regex: '(?im)^\s*(FROM\s+\S+:latest|image:\s+\S+:latest)\s*$'
