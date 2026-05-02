@@ -10,6 +10,8 @@ const projectDir = process.env.PROJECT_DIR || process.cwd();
 const resultsDir = process.env.RESULTS_DIR || path.join(projectDir, "results");
 const rawDir = path.join(resultsDir, "raw");
 const normalizedDir = path.join(resultsDir, "normalized");
+const diagnosticsDir = path.join(rawDir, "diagnostics");
+const logDir = path.join(rawDir, "logs");
 const force = process.argv.includes("--force");
 
 function writeJsonIfMissing(file, payload) {
@@ -68,8 +70,20 @@ function emptySummary(scenarios) {
 function main() {
   fs.mkdirSync(rawDir, { recursive: true });
   fs.mkdirSync(normalizedDir, { recursive: true });
+  fs.mkdirSync(diagnosticsDir, { recursive: true });
+  fs.mkdirSync(logDir, { recursive: true });
 
   const scenarios = loadScenarios(projectDir);
+
+  for (const tool of TOOLS) {
+    for (const file of [
+      path.join(rawDir, `${tool}.json`),
+      path.join(diagnosticsDir, `${tool}.json`),
+      path.join(logDir, `${tool}.log`)
+    ]) {
+      if (fs.existsSync(file)) fs.rmSync(file);
+    }
+  }
 
   writeJsonIfMissing(path.join(normalizedDir, "findings.json"), []);
   writeJsonIfMissing(path.join(normalizedDir, "scenarios.json"), scenarios);

@@ -30,3 +30,7 @@ Findings are mapped to scenarios in this order:
 4. `UNMAPPED` when no scenario can be identified.
 
 The expected coverage table is intentionally excluded from this process.
+
+## Result Trust Notes
+
+The dashboard represents scanner output, not an oracle. A result is most trustworthy after a fresh full scanner run because the initializer clears prior raw outputs for known tools before wrappers execute. Generated files under `results/` are excluded or allowlisted where practical so tools do not report on their own previous reports. Raw findings that cannot be mapped remain visible as `UNMAPPED` rather than being hidden.
