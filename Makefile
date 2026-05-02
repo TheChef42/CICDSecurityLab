@@ -13,4 +13,4 @@ all:
 clean:
 	rm -rf results/raw results/normalized results/summary.json results/diagnostics.json
 	mkdir -p results/raw results/normalized
-	docker compose run --rm results-init node scanner/init-results.js --force
+	docker compose run --rm results-init node scanner/init-results.js --reset-run --force

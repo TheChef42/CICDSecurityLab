@@ -141,11 +141,11 @@ export default function App() {
     () => ({
       tools: TOOLS,
       severities: SEVERITIES,
-      owaspCategories: uniqueValues(findings, "owaspCategory"),
-      cwes: uniqueValues(findings, "cwe"),
-      scenarios: uniqueValues(findings, "scenarioId")
+      owaspCategories: uniqueValues([...scenarios, ...findings], "owaspCategory"),
+      cwes: uniqueValues([...scenarios, ...findings], "cwe"),
+      scenarios: uniqueValues([...scenarios.map((scenario) => ({ scenarioId: scenario.id })), ...findings], "scenarioId")
     }),
-    [findings]
+    [findings, scenarios]
   );
 
   const scanCompleted = Boolean(summary?.scanCompleted) || findings.length > 0 || diagnostics.some((item) => item.status);

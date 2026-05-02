@@ -13,9 +13,15 @@ const normalizedDir = path.join(resultsDir, "normalized");
 const diagnosticsDir = path.join(rawDir, "diagnostics");
 const logDir = path.join(rawDir, "logs");
 const force = process.argv.includes("--force");
+const resetRun = process.argv.includes("--reset-run");
 
 function writeJsonIfMissing(file, payload) {
   if (!force && fs.existsSync(file)) return;
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, `${JSON.stringify(payload, null, 2)}\n`);
+}
+
+function writeJson(file, payload) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, `${JSON.stringify(payload, null, 2)}\n`);
 }
@@ -75,18 +81,20 @@ function main() {
 
   const scenarios = loadScenarios(projectDir);
 
-  for (const tool of TOOLS) {
-    for (const file of [
-      path.join(rawDir, `${tool}.json`),
-      path.join(diagnosticsDir, `${tool}.json`),
-      path.join(logDir, `${tool}.log`)
-    ]) {
-      if (fs.existsSync(file)) fs.rmSync(file);
+  if (resetRun) {
+    for (const tool of TOOLS) {
+      for (const file of [
+        path.join(rawDir, `${tool}.json`),
+        path.join(diagnosticsDir, `${tool}.json`),
+        path.join(logDir, `${tool}.log`)
+      ]) {
+        if (fs.existsSync(file)) fs.rmSync(file);
+      }
     }
   }
 
   writeJsonIfMissing(path.join(normalizedDir, "findings.json"), []);
-  writeJsonIfMissing(path.join(normalizedDir, "scenarios.json"), scenarios);
+  writeJson(path.join(normalizedDir, "scenarios.json"), scenarios);
   writeJsonIfMissing(path.join(resultsDir, "summary.json"), emptySummary(scenarios));
   writeJsonIfMissing(path.join(resultsDir, "diagnostics.json"), []);
 

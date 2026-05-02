@@ -90,10 +90,12 @@ If no scan has run yet, the lab initializes empty but valid JSON files for findi
 Coverage is calculated from mapped scenario detections only:
 
 - Per-tool coverage = unique mapped scenarios detected by that tool / 10.
-- Per-scenario coverage = tools detecting that scenario / 6.
+- Per-scenario coverage = reporting profiles detecting that scenario / number of reporting profiles.
 - Combined coverage = union of mapped scenarios detected by selected tools / 10.
 
 Raw finding count is not a coverage metric. A tool with many unmapped findings is not automatically better than a tool with fewer findings mapped to relevant lab scenarios.
+
+The selected scanner families are the six original tools. The dashboard separates Semgrep into `semgrep-default` and `semgrep-custom`, so the UI may show seven reporting profiles. This split is intentional and prevents custom policy rules from being mistaken for out-of-the-box Semgrep behavior.
 
 ## Expected Coverage
 

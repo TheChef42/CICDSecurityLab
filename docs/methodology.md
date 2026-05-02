@@ -6,7 +6,7 @@ The CWE mapping is not an official one-to-one OWASP mapping. OWASP CI/CD categor
 
 All tools are treated equally. The scanner container runs every available tool against the full lab. Expected coverage is not used to decide scanner execution, parsing, finding mapping, suppression, or scoring.
 
-Semgrep is represented as two tool configurations: `semgrep-default` and `semgrep-custom`. The default entry uses Semgrep's public default ruleset. The custom entry uses local CI/CD policy rules written in the style a team might maintain for its own repositories. These rules are intentionally generic and are not designed to match every lab scenario, every scenario ID, or every fake secret. This separation avoids presenting policy-as-code results as out-of-the-box scanner behavior.
+Semgrep is represented as two reporting profiles: `semgrep-default` and `semgrep-custom`. The default entry uses Semgrep's public default ruleset. The custom entry uses local CI/CD policy rules written in the style a team might maintain for its own repositories. These rules are intentionally generic and are not designed to match every lab scenario, every scenario ID, or every fake secret. This separation avoids presenting policy-as-code results as out-of-the-box scanner behavior.
 
 Actual scanner output is the only source of coverage. A scenario is covered by a tool only when that tool emits at least one finding that maps to the scenario. If a finding cannot be mapped, it remains visible as `UNMAPPED`.
 
@@ -33,4 +33,4 @@ The expected coverage table is intentionally excluded from this process.
 
 ## Result Trust Notes
 
-The dashboard represents scanner output, not an oracle. A result is most trustworthy after a fresh full scanner run because the initializer clears prior raw outputs for known tools before wrappers execute. Generated files under `results/` are excluded or allowlisted where practical so tools do not report on their own previous reports. Raw findings that cannot be mapped remain visible as `UNMAPPED` rather than being hidden.
+The dashboard represents scanner output, not an oracle. A result is most trustworthy after a fresh full scanner run because scan startup clears prior raw outputs for known tools before wrappers execute. Starting only the dashboard initializes missing JSON files but does not erase existing scanner output. Generated files under `results/` are excluded or allowlisted where practical so tools do not report on their own previous reports. Raw findings that cannot be mapped remain visible as `UNMAPPED` rather than being hidden.

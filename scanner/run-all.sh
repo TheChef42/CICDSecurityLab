@@ -10,7 +10,7 @@ DIAGNOSTICS_DIR="$RAW_DIR/diagnostics"
 
 mkdir -p "$RAW_DIR" "$NORMALIZED_DIR" "$DIAGNOSTICS_DIR"
 
-node "$SCRIPT_DIR/init-results.js"
+node "$SCRIPT_DIR/init-results.js" --reset-run --force
 
 echo "Running CI/CD security lab scanners against $PROJECT_DIR"
 
