@@ -15,6 +15,7 @@ The vulnerable package manifest omits a lockfile. Absence of a lockfile is not d
 ## Affected Vulnerable Files
 
 - `vulnerable/package.json`
+- `vulnerable/resolved-dependency-snapshot/package.json`
 - `vulnerable/resolved-dependency-snapshot/package-lock.json`
 - `vulnerable/install-dependencies.sh`
 

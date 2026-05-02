@@ -7,6 +7,7 @@
   "description": "Pipeline dependency installation resolves packages without a deterministic lockfile.",
   "vulnerableFiles": [
     "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/package.json",
+    "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/resolved-dependency-snapshot/package.json",
     "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/resolved-dependency-snapshot/package-lock.json",
     "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/install-dependencies.sh"
   ],

@@ -1,0 +1,9 @@
+{
+  "name": "sec03-cwe829-resolved-snapshot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Safe scanner fixture representing a resolved dependency snapshot from an unpinned install.",
+  "dependencies": {
+    "lodash": "4.17.20"
+  }
+}
