@@ -10,13 +10,14 @@ The lab treats all scanners equally. Every selected tool scans the full project 
 - Snyk
 - Semgrep default rules
 - Semgrep custom lab rules
+- Semgrep combined profile
 - Gitleaks
 - Checkov
 - Grype
 
 Snyk runs only when `SNYK_TOKEN` is available. If no token is set, the scan continues and a warning diagnostic is written.
 
-Semgrep is reported in two separate dashboard columns: `semgrep-default` for Semgrep's public default rules and `semgrep-custom` for the lab's local CI/CD policy rules. This keeps the comparison honest: custom rules show what policy-as-code can detect, while default rules show less tailored coverage.
+Semgrep is reported in three dashboard columns: `semgrep-default` for Semgrep's public default rules, `semgrep-custom` for the lab's local CI/CD policy rules, and `semgrep-combined` for both rule sets together. This keeps the comparison honest while also showing the practical result of extending Semgrep with local policy rules.
 
 If you need to scope Snyk to a specific organization, set `SNYK_ORG` to the organization ID. For example:
 
@@ -95,7 +96,7 @@ Coverage is calculated from mapped scenario detections only:
 
 Raw finding count is not a coverage metric. A tool with many unmapped findings is not automatically better than a tool with fewer findings mapped to relevant lab scenarios.
 
-The selected scanner families are the six original tools. The dashboard separates Semgrep into `semgrep-default` and `semgrep-custom`, so the UI may show seven reporting profiles. This split is intentional and prevents custom policy rules from being mistaken for out-of-the-box Semgrep behavior.
+The selected scanner families are the six original tools. The dashboard separates Semgrep into `semgrep-default`, `semgrep-custom`, and `semgrep-combined`, so the UI may show eight reporting profiles. This split is intentional and prevents custom policy rules from being mistaken for out-of-the-box Semgrep behavior.
 
 ## Expected Coverage
 

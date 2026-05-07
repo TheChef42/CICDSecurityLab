@@ -14,7 +14,7 @@ node "$SCRIPT_DIR/init-results.js" --reset-run --force
 
 echo "Running CI/CD security lab scanners against $PROJECT_DIR"
 
-for tool in trivy semgrep-default semgrep-custom gitleaks checkov grype snyk; do
+for tool in trivy semgrep-default semgrep-custom semgrep-combined gitleaks checkov grype snyk; do
   echo "---- $tool ----"
   bash "$SCRIPT_DIR/tools/run-$tool.sh" || true
 done
