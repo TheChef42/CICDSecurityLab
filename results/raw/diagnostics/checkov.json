@@ -1,0 +1,6 @@
+{
+  "tool": "checkov",
+  "status": "OK",
+  "message": "Checkov IaC/configuration scan completed.",
+  "rawOutputPath": "results/raw/checkov.json"
+}

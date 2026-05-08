@@ -1,0 +1,300 @@
+[
+  {
+    "id": "SEC03-CWE494",
+    "title": "Integrity Omission",
+    "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
+    "cwe": "CWE-494",
+    "cweTitle": "Download of Code Without Integrity Check",
+    "description": "Pipeline downloads or executes code without validating checksum, digest, or signature.",
+    "vulnerableFiles": [
+      "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/vulnerable/install-unverified.sh",
+      "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/vulnerable/remote-install-example.sh"
+    ],
+    "fixedFiles": [
+      "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/install-verified.sh",
+      "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/trusted-install.sh",
+      "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/trusted-install.sh.sha256"
+    ],
+    "remediation": "Pin versions and verify checksums, signatures, or digests before execution.",
+    "mappingHints": {
+      "keywords": [
+        "curl | sh",
+        "curl",
+        "checksum",
+        "integrity verification",
+        "download without integrity"
+      ],
+      "filePatterns": [
+        "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission",
+    "metadataPath": "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/metadata.json"
+  },
+  {
+    "id": "SEC03-CWE829",
+    "title": "Untrusted Dependency Resolution",
+    "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
+    "cwe": "CWE-829",
+    "cweTitle": "Inclusion of Functionality from Untrusted Control Sphere",
+    "description": "Pipeline dependency installation resolves packages without a deterministic lockfile.",
+    "vulnerableFiles": [
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/package.json",
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/resolved-dependency-snapshot/package.json",
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/resolved-dependency-snapshot/package-lock.json",
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/install-dependencies.sh"
+    ],
+    "fixedFiles": [
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/package.json",
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/package-lock.json",
+      "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/install-dependencies.sh"
+    ],
+    "remediation": "Commit lockfiles, pin versions, and use deterministic installers such as npm ci.",
+    "mappingHints": {
+      "keywords": [
+        "package-lock",
+        "npm install",
+        "dependency resolution",
+        "lockfile"
+      ],
+      "filePatterns": [
+        "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution",
+    "metadataPath": "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/metadata.json"
+  },
+  {
+    "id": "SEC04-CWE78",
+    "title": "Tainted Command Injection",
+    "owaspCategory": "CICD-SEC-04: Poisoned Pipeline Execution",
+    "cwe": "CWE-78",
+    "cweTitle": "Improper Neutralization of Special Elements used in an OS Command",
+    "description": "Untrusted CI event context is interpolated directly into a shell command.",
+    "vulnerableFiles": [
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/vulnerable/issue-title-search.yml"
+    ],
+    "fixedFiles": [
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/fixed/issue-title-search.yml"
+    ],
+    "remediation": "Pass untrusted values through environment variables, validate input, quote safely, or avoid shell interpolation.",
+    "mappingHints": {
+      "keywords": [
+        "github.event.issue.title",
+        "shell command",
+        "command injection",
+        "interpolated"
+      ],
+      "filePatterns": [
+        "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection",
+    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/metadata.json"
+  },
+  {
+    "id": "SEC04-CWE269",
+    "title": "Token Over-privilege",
+    "owaspCategory": "CICD-SEC-04: Poisoned Pipeline Execution",
+    "cwe": "CWE-269",
+    "cweTitle": "Improper Privilege Management",
+    "description": "GitHub Actions workflow grants unnecessary write-all token permissions during build/test.",
+    "vulnerableFiles": [
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/vulnerable/build.yml"
+    ],
+    "fixedFiles": [
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/fixed/build.yml"
+    ],
+    "remediation": "Use least-privilege workflow permissions such as contents: read.",
+    "mappingHints": {
+      "keywords": [
+        "write-all",
+        "permissions",
+        "token",
+        "least privilege"
+      ],
+      "filePatterns": [
+        "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege",
+    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/metadata.json"
+  },
+  {
+    "id": "SEC06-CWE798",
+    "title": "Hardcoded Secret",
+    "owaspCategory": "CICD-SEC-06: Insufficient Credential Hygiene",
+    "cwe": "CWE-798",
+    "cweTitle": "Use of Hard-coded Credentials",
+    "description": "High-entropy fake credentials are committed in CI/CD scripts or configuration.",
+    "vulnerableFiles": [
+      "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh",
+      "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/app.env"
+    ],
+    "fixedFiles": [
+      "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/fixed/deploy.sh",
+      "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/fixed/app.env.example"
+    ],
+    "remediation": "Store secrets in environment variables or a secret manager and never commit credential values.",
+    "mappingHints": {
+      "keywords": [
+        "AKIAIOSFODNN7EXAMPLE",
+        "ghp_FAKE",
+        "sk_test_FAKE",
+        "hardcoded secret"
+      ],
+      "filePatterns": [
+        "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret",
+    "metadataPath": "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/metadata.json"
+  },
+  {
+    "id": "SEC06-CWE532",
+    "title": "Verbose Log Leak",
+    "owaspCategory": "CICD-SEC-06: Insufficient Credential Hygiene",
+    "cwe": "CWE-532",
+    "cweTitle": "Insertion of Sensitive Information into Log File",
+    "description": "Workflow debug output can print secret-bearing environment variables to plaintext build logs.",
+    "vulnerableFiles": [
+      "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/vulnerable/debug-workflow.yml"
+    ],
+    "fixedFiles": [
+      "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/fixed/debug-workflow.yml"
+    ],
+    "remediation": "Avoid dumping environment variables, disable shell tracing around secrets, and mask sensitive values.",
+    "mappingHints": {
+      "keywords": [
+        "set -x",
+        "printenv",
+        "env",
+        "verbose log",
+        "log leak"
+      ],
+      "filePatterns": [
+        "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak",
+    "metadataPath": "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/metadata.json"
+  },
+  {
+    "id": "SEC07-CWE16",
+    "title": "Insecure Container Default",
+    "owaspCategory": "CICD-SEC-07: Insecure System Configuration",
+    "cwe": "CWE-16",
+    "cweTitle": "Configuration",
+    "description": "CI/build container Dockerfile lacks a USER directive, so it runs as root by default.",
+    "vulnerableFiles": [
+      "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/vulnerable/Dockerfile"
+    ],
+    "fixedFiles": [
+      "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/fixed/Dockerfile"
+    ],
+    "remediation": "Create and use a non-root user in build and runner containers.",
+    "mappingHints": {
+      "keywords": [
+        "missing user",
+        "root",
+        "dockerfile",
+        "container default"
+      ],
+      "filePatterns": [
+        "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default",
+    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/metadata.json"
+  },
+  {
+    "id": "SEC07-CWE269",
+    "title": "Overprivileged Cloud Identity",
+    "owaspCategory": "CICD-SEC-07: Insecure System Configuration",
+    "cwe": "CWE-269",
+    "cweTitle": "Improper Privilege Management",
+    "description": "Terraform grants a CI/CD role AdministratorAccess instead of scoped permissions.",
+    "vulnerableFiles": [
+      "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/vulnerable/main.tf"
+    ],
+    "fixedFiles": [
+      "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/fixed/main.tf"
+    ],
+    "remediation": "Use scoped IAM policies with only the actions required by the pipeline.",
+    "mappingHints": {
+      "keywords": [
+        "AdministratorAccess",
+        "iam policy",
+        "overprivileged",
+        "least privilege"
+      ],
+      "filePatterns": [
+        "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity",
+    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/metadata.json"
+  },
+  {
+    "id": "SEC09-CWE345-A",
+    "title": "Mutable Image Tags",
+    "owaspCategory": "CICD-SEC-09: Improper Artifact Integrity Validation",
+    "cwe": "CWE-345",
+    "cweTitle": "Insufficient Verification of Data Authenticity",
+    "description": "Build or deployment configuration references container images by mutable tags such as latest instead of immutable digests.",
+    "vulnerableFiles": [
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/vulnerable/Dockerfile",
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/vulnerable/docker-compose.yml"
+    ],
+    "fixedFiles": [
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/Dockerfile",
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/docker-compose.yml"
+    ],
+    "remediation": "Pin container images by immutable SHA-256 digest instead of mutable tags.",
+    "mappingHints": {
+      "keywords": [
+        "latest",
+        "mutable image",
+        "sha256",
+        "digest"
+      ],
+      "filePatterns": [
+        "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags",
+    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/metadata.json"
+  },
+  {
+    "id": "SEC09-CWE345-B",
+    "title": "Unverified Provenance",
+    "owaspCategory": "CICD-SEC-09: Improper Artifact Integrity Validation",
+    "cwe": "CWE-345",
+    "cweTitle": "Insufficient Verification of Data Authenticity",
+    "description": "Deployment logic accepts artifacts without requiring or verifying provenance, signature, attestation, or trusted builder identity.",
+    "vulnerableFiles": [
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/vulnerable/deploy-artifact.sh",
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/vulnerable/artifact.txt"
+    ],
+    "fixedFiles": [
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/deploy-artifact.sh",
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/artifact.txt",
+      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/provenance.json"
+    ],
+    "remediation": "Require provenance or signature verification and fail closed when verification is missing or invalid.",
+    "mappingHints": {
+      "keywords": [
+        "provenance",
+        "attestation",
+        "signature",
+        "trusted builder",
+        "ALLOW_MISSING_PROVENANCE"
+      ],
+      "filePatterns": [
+        "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/**"
+      ]
+    },
+    "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance",
+    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/metadata.json"
+  }
+]

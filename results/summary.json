@@ -1,0 +1,144 @@
+{
+  "generatedAt": null,
+  "scanCompleted": false,
+  "totalFindings": 0,
+  "mappedFindings": 0,
+  "unmappedFindings": 0,
+  "severityCounts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 0,
+    "UNKNOWN": 0
+  },
+  "toolsReporting": [],
+  "totalScenarios": 10,
+  "totalTools": 8,
+  "combinedCoverage": {
+    "coveredScenarioIds": [],
+    "coveredCount": 0,
+    "coveragePercent": 0
+  },
+  "perToolCoverage": {
+    "gitleaks": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    },
+    "checkov": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    },
+    "semgrep-default": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    },
+    "semgrep-custom": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    },
+    "semgrep-combined": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    },
+    "trivy": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    },
+    "grype": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    },
+    "snyk": {
+      "coveredScenarioIds": [],
+      "coveredCount": 0,
+      "totalScenarios": 10,
+      "coveragePercent": 0,
+      "mappedFindings": 0
+    }
+  },
+  "perScenarioCoverage": {
+    "SEC03-CWE494": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC03-CWE829": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC04-CWE78": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC04-CWE269": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC06-CWE798": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC06-CWE532": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC07-CWE16": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC07-CWE269": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC09-CWE345-A": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    },
+    "SEC09-CWE345-B": {
+      "detectingTools": [],
+      "detectingToolCount": 0,
+      "totalTools": 8,
+      "coveragePercent": 0
+    }
+  },
+  "diagnosticsStatus": {}
+}

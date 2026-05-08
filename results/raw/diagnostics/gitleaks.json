@@ -1,0 +1,7 @@
+{
+  "tool": "gitleaks",
+  "status": "OK",
+  "message": "Gitleaks repository scan completed.",
+  "rawOutputPath": "results/raw/gitleaks.json",
+  "details": "\n    ○\n    │╲\n    │ ○\n    ○ ░\n    ░    gitleaks\n\n\u001b[90m8:25AM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mscanned ~120827 bytes (120.83 KB) in 295ms\u001b[0m\n\u001b[90m8:25AM\u001b[0m \u001b[33mWRN\u001b[0m \u001b[1mleaks found: 2\u001b[0m"
+}
