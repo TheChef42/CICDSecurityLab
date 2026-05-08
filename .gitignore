@@ -4,13 +4,6 @@ web/node_modules/
 web/dist/
 dist/
 
-# Generated scanner output
-results/raw/*
-!results/raw/.gitkeep
-results/normalized/*
-!results/normalized/.gitkeep
-results/summary.json
-results/diagnostics.json
 
 # Local temporary files
 .env
