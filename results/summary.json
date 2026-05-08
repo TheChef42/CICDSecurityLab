@@ -1,137 +1,229 @@
 {
-  "generatedAt": null,
-  "scanCompleted": false,
-  "totalFindings": 0,
-  "mappedFindings": 0,
-  "unmappedFindings": 0,
+  "generatedAt": "2026-05-08T08:36:07.528Z",
+  "scanCompleted": true,
+  "totalFindings": 85,
+  "mappedFindings": 75,
+  "unmappedFindings": 10,
   "severityCounts": {
-    "CRITICAL": 0,
-    "HIGH": 0,
-    "MEDIUM": 0,
-    "LOW": 0,
+    "CRITICAL": 2,
+    "HIGH": 31,
+    "MEDIUM": 46,
+    "LOW": 6,
     "INFO": 0,
     "UNKNOWN": 0
   },
-  "toolsReporting": [],
+  "toolsReporting": [
+    "checkov",
+    "gitleaks",
+    "grype",
+    "semgrep-combined",
+    "semgrep-custom",
+    "semgrep-default",
+    "snyk",
+    "trivy"
+  ],
   "totalScenarios": 10,
   "totalTools": 8,
   "combinedCoverage": {
-    "coveredScenarioIds": [],
-    "coveredCount": 0,
-    "coveragePercent": 0
+    "coveredScenarioIds": [
+      "SEC03-CWE494",
+      "SEC03-CWE829",
+      "SEC04-CWE269",
+      "SEC04-CWE78",
+      "SEC06-CWE532",
+      "SEC06-CWE798",
+      "SEC07-CWE16",
+      "SEC07-CWE269",
+      "SEC09-CWE345-A"
+    ],
+    "coveredCount": 9,
+    "coveragePercent": 90
   },
   "perToolCoverage": {
     "gitleaks": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC06-CWE798"
+      ],
+      "coveredCount": 1,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 10,
+      "mappedFindings": 2
     },
     "checkov": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC06-CWE532",
+        "SEC06-CWE798",
+        "SEC07-CWE16",
+        "SEC07-CWE269",
+        "SEC09-CWE345-A"
+      ],
+      "coveredCount": 5,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 50,
+      "mappedFindings": 16
     },
     "semgrep-default": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC04-CWE78",
+        "SEC06-CWE532",
+        "SEC07-CWE16"
+      ],
+      "coveredCount": 3,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 30,
+      "mappedFindings": 5
     },
     "semgrep-custom": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC03-CWE494",
+        "SEC04-CWE269",
+        "SEC04-CWE78",
+        "SEC06-CWE532",
+        "SEC07-CWE269",
+        "SEC09-CWE345-A"
+      ],
+      "coveredCount": 6,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 60,
+      "mappedFindings": 9
     },
     "semgrep-combined": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC03-CWE494",
+        "SEC04-CWE269",
+        "SEC04-CWE78",
+        "SEC06-CWE532",
+        "SEC07-CWE16",
+        "SEC07-CWE269",
+        "SEC09-CWE345-A"
+      ],
+      "coveredCount": 7,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 70,
+      "mappedFindings": 14
     },
     "trivy": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC03-CWE829",
+        "SEC06-CWE798",
+        "SEC07-CWE16",
+        "SEC09-CWE345-A"
+      ],
+      "coveredCount": 4,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 40,
+      "mappedFindings": 19
     },
     "grype": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC03-CWE829"
+      ],
+      "coveredCount": 1,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 10,
+      "mappedFindings": 5
     },
     "snyk": {
-      "coveredScenarioIds": [],
-      "coveredCount": 0,
+      "coveredScenarioIds": [
+        "SEC03-CWE829"
+      ],
+      "coveredCount": 1,
       "totalScenarios": 10,
-      "coveragePercent": 0,
-      "mappedFindings": 0
+      "coveragePercent": 10,
+      "mappedFindings": 5
     }
   },
   "perScenarioCoverage": {
     "SEC03-CWE494": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "semgrep-combined",
+        "semgrep-custom"
+      ],
+      "detectingToolCount": 2,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 25
     },
     "SEC03-CWE829": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "grype",
+        "snyk",
+        "trivy"
+      ],
+      "detectingToolCount": 3,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 37.5
     },
     "SEC04-CWE78": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "semgrep-combined",
+        "semgrep-custom",
+        "semgrep-default"
+      ],
+      "detectingToolCount": 3,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 37.5
     },
     "SEC04-CWE269": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "semgrep-combined",
+        "semgrep-custom"
+      ],
+      "detectingToolCount": 2,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 25
     },
     "SEC06-CWE798": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "checkov",
+        "gitleaks",
+        "trivy"
+      ],
+      "detectingToolCount": 3,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 37.5
     },
     "SEC06-CWE532": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "checkov",
+        "semgrep-combined",
+        "semgrep-custom",
+        "semgrep-default"
+      ],
+      "detectingToolCount": 4,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 50
     },
     "SEC07-CWE16": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "checkov",
+        "semgrep-combined",
+        "semgrep-default",
+        "trivy"
+      ],
+      "detectingToolCount": 4,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 50
     },
     "SEC07-CWE269": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "checkov",
+        "semgrep-combined",
+        "semgrep-custom"
+      ],
+      "detectingToolCount": 3,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 37.5
     },
     "SEC09-CWE345-A": {
-      "detectingTools": [],
-      "detectingToolCount": 0,
+      "detectingTools": [
+        "checkov",
+        "semgrep-combined",
+        "semgrep-custom",
+        "trivy"
+      ],
+      "detectingToolCount": 4,
       "totalTools": 8,
-      "coveragePercent": 0
+      "coveragePercent": 50
     },
     "SEC09-CWE345-B": {
       "detectingTools": [],
@@ -140,5 +232,14 @@
       "coveragePercent": 0
     }
   },
-  "diagnosticsStatus": {}
+  "diagnosticsStatus": {
+    "gitleaks": "OK",
+    "checkov": "OK",
+    "semgrep-default": "OK",
+    "semgrep-custom": "OK",
+    "semgrep-combined": "OK",
+    "trivy": "OK",
+    "grype": "OK",
+    "snyk": "OK"
+  }
 }

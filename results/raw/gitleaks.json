@@ -2,26 +2,6 @@
  {
   "RuleID": "stripe-access-token",
   "Description": "Found a Stripe Access Token, posing a risk to payment processing services and sensitive financial data.",
-  "StartLine": 7,
-  "EndLine": 7,
-  "StartColumn": 21,
-  "EndColumn": 49,
-  "Match": "sk_test_FAKE1234567890...\"",
-  "Secret": "sk_test_FAKE1234567890...",
-  "File": "/workspace/scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh",
-  "SymlinkFile": "",
-  "Commit": "",
-  "Entropy": 4.521641,
-  "Author": "",
-  "Email": "",
-  "Date": "",
-  "Message": "",
-  "Tags": [],
-  "Fingerprint": "/workspace/scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh:stripe-access-token:7"
- },
- {
-  "RuleID": "stripe-access-token",
-  "Description": "Found a Stripe Access Token, posing a risk to payment processing services and sensitive financial data.",
   "StartLine": 4,
   "EndLine": 4,
   "StartColumn": 13,
@@ -38,5 +18,25 @@
   "Message": "",
   "Tags": [],
   "Fingerprint": "/workspace/scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/app.env:stripe-access-token:4"
+ },
+ {
+  "RuleID": "stripe-access-token",
+  "Description": "Found a Stripe Access Token, posing a risk to payment processing services and sensitive financial data.",
+  "StartLine": 7,
+  "EndLine": 7,
+  "StartColumn": 21,
+  "EndColumn": 49,
+  "Match": "sk_test_FAKE1234567890...\"",
+  "Secret": "sk_test_FAKE1234567890...",
+  "File": "/workspace/scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 4.521641,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "/workspace/scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh:stripe-access-token:7"
  }
 ]
