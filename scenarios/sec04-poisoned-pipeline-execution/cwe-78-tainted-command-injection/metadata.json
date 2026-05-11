@@ -12,6 +12,8 @@
     "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/fixed/issue-title-search.yml"
   ],
   "remediation": "Pass untrusted values through environment variables, validate input, quote safely, or avoid shell interpolation.",
+  "intendedVulnerabilityCount": 1,
+  "intendedVulnerabilityNotes": "Untrusted GitHub context interpolated into a shell command.",
   "mappingHints": {
     "keywords": [
       "github.event.issue.title",

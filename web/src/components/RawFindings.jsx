@@ -17,6 +17,7 @@ export default function RawFindings({ findings }) {
             <span className={finding.mapped ? "badge mapped" : "badge unmapped"}>
               {finding.mapped ? finding.scenarioId : "UNMAPPED"}
             </span>
+            {finding.duplicate ? <span className="badge unmapped">duplicate {finding.duplicateIndex}/{finding.duplicateCount}</span> : null}
           </div>
           <h3>{finding.title || "Unmapped finding"}</h3>
           <dl className="finding-meta">

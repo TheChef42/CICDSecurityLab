@@ -22,14 +22,16 @@ export default function ToolScenarioMatrix({ findings, scenarios, tools }) {
               <th>
                 <span>{scenario.id}</span>
                 <small>{scenario.title}</small>
+                <small>CVSS {scenario.cvss?.baseScore ?? "n/a"} | intended {scenario.intendedVulnerabilityCount || 1}</small>
               </th>
               {tools.map((tool) => {
                 const count = countMappedFindings(findings, tool, scenario.id);
+                const intended = scenario.intendedVulnerabilityCount || 1;
                 return (
                   <td key={`${scenario.id}-${tool}`}>
                     <span className={count > 0 ? "matrix-cell detected" : "matrix-cell missed"}>
                       {count > 0 ? "detected" : "missed"}
-                      <strong>{count}</strong>
+                      <strong>{count}/{intended}</strong>
                     </span>
                   </td>
                 );

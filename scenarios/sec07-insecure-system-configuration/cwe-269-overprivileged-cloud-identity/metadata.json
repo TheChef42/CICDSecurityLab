@@ -12,6 +12,8 @@
     "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/fixed/main.tf"
   ],
   "remediation": "Use scoped IAM policies with only the actions required by the pipeline.",
+  "intendedVulnerabilityCount": 1,
+  "intendedVulnerabilityNotes": "IaC grants broad administrator access to a CI/CD identity.",
   "mappingHints": {
     "keywords": [
       "AdministratorAccess",

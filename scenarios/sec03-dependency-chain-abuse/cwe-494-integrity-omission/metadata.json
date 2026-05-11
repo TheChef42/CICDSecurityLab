@@ -15,6 +15,8 @@
     "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/trusted-install.sh.sha256"
   ],
   "remediation": "Pin versions and verify checksums, signatures, or digests before execution.",
+  "intendedVulnerabilityCount": 1,
+  "intendedVulnerabilityNotes": "Unsafe execution without checksum, digest, or signature verification.",
   "mappingHints": {
     "keywords": [
       "curl | sh",

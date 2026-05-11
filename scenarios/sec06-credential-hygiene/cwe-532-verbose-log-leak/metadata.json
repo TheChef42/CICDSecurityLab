@@ -12,6 +12,8 @@
     "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/fixed/debug-workflow.yml"
   ],
   "remediation": "Avoid dumping environment variables, disable shell tracing around secrets, and mask sensitive values.",
+  "intendedVulnerabilityCount": 2,
+  "intendedVulnerabilityNotes": "Verbose shell tracing and environment dumping can expose sensitive values.",
   "mappingHints": {
     "keywords": [
       "set -x",

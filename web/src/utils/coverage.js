@@ -8,6 +8,11 @@ export function countMappedFindings(findings, tool, scenarioId) {
   ).length;
 }
 
+export function scenarioWeight(scenario) {
+  const score = Number(scenario?.cvss?.baseScore);
+  return Number.isFinite(score) && score > 0 ? score : 0;
+}
+
 export function scenarioTools(findings, scenarioId, selectedTools = TOOLS) {
   const selected = new Set(selectedTools);
   return Array.from(
@@ -23,6 +28,7 @@ export function combinedCoverage(findings, scenarios, selectedTools) {
   const selected = selectedTools.length ? selectedTools : TOOLS;
   const covered = new Set();
   const scenarioToTools = {};
+  const totalWeight = scenarios.reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
 
   for (const scenario of scenarios) {
     const tools = scenarioTools(findings, scenario.id, selected);
@@ -54,12 +60,21 @@ export function combinedCoverage(findings, scenarios, selectedTools) {
     }
   }
 
+  const coveredWeight = coveredScenarioIds.reduce((sum, scenarioId) => {
+    return sum + scenarioWeight(scenarios.find((scenario) => scenario.id === scenarioId));
+  }, 0);
+
   return {
     selectedTools: selected,
     coveredScenarioIds,
     missedScenarioIds,
     singleToolDetections,
     overlap,
-    coveragePercent: scenarios.length ? Math.round((covered.size / scenarios.length) * 1000) / 10 : 0
+    coveragePercent: scenarios.length ? Math.round((covered.size / scenarios.length) * 1000) / 10 : 0,
+    weightedCoverage: {
+      coveredWeight: Math.round(coveredWeight * 10) / 10,
+      totalWeight: Math.round(totalWeight * 10) / 10,
+      coveragePercent: totalWeight ? Math.round((coveredWeight / totalWeight) * 1000) / 10 : 0
+    }
   };
 }

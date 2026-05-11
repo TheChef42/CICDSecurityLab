@@ -14,6 +14,10 @@ export default function ToolDiagnostics({ diagnostics }) {
           <p>{item.message}</p>
           <dl>
             <div>
+              <dt>Runtime</dt>
+              <dd>{typeof item.runtimeSeconds === "number" ? `${item.runtimeSeconds}s` : "n/a"}</dd>
+            </div>
+            <div>
               <dt>Raw output</dt>
               <dd>{item.rawOutputPath || "n/a"}</dd>
             </div>

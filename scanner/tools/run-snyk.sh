@@ -30,12 +30,14 @@ run_snyk() {
   local log_mode="$1"
   shift
   set +e
+  START_MS="$(now_ms)"
   if [ "$log_mode" = "append" ]; then
     snyk test "$PROJECT_DIR" "$@" >>"$LOG_FILE" 2>&1
   else
     snyk test "$PROJECT_DIR" "$@" >"$LOG_FILE" 2>&1
   fi
   local code=$?
+  RUNTIME_MS="$(elapsed_ms "$START_MS")"
   set -u
   return "$code"
 }
@@ -62,16 +64,16 @@ fi
 
 case "$CODE" in
   0)
-    write_diag "$TOOL" "OK" "Snyk scan completed with no reported vulnerabilities." "$RAW_REF" "$(tail_log "$LOG_FILE")"
+    write_diag "$TOOL" "OK" "Snyk scan completed with no reported vulnerabilities." "$RAW_REF" "$(tail_log "$LOG_FILE")" "$RUNTIME_MS"
     ;;
   1)
-    write_diag "$TOOL" "OK" "Snyk scan completed and reported findings." "$RAW_REF" "$(tail_log "$LOG_FILE")"
+    write_diag "$TOOL" "OK" "Snyk scan completed and reported findings." "$RAW_REF" "$(tail_log "$LOG_FILE")" "$RUNTIME_MS"
     ;;
   3)
-    write_diag "$TOOL" "WARN" "Snyk found no supported projects to scan." "$RAW_REF" "$(tail_log "$LOG_FILE")"
+    write_diag "$TOOL" "WARN" "Snyk found no supported projects to scan." "$RAW_REF" "$(tail_log "$LOG_FILE")" "$RUNTIME_MS"
     ;;
   *)
-    write_diag "$TOOL" "WARN" "Snyk exited with code $CODE; normalization will use any raw output that was produced." "$RAW_REF" "$(tail_log "$LOG_FILE")"
+    write_diag "$TOOL" "WARN" "Snyk exited with code $CODE; normalization will use any raw output that was produced." "$RAW_REF" "$(tail_log "$LOG_FILE")" "$RUNTIME_MS"
     ;;
 esac
 

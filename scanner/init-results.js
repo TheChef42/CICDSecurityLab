@@ -61,11 +61,19 @@ function emptySummary(scenarios) {
     severityCounts: Object.fromEntries(SEVERITIES.map((severity) => [severity, 0])),
     toolsReporting: [],
     totalScenarios: scenarios.length,
+    totalIntendedVulnerabilities: scenarios.reduce((sum, scenario) => sum + (Number(scenario.intendedVulnerabilityCount) || 1), 0),
     totalTools: TOOLS.length,
+    duplicateFindings: 0,
+    duplicateGroups: 0,
     combinedCoverage: {
       coveredScenarioIds: [],
       coveredCount: 0,
-      coveragePercent: 0
+      coveragePercent: 0,
+      weightedCoverage: {
+        coveredWeight: 0,
+        totalWeight: Math.round(scenarios.reduce((sum, scenario) => sum + (Number(scenario.cvss?.baseScore) || 0), 0) * 10) / 10,
+        coveragePercent: 0
+      }
     },
     perToolCoverage,
     perScenarioCoverage,
@@ -95,6 +103,13 @@ function main() {
 
   writeJsonIfMissing(path.join(normalizedDir, "findings.json"), []);
   writeJson(path.join(normalizedDir, "scenarios.json"), scenarios);
+  writeJsonIfMissing(path.join(normalizedDir, "cwe-cvss.json"), {
+    generatedAt: null,
+    validForDays: 30,
+    cwes: [],
+    notes: [],
+    entries: []
+  });
   writeJsonIfMissing(path.join(resultsDir, "summary.json"), emptySummary(scenarios));
   writeJsonIfMissing(path.join(resultsDir, "diagnostics.json"), []);
 

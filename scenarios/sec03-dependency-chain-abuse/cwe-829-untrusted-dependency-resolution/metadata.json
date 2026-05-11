@@ -17,6 +17,8 @@
     "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/install-dependencies.sh"
   ],
   "remediation": "Commit lockfiles, pin versions, and use deterministic installers such as npm ci.",
+  "intendedVulnerabilityCount": 1,
+  "intendedVulnerabilityNotes": "Untrusted dependency resolution through missing deterministic lockfile protection.",
   "mappingHints": {
     "keywords": [
       "package-lock",

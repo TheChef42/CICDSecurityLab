@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const loadScenarios = require("./load-scenarios");
+const { ensureCweCvssTable, enrichScenariosWithCvss } = require("./cwe-cvss");
 const { mapFinding } = require("./map-findings");
 
 const parsers = {
@@ -50,6 +51,40 @@ function findingId(finding, index) {
     index
   ].join("|");
   return crypto.createHash("sha1").update(seed).digest("hex").slice(0, 16);
+}
+
+function duplicateSeed(finding) {
+  return [
+    finding.tool,
+    finding.scenarioId,
+    finding.file,
+    finding.line,
+    finding.ruleId,
+    finding.message
+  ].join("|");
+}
+
+function scenarioWeight(scenario) {
+  const score = Number(scenario.cvss?.baseScore);
+  return Number.isFinite(score) && score > 0 ? score : 0;
+}
+
+function weightedCoverageFor(findings, scenarios, predicate) {
+  const byId = new Map(scenarios.map((scenario) => [scenario.id, scenario]));
+  const totalWeight = scenarios.reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
+  const coveredIds = new Set(
+    findings
+      .filter((finding) => finding.mapped && predicate(finding))
+      .map((finding) => finding.scenarioId)
+  );
+  const coveredWeight = Array.from(coveredIds).reduce((sum, scenarioId) => {
+    return sum + scenarioWeight(byId.get(scenarioId) || {});
+  }, 0);
+  return {
+    coveredWeight: Math.round(coveredWeight * 10) / 10,
+    totalWeight: Math.round(totalWeight * 10) / 10,
+    coveragePercent: totalWeight ? Math.round((coveredWeight / totalWeight) * 1000) / 10 : 0
+  };
 }
 
 function loadDiagnostics() {
@@ -105,6 +140,7 @@ function buildSummary(findings, scenarios, diagnostics) {
       coveredCount: covered.size,
       totalScenarios: scenarios.length,
       coveragePercent: scenarios.length ? Math.round((covered.size / scenarios.length) * 1000) / 10 : 0,
+      weightedCoverage: weightedCoverageFor(findings, scenarios, (finding) => finding.tool === tool),
       mappedFindings: findings.filter((finding) => finding.tool === tool && finding.mapped).length
     };
   }
@@ -120,13 +156,19 @@ function buildSummary(findings, scenarios, diagnostics) {
       detectingTools: Array.from(tools).sort(),
       detectingToolCount: tools.size,
       totalTools: TOOLS.length,
-      coveragePercent: Math.round((tools.size / TOOLS.length) * 1000) / 10
+      coveragePercent: Math.round((tools.size / TOOLS.length) * 1000) / 10,
+      intendedVulnerabilityCount: scenario.intendedVulnerabilityCount || 1,
+      cvss: scenario.cvss || null
     };
   }
 
   const mappedFindings = findings.filter((finding) => finding.mapped).length;
   const toolsReporting = Array.from(new Set(findings.map((finding) => finding.tool))).sort();
   const coveredScenarios = new Set(findings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId));
+  const duplicateGroups = new Set(findings.filter((finding) => finding.duplicateCount > 1).map((finding) => finding.duplicateGroupId));
+  const totalIntendedVulnerabilities = scenarios.reduce((sum, scenario) => {
+    return sum + (Number(scenario.intendedVulnerabilityCount) || 1);
+  }, 0);
 
   return {
     generatedAt: new Date().toISOString(),
@@ -137,11 +179,15 @@ function buildSummary(findings, scenarios, diagnostics) {
     severityCounts,
     toolsReporting,
     totalScenarios: scenarios.length,
+    totalIntendedVulnerabilities,
     totalTools: TOOLS.length,
+    duplicateFindings: findings.filter((finding) => finding.duplicateCount > 1).length,
+    duplicateGroups: duplicateGroups.size,
     combinedCoverage: {
       coveredScenarioIds: Array.from(coveredScenarios).sort(),
       coveredCount: coveredScenarios.size,
-      coveragePercent: scenarios.length ? Math.round((coveredScenarios.size / scenarios.length) * 1000) / 10 : 0
+      coveragePercent: scenarios.length ? Math.round((coveredScenarios.size / scenarios.length) * 1000) / 10 : 0,
+      weightedCoverage: weightedCoverageFor(findings, scenarios, () => true)
     },
     perToolCoverage,
     perScenarioCoverage,
@@ -150,7 +196,9 @@ function buildSummary(findings, scenarios, diagnostics) {
 }
 
 function main() {
-  const scenarios = loadScenarios(projectDir);
+  const baseScenarios = loadScenarios(projectDir);
+  const cweCvssTable = ensureCweCvssTable(projectDir, resultsDir, baseScenarios);
+  const scenarios = enrichScenariosWithCvss(baseScenarios, cweCvssTable);
   const rawFindings = [];
 
   for (const tool of TOOLS) {
@@ -196,6 +244,22 @@ function main() {
       rawReference: mapped.rawReference || ""
     };
   });
+
+  const duplicates = new Map();
+  for (const finding of findings) {
+    const seed = duplicateSeed(finding);
+    const groupId = crypto.createHash("sha1").update(seed).digest("hex").slice(0, 12);
+    if (!duplicates.has(groupId)) duplicates.set(groupId, []);
+    duplicates.get(groupId).push(finding);
+  }
+  for (const [groupId, group] of duplicates.entries()) {
+    group.forEach((finding, index) => {
+      finding.duplicateGroupId = groupId;
+      finding.duplicateIndex = index + 1;
+      finding.duplicateCount = group.length;
+      finding.duplicate = group.length > 1;
+    });
+  }
 
   const diagnostics = loadDiagnostics();
   const summary = buildSummary(findings, scenarios, diagnostics);

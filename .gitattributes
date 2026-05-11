@@ -3,6 +3,7 @@
 
 # Linux shell scripts run inside the scanner container and must not use CRLF.
 *.sh text eol=lf
+*.py text eol=lf
 Makefile text eol=lf
 
 # Windows helper scripts, if added later, should keep Windows line endings.

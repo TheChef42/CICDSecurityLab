@@ -14,6 +14,8 @@
     "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/docker-compose.yml"
   ],
   "remediation": "Pin container images by immutable SHA-256 digest instead of mutable tags.",
+  "intendedVulnerabilityCount": 2,
+  "intendedVulnerabilityNotes": "Mutable latest tags are used in container build/deployment configuration.",
   "mappingHints": {
     "keywords": [
       "latest",

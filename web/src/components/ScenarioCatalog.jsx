@@ -15,6 +15,21 @@ export default function ScenarioCatalog({ scenarios }) {
           <p>{scenario.description}</p>
           <dl className="scenario-meta">
             <div>
+              <dt>Representative CVSS</dt>
+              <dd>
+                {scenario.cvss
+                  ? `${scenario.cvss.baseScore} ${scenario.cvss.severity} (${scenario.cvss.confidence})`
+                  : "n/a"}
+              </dd>
+            </div>
+            <div>
+              <dt>Intended vulnerabilities</dt>
+              <dd>
+                {scenario.intendedVulnerabilityCount || 1}
+                {scenario.intendedVulnerabilityNotes ? ` - ${scenario.intendedVulnerabilityNotes}` : ""}
+              </dd>
+            </div>
+            <div>
               <dt>OWASP</dt>
               <dd>{scenario.owaspCategory}</dd>
             </div>

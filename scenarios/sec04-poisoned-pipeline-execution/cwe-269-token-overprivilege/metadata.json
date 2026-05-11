@@ -12,6 +12,8 @@
     "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/fixed/build.yml"
   ],
   "remediation": "Use least-privilege workflow permissions such as contents: read.",
+  "intendedVulnerabilityCount": 1,
+  "intendedVulnerabilityNotes": "Workflow grants write-all permissions instead of least privilege.",
   "mappingHints": {
     "keywords": [
       "write-all",

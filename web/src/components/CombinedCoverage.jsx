@@ -42,6 +42,9 @@ export default function CombinedCoverage({ findings, scenarios, tools }) {
           <div className="meter-fill" style={{ width: `${coverage.coveragePercent}%` }} />
         </div>
         <p>{coverage.coveredScenarioIds.length} of {scenarios.length || 10} scenarios covered by selected tools</p>
+        <p>
+          CVSS-weighted coverage: {coverage.weightedCoverage.coveragePercent}% ({coverage.weightedCoverage.coveredWeight} of {coverage.weightedCoverage.totalWeight})
+        </p>
       </div>
 
       <div className="coverage-columns">

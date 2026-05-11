@@ -12,6 +12,8 @@ Actual scanner output is the only source of coverage. A scenario is covered by a
 
 Results depend on tool version, rule configuration, scan target, network availability for vulnerability databases, and parser quality. The dashboard separates raw findings, mapped findings, coverage, and diagnostics so those influences remain visible.
 
+The lab also produces a representative CWE CVSS weighting table. This is used to add a severity-weighted view of coverage, so that coverage of higher-impact CWE scenarios can be interpreted separately from simple scenario count. This does not replace the primary coverage metric, because CVSS belongs to concrete vulnerabilities rather than CWE classes.
+
 Custom Semgrep rules are treated as scanner configuration, not ground truth. They may improve coverage for policy patterns such as risky workflow interpolation, broad permissions, mutable image tags, and unsafe download execution, but they are not a replacement for specialized tools such as Gitleaks for secret detection, Checkov for configuration/IaC checks, or Grype/Snyk for dependency vulnerability analysis.
 
 ## Broad CWE Notes
@@ -34,3 +36,5 @@ The expected coverage table is intentionally excluded from this process.
 ## Result Trust Notes
 
 The dashboard represents scanner output, not an oracle. A result is most trustworthy after a fresh full scanner run because scan startup clears prior raw outputs for known tools before wrappers execute. Starting only the dashboard initializes missing JSON files but does not erase existing scanner output. Generated files under `results/` are excluded or allowlisted where practical so tools do not report on their own previous reports. Raw findings that cannot be mapped remain visible as `UNMAPPED` rather than being hidden.
+
+Scanner diagnostics include runtime measurements for each tool when the wrapper executed the tool binary. These measurements are useful for comparing practical scanner cost, but they depend on network state, cache state, host performance, and Docker image state.

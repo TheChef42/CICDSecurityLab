@@ -22,6 +22,7 @@ if [ -z "$SEMGREP_BIN" ]; then
 fi
 
 set +e
+START_MS="$(now_ms)"
 "$SEMGREP_BIN" scan \
   --metrics=off \
   --config p/default \
@@ -33,12 +34,13 @@ set +e
   --exclude web/node_modules \
   "$PROJECT_DIR" >"$LOG_FILE" 2>&1
 CODE=$?
+RUNTIME_MS="$(elapsed_ms "$START_MS")"
 set -u
 
 if [ "$CODE" -eq 0 ]; then
-  write_diag "$TOOL" "OK" "Semgrep combined default and custom rules scan completed." "$RAW_REF" "$(tail_log "$LOG_FILE")"
+  write_diag "$TOOL" "OK" "Semgrep combined default and custom rules scan completed." "$RAW_REF" "$(tail_log "$LOG_FILE")" "$RUNTIME_MS"
 else
-  write_diag "$TOOL" "WARN" "Semgrep combined scan exited with code $CODE; this may require network access to fetch registry rules." "$RAW_REF" "$(tail_log "$LOG_FILE")"
+  write_diag "$TOOL" "WARN" "Semgrep combined scan exited with code $CODE; this may require network access to fetch registry rules." "$RAW_REF" "$(tail_log "$LOG_FILE")" "$RUNTIME_MS"
 fi
 
 exit 0
