@@ -95,6 +95,7 @@ Coverage is calculated from mapped scenario detections only:
 - Per-scenario coverage = reporting profiles detecting that scenario / number of reporting profiles.
 - Combined coverage = union of mapped scenarios detected by selected tools / 10.
 - CVSS-weighted coverage = union of mapped scenarios weighted by generated NVD-derived CWE CVSS context, when that data is available.
+- Tool recommendations = the smallest reporting-profile combinations that cover selected scenarios, calculated only from mapped findings.
 
 Raw finding count is not a coverage metric. A tool with many unmapped findings is not automatically better than a tool with fewer findings mapped to relevant lab scenarios.
 

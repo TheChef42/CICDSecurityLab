@@ -117,6 +117,7 @@ h1 {
 .finding-card,
 .scenario-card,
 .diagnostic-card,
+.recommendation-card,
 .overlap-card {
   border: 1px solid #263142;
   border-radius: 8px;
@@ -339,6 +340,7 @@ h1 {
 
 .finding-card h3,
 .scenario-card h3,
+.recommendation-card h3,
 .coverage-columns h3 {
   margin: 10px 0;
   font-size: 1rem;
@@ -346,11 +348,18 @@ h1 {
 
 .finding-topline,
 .diagnostic-heading,
-.scenario-heading {
+.scenario-heading,
+.recommendation-card-heading,
+.selector-heading {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
+}
+
+.selector-heading,
+.recommendation-card-heading {
+  justify-content: space-between;
 }
 
 .badge {
@@ -380,6 +389,7 @@ h1 {
 
 .finding-meta,
 .scenario-meta,
+.recommendation-meta,
 .diagnostic-card dl {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -404,6 +414,7 @@ dd {
 .scenario-card p,
 .coverage-columns p,
 .overlap-card p,
+.selector-heading p,
 .diagnostic-card p {
   color: #bac6d8;
   line-height: 1.55;
@@ -551,6 +562,165 @@ dd {
   font-weight: 800;
 }
 
+.recommendation-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.4fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.recommendation-selector,
+.recommendation-results {
+  display: grid;
+  gap: 12px;
+}
+
+.selector-heading {
+  padding: 14px;
+  border: 1px solid #263142;
+  border-radius: 8px;
+  background: #101722;
+}
+
+.selector-heading h3,
+.selector-heading p {
+  margin: 0;
+}
+
+.selector-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.selector-actions button {
+  min-height: 32px;
+  padding: 0 10px;
+  color: #dce6f2;
+  border: 1px solid #2b3444;
+  border-radius: 8px;
+  background: #151f2f;
+  cursor: pointer;
+}
+
+.scenario-picker,
+.recommendation-list {
+  display: grid;
+  gap: 10px;
+}
+
+.scenario-choice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  width: 100%;
+  min-height: 74px;
+  padding: 12px;
+  text-align: left;
+  color: #dce6f2;
+  border: 1px solid #263142;
+  border-radius: 8px;
+  background: #101722;
+  cursor: pointer;
+}
+
+.scenario-choice.selected {
+  border-color: #2d8b63;
+  background: rgba(23, 70, 50, 0.28);
+}
+
+.scenario-choice svg {
+  margin-top: 2px;
+  color: #65eea8;
+}
+
+.scenario-choice span {
+  display: grid;
+  gap: 4px;
+}
+
+.scenario-choice small {
+  color: #91a0b8;
+}
+
+.recommendation-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.recommendation-summary div,
+.recommendation-warning {
+  border: 1px solid #263142;
+  border-radius: 8px;
+  background: #101722;
+}
+
+.recommendation-summary div {
+  padding: 14px;
+}
+
+.recommendation-summary span {
+  display: block;
+  color: #96a4ba;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.recommendation-summary strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.6rem;
+}
+
+.recommendation-warning {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  color: #f5d36d;
+}
+
+.recommendation-card {
+  padding: 16px;
+}
+
+.recommendation-meta {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.recommendation-covered {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.recommendation-tools {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.recommendation-tools div {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid #263142;
+  border-radius: 8px;
+  background: #0c121d;
+}
+
+.recommendation-tools strong {
+  color: #8fd4ff;
+}
+
+.recommendation-tools span {
+  color: #bac6d8;
+  overflow-wrap: anywhere;
+}
+
 .details-text {
   white-space: pre-wrap;
   max-height: 260px;
@@ -560,6 +730,9 @@ dd {
 @media (max-width: 1100px) {
   .summary-grid,
   .coverage-columns,
+  .recommendation-layout,
+  .recommendation-summary,
+  .recommendation-tools,
   .overlap-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -591,8 +764,12 @@ dd {
   .summary-grid,
   .toolbar,
   .coverage-columns,
+  .recommendation-layout,
+  .recommendation-summary,
+  .recommendation-tools,
   .overlap-grid,
-  .finding-meta {
+  .finding-meta,
+  .recommendation-meta {
     grid-template-columns: 1fr;
   }
 

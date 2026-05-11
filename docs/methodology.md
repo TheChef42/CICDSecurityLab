@@ -10,6 +10,8 @@ Semgrep is represented as three reporting profiles: `semgrep-default`, `semgrep-
 
 Actual scanner output is the only source of coverage. A scenario is covered by a tool only when that tool emits at least one finding that maps to the scenario. If a finding cannot be mapped, it remains visible as `UNMAPPED`.
 
+The tool recommendation view uses the same rule in reverse. The user selects scenarios, and the dashboard calculates the smallest reporting-profile combinations that cover those selected scenarios. It does not use expected coverage, raw finding counts, or manual assumptions.
+
 Results depend on tool version, rule configuration, scan target, network availability for vulnerability databases, and parser quality. The dashboard separates raw findings, mapped findings, coverage, and diagnostics so those influences remain visible.
 
 The lab also produces a CWE CVSS context table from NVD CVEs mapped to each implemented CWE. This is used to add a severity-weighted view of coverage when usable CVSS data exists, so that coverage of higher-impact CWE scenarios can be interpreted separately from simple scenario count. This does not replace the primary coverage metric, because CVSS belongs to concrete vulnerabilities rather than CWE classes. The lab does not use local fallback scores; if NVD lookup fails or no CVSS data is available, the CWE severity context is shown as `UNKNOWN`.
