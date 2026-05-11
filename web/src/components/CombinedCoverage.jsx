@@ -43,7 +43,7 @@ export default function CombinedCoverage({ findings, scenarios, tools }) {
         </div>
         <p>{coverage.coveredScenarioIds.length} of {scenarios.length || 10} scenarios covered by selected tools</p>
         <p>
-          Median CVSS-weighted coverage: {coverage.weightedCoverage.coveragePercent}% ({coverage.weightedCoverage.coveredWeight} of {coverage.weightedCoverage.totalWeight})
+          CVSS impact coverage: {coverage.weightedCoverage.coveragePercent}% ({coverage.weightedCoverage.coveredWeight} of {coverage.weightedCoverage.totalWeight} median CVSS weight)
         </p>
       </div>
 

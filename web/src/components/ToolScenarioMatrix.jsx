@@ -1,4 +1,4 @@
-import { countMappedFindings } from "../utils/coverage.js";
+import { detectionStats, scenarioImpact } from "../utils/coverage.js";
 
 export default function ToolScenarioMatrix({ findings, scenarios, tools }) {
   if (!scenarios.length) {
@@ -22,16 +22,32 @@ export default function ToolScenarioMatrix({ findings, scenarios, tools }) {
               <th>
                 <span>{scenario.id}</span>
                 <small>{scenario.title}</small>
-                <small>CVSS {scenario.cvss?.baseScore ?? "n/a"} {scenario.cvss?.selectedStatistic ? `(${scenario.cvss.selectedStatistic})` : ""} | intended {scenario.intendedVulnerabilityCount || 1}</small>
+                {(() => {
+                  const impact = scenarioImpact(scenario);
+                  return (
+                    <>
+                      <small>
+                        CVSS {impact.score || "n/a"} {scenario.cvss?.selectedStatistic ? `(${scenario.cvss.selectedStatistic})` : ""} | intended {scenario.intendedVulnerabilityCount || 1}
+                      </small>
+                      <small>
+                        <span className={`impact-text ${impact.level.toLowerCase()}`}>{impact.level}</span> impact
+                      </small>
+                    </>
+                  );
+                })()}
               </th>
               {tools.map((tool) => {
-                const count = countMappedFindings(findings, tool, scenario.id);
-                const intended = scenario.intendedVulnerabilityCount || 1;
+                const stats = detectionStats(findings, tool, scenario);
                 return (
                   <td key={`${scenario.id}-${tool}`}>
-                    <span className={count > 0 ? "matrix-cell detected" : "matrix-cell missed"}>
-                      {count > 0 ? "detected" : "missed"}
-                      <strong>{count}/{intended}</strong>
+                    <span className={stats.detected ? "matrix-cell detected" : "matrix-cell missed"}>
+                      <span>{stats.detected ? "detected" : "missed"}</span>
+                      <strong>{stats.creditedCount}/{stats.intendedCount}</strong>
+                      {stats.rawCount > 0 ? (
+                        <em>
+                          {stats.rawCount} raw{stats.extraCount ? `, ${stats.extraCount} extra` : ""}
+                        </em>
+                      ) : null}
                     </span>
                   </td>
                 );

@@ -10,6 +10,8 @@ Semgrep is represented as three reporting profiles: `semgrep-default`, `semgrep-
 
 Actual scanner output is the only source of coverage. A scenario is covered by a tool only when that tool emits at least one finding that maps to the scenario. If a finding cannot be mapped, it remains visible as `UNMAPPED`.
 
+Raw finding volume is preserved but is not allowed to inflate coverage. Some scanners can emit several findings for the same lab scenario, for example one dependency scenario can produce multiple package CVEs or one container scenario can trigger several configuration rules. The normalized output therefore keeps every raw finding, marks exact duplicate groups where possible, and also marks extra raw findings when a tool reports more mapped findings for a scenario than the scenario's intended vulnerability count. The dashboard credits only the capped scenario detection count in the matrix, while still showing the extra findings for auditability.
+
 The tool recommendation view uses the same rule in reverse. The user selects scenarios, and the dashboard calculates the smallest reporting-profile combinations that cover those selected scenarios. It does not use expected coverage, raw finding counts, or manual assumptions.
 
 Results depend on tool version, rule configuration, scan target, network availability for vulnerability databases, and parser quality. The dashboard separates raw findings, mapped findings, coverage, and diagnostics so those influences remain visible.

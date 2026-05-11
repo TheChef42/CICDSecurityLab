@@ -69,6 +69,15 @@ function scenarioWeight(scenario) {
   return Number.isFinite(score) && score > 0 ? score : 0;
 }
 
+function impactLevelFromScore(score) {
+  const value = Number(score);
+  if (!Number.isFinite(value) || value <= 0) return "UNKNOWN";
+  if (value >= 9) return "CRITICAL";
+  if (value >= 7) return "HIGH";
+  if (value >= 4) return "MEDIUM";
+  return "LOW";
+}
+
 function weightedCoverageFor(findings, scenarios, predicate) {
   const byId = new Map(scenarios.map((scenario) => [scenario.id, scenario]));
   const totalWeight = scenarios.reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
@@ -183,6 +192,7 @@ function buildSummary(findings, scenarios, diagnostics) {
     totalTools: TOOLS.length,
     duplicateFindings: findings.filter((finding) => finding.duplicateCount > 1).length,
     duplicateGroups: duplicateGroups.size,
+    extraScenarioFindings: findings.filter((finding) => finding.coverageExtra).length,
     combinedCoverage: {
       coveredScenarioIds: Array.from(coveredScenarios).sort(),
       coveredCount: coveredScenarios.size,
@@ -226,8 +236,12 @@ function main() {
     }
   }
 
+  const scenariosById = new Map(scenarios.map((scenario) => [scenario.id, scenario]));
+
   const findings = rawFindings.map((finding, index) => {
     const mapped = mapFinding(finding, scenarios, projectDir);
+    const scenario = scenariosById.get(mapped.scenarioId);
+    const cvssScore = scenarioWeight(scenario || {});
     return {
       id: findingId(mapped, index),
       tool: mapped.tool,
@@ -241,7 +255,13 @@ function main() {
       line: mapped.line || 1,
       message: mapped.message || "",
       ruleId: mapped.ruleId || "",
-      rawReference: mapped.rawReference || ""
+      rawReference: mapped.rawReference || "",
+      impactScore: mapped.mapped ? cvssScore : 0,
+      impactLevel: mapped.mapped ? impactLevelFromScore(cvssScore) : "UNMAPPED",
+      impactSource: mapped.mapped ? (scenario?.cvss?.selectedStatistic || "scenario CVSS") : "UNMAPPED",
+      impactRationale: mapped.mapped
+        ? `Impact is inherited from ${mapped.scenarioId} (${scenario?.cwe || mapped.cwe}) using the selected CVSS statistic.`
+        : "Finding is unmapped, so no scenario CVSS impact can be assigned."
     };
   });
 
@@ -259,6 +279,34 @@ function main() {
       finding.duplicateCount = group.length;
       finding.duplicate = group.length > 1;
     });
+  }
+
+  const toolScenarioGroups = new Map();
+  for (const finding of findings) {
+    if (!finding.mapped) continue;
+    const key = `${finding.tool}|${finding.scenarioId}`;
+    if (!toolScenarioGroups.has(key)) toolScenarioGroups.set(key, []);
+    toolScenarioGroups.get(key).push(finding);
+  }
+
+  for (const [, group] of toolScenarioGroups.entries()) {
+    const scenario = scenariosById.get(group[0].scenarioId);
+    const intendedCount = Number(scenario?.intendedVulnerabilityCount) || 1;
+    group
+      .sort((left, right) => (
+        (left.file || "").localeCompare(right.file || "") ||
+        (Number(left.line) || 0) - (Number(right.line) || 0) ||
+        (left.ruleId || "").localeCompare(right.ruleId || "")
+      ))
+      .forEach((finding, index) => {
+        finding.coverageFindingIndex = index + 1;
+        finding.coverageFindingCount = group.length;
+        finding.coverageCredited = index < intendedCount;
+        finding.coverageExtra = index >= intendedCount;
+        finding.coverageExtraReason = finding.coverageExtra
+          ? `Additional raw finding for ${finding.scenarioId}; coverage credit is capped at ${intendedCount} intended vulnerability instance(s).`
+          : "";
+      });
   }
 
   const diagnostics = loadDiagnostics();

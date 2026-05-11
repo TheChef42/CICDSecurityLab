@@ -127,7 +127,7 @@ export default function ToolRecommendations({ findings, scenarios, tools, diagno
                       <dd>{recommendation.coveragePercent}%</dd>
                     </div>
                     <div>
-                      <dt>Median CVSS weighted</dt>
+                      <dt>CVSS impact coverage</dt>
                       <dd>{recommendation.weightedCoverage.coveragePercent}%</dd>
                     </div>
                     <div>

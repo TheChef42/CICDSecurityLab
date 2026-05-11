@@ -13,6 +13,48 @@ export function scenarioWeight(scenario) {
   return Number.isFinite(score) && score > 0 ? score : 0;
 }
 
+export function impactLevelFromScore(score) {
+  const value = Number(score);
+  if (!Number.isFinite(value) || value <= 0) return "UNKNOWN";
+  if (value >= 9) return "CRITICAL";
+  if (value >= 7) return "HIGH";
+  if (value >= 4) return "MEDIUM";
+  return "LOW";
+}
+
+export function scenarioImpact(scenario) {
+  const score = scenarioWeight(scenario);
+  return {
+    score,
+    level: impactLevelFromScore(score),
+    statistic: scenario?.cvss?.selectedStatistic || "n/a",
+    sampleSize: Number(scenario?.cvss?.sampleSize) || 0
+  };
+}
+
+export function detectionStats(findings, tool, scenario) {
+  const scenarioFindings = findings.filter(
+    (finding) => finding.mapped && finding.tool === tool && finding.scenarioId === scenario.id
+  );
+  const rawCount = scenarioFindings.length;
+  const intendedCount = Number(scenario.intendedVulnerabilityCount) || 1;
+  const creditedCount = Math.min(rawCount, intendedCount);
+
+  return {
+    rawCount,
+    intendedCount,
+    creditedCount,
+    extraCount: Math.max(rawCount - creditedCount, 0),
+    detected: creditedCount > 0
+  };
+}
+
+export function uniqueCoveredScenarioIds(findings) {
+  return Array.from(
+    new Set(findings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId))
+  ).sort();
+}
+
 export function scenarioTools(findings, scenarioId, selectedTools = TOOLS) {
   const selected = new Set(selectedTools);
   return Array.from(

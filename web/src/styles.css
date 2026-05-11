@@ -377,6 +377,7 @@ h1 {
 .badge.tool { color: #9ed7ff; background: #102235; }
 .badge.mapped { color: #60f2a7; background: #0f2a21; border-color: #236f4e; }
 .badge.unmapped { color: #f5d36d; background: #2a240e; border-color: #6f5a1b; }
+.badge.extra { color: #ffd08a; background: #2c1f11; border-color: #7d5428; }
 .badge.status.ok { color: #60f2a7; background: #0f2a21; }
 .badge.status.warn { color: #f5d36d; background: #2a240e; }
 .badge.status.error { color: #ff7d85; background: #31161b; }
@@ -386,13 +387,29 @@ h1 {
 .badge.severity.low { color: #8fd4ff; background: #102235; border-color: #2e668a; }
 .badge.severity.info { color: #95e6c2; background: #10271f; border-color: #2b7656; }
 .badge.severity.unknown { color: #c4ccda; background: #1e2531; }
+.badge.impact.critical,
+.impact-text.critical { color: #ff8a91; }
+.badge.impact.high,
+.impact-text.high { color: #ffad76; }
+.badge.impact.medium,
+.impact-text.medium { color: #f5d36d; }
+.badge.impact.low,
+.impact-text.low { color: #8fd4ff; }
+.badge.impact.unknown,
+.impact-text.unknown { color: #c4ccda; }
+.badge.impact {
+  background: #141f2e;
+}
+.impact-text {
+  font-weight: 900;
+}
 
 .finding-meta,
 .scenario-meta,
 .recommendation-meta,
 .diagnostic-card dl {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 10px;
   margin: 12px 0 0;
 }
@@ -411,6 +428,7 @@ dd {
 }
 
 .finding-message,
+.finding-note,
 .scenario-card p,
 .coverage-columns p,
 .overlap-card p,
@@ -418,6 +436,11 @@ dd {
 .diagnostic-card p {
   color: #bac6d8;
   line-height: 1.55;
+}
+
+.finding-note {
+  margin: 10px 0 0;
+  color: #ffd08a;
 }
 
 .matrix-wrap {
@@ -463,6 +486,13 @@ dd {
   padding: 7px 9px;
   border-radius: 8px;
   border: 1px solid #303b4f;
+}
+
+.matrix-cell em {
+  grid-column: 1 / -1;
+  color: #8b99ad;
+  font-size: 0.72rem;
+  font-style: normal;
 }
 
 .matrix-cell.detected {
