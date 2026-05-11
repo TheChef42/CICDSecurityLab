@@ -36,15 +36,28 @@ def load_scenario_cwes(project_dir):
 
 def cve_cvss_score(item):
     metrics = item.get("cve", {}).get("metrics", {})
-    for key in ("cvssMetricV31", "cvssMetricV30", "cvssMetricV2"):
-        metric_list = metrics.get(key, [])
-        if not metric_list:
-            continue
-        primary = next((metric for metric in metric_list if metric.get("type") == "Primary"), metric_list[0])
-        score = primary.get("cvssData", {}).get("baseScore")
-        if isinstance(score, (int, float)):
-            return float(score)
-    return None
+    candidates = []
+    for key in ("cvssMetricV31", "cvssMetricV30"):
+        for metric in metrics.get(key, []):
+            data = metric.get("cvssData", {})
+            score = data.get("baseScore")
+            if isinstance(score, (int, float)):
+                candidates.append({
+                    "score": float(score),
+                    "version": data.get("version"),
+                    "type": metric.get("type"),
+                    "source": metric.get("source")
+                })
+    if not candidates:
+        return None
+
+    def priority(item):
+        version_priority = 0 if item.get("version") == "3.1" else 1
+        type_priority = 0 if item.get("type") == "Primary" else 1
+        source_priority = 0 if item.get("source") == "nvd@nist.gov" else 1
+        return (version_priority, type_priority, source_priority)
+
+    return sorted(candidates, key=priority)[0]["score"]
 
 
 def extract_cvss_scores(payload):
@@ -73,7 +86,8 @@ def query_nvd(cwe, timeout, start_index, results_per_page):
     query = urllib.parse.urlencode({
         "cweId": cwe,
         "resultsPerPage": results_per_page,
-        "startIndex": start_index
+        "startIndex": start_index,
+        "noRejected": ""
     })
     headers = {"User-Agent": "CICDSecurityLab/1.0"}
     api_key = os.environ.get("NVD_API_KEY")
@@ -190,11 +204,11 @@ def main():
     parser.add_argument("--project-dir", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--fetch", default=os.environ.get("CWE_CVSS_FETCH", "auto"))
-    parser.add_argument("--timeout", type=float, default=float(os.environ.get("CWE_CVSS_TIMEOUT", "12")))
+    parser.add_argument("--timeout", type=float, default=float(os.environ.get("CWE_CVSS_TIMEOUT", "60")))
     parser.add_argument("--max-cves-per-cwe", type=int, default=int(os.environ.get("CWE_CVSS_MAX_CVES_PER_CWE", "2000")))
-    parser.add_argument("--page-size", type=int, default=int(os.environ.get("CWE_CVSS_PAGE_SIZE", "200")))
+    parser.add_argument("--page-size", type=int, default=int(os.environ.get("CWE_CVSS_PAGE_SIZE", "2000")))
     parser.add_argument("--retries", type=int, default=int(os.environ.get("CWE_CVSS_RETRIES", "2")))
-    parser.add_argument("--delay", type=float, default=float(os.environ.get("CWE_CVSS_DELAY", "6.2")))
+    parser.add_argument("--delay", type=float, default=float(os.environ.get("CWE_CVSS_DELAY", "0.7" if os.environ.get("NVD_API_KEY") else "6.0")))
     parser.add_argument("--selected-statistic", choices=["mean", "median", "p75"], default=os.environ.get("CWE_CVSS_SELECTED_STATISTIC", "median"))
     args = parser.parse_args()
 
@@ -230,7 +244,7 @@ def main():
         "notes": [
             "CVSS is defined for concrete vulnerabilities, not CWE classes.",
             "This table derives representative CWE severity weights from NVD CVEs mapped to each CWE.",
-            "Each CVE contributes one preferred CVSS score: CVSS v3.1, then v3.0, then v2.",
+            "Each CVE contributes one preferred CVSS v3 score: CVSS v3.1 first, then v3.0.",
             "Entries include mean, median, and 75th percentile; baseScore uses the selectedStatistic value.",
             "No local fallback CVSS values are used; missing lookup data is marked UNKNOWN.",
             "If totalMatchingCves is larger than fetchedCves, the entry is based on a capped partial NVD sample.",
