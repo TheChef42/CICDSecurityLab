@@ -32,7 +32,7 @@ export default function SummaryCards({ findings, scenarios }) {
     { label: "Intended Vulns", value: intendedVulnerabilities, icon: Target, tone: "green" },
     { label: "Duplicate Findings", value: duplicateFindings, icon: ShieldQuestion, tone: "amber" },
     { label: "Combined Coverage", value: `${coverage}%`, icon: Gauge, tone: "amber" },
-    { label: "CVSS Weighted Coverage", value: `${weightedCoverage}%`, icon: ShieldAlert, tone: "red" }
+    { label: "Median CVSS Coverage", value: `${weightedCoverage}%`, icon: ShieldAlert, tone: "red" }
   ];
 
   return (

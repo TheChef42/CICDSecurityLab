@@ -106,6 +106,7 @@ function main() {
   writeJsonIfMissing(path.join(normalizedDir, "cwe-cvss.json"), {
     generatedAt: null,
     validForDays: 30,
+    selectedStatistic: "median",
     cwes: [],
     notes: [],
     entries: []

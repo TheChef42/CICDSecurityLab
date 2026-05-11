@@ -18,7 +18,15 @@ export default function ScenarioCatalog({ scenarios }) {
               <dt>Representative CVSS</dt>
               <dd>
                 {typeof scenario.cvss?.baseScore === "number"
-                  ? `${scenario.cvss.baseScore} ${scenario.cvss.severity} (${scenario.cvss.confidence})`
+                  ? `${scenario.cvss.baseScore} ${scenario.cvss.severity} (${scenario.cvss.selectedStatistic || "selected"})`
+                  : "n/a"}
+              </dd>
+            </div>
+            <div>
+              <dt>CVSS statistics</dt>
+              <dd>
+                {typeof scenario.cvss?.scoreMedian === "number"
+                  ? `mean ${scenario.cvss.scoreMean}, median ${scenario.cvss.scoreMedian}, p75 ${scenario.cvss.scoreP75}`
                   : "n/a"}
               </dd>
             </div>

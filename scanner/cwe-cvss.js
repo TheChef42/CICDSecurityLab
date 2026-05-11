@@ -18,10 +18,19 @@ function sameCwes(left, right) {
 
 function isFresh(table, cwes, maxAgeDays = 30) {
   if (!table || !sameCwes(table.cwes, cwes) || !table.generatedAt) return false;
+  const selectedStatistic = process.env.CWE_CVSS_SELECTED_STATISTIC || "median";
+  if ((table.selectedStatistic || "mean") !== selectedStatistic) return false;
   if ((table.entries || []).some((entry) => {
     const confidence = String(entry.confidence || "").toUpperCase();
     const source = String(entry.source || "").toLowerCase();
-    return confidence === "FALLBACK" || source.includes("fallback");
+    const rationale = String(entry.rationale || "").toLowerCase();
+    return (
+      confidence === "FALLBACK" ||
+      source.includes("fallback") ||
+      rationale.includes("lookup failed") ||
+      rationale.includes("lookup disabled") ||
+      rationale.includes("generator was unavailable")
+    );
   })) {
     return false;
   }
@@ -35,9 +44,11 @@ function unavailableTable(cwes, reason) {
     generatedAt: new Date().toISOString(),
     validForDays: 30,
     cwes,
+    selectedStatistic: process.env.CWE_CVSS_SELECTED_STATISTIC || "median",
     notes: [
       "CVSS is defined for concrete vulnerabilities, not CWE classes.",
       "This table derives representative CWE severity weights from NVD CVEs mapped to each CWE.",
+      "Entries include mean, median, and 75th percentile; baseScore uses the selectedStatistic value.",
       "No local fallback CVSS values are used; missing lookup data is marked UNKNOWN.",
       "Scenario coverage is still calculated from mapped scanner detections."
     ],
@@ -52,7 +63,10 @@ function unavailableTable(cwes, reason) {
       complete: false,
       scoreMin: null,
       scoreMax: null,
+      scoreMean: null,
       scoreMedian: null,
+      scoreP75: null,
+      selectedStatistic: null,
       source: "NVD CVE API grouped by CWE",
       rationale: reason
     }))
