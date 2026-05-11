@@ -17,7 +17,7 @@ export default function ScenarioCatalog({ scenarios }) {
             <div>
               <dt>Representative CVSS</dt>
               <dd>
-                {scenario.cvss
+                {typeof scenario.cvss?.baseScore === "number"
                   ? `${scenario.cvss.baseScore} ${scenario.cvss.severity} (${scenario.cvss.confidence})`
                   : "n/a"}
               </dd>

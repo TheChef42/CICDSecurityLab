@@ -11,58 +11,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-FALLBACK = {
-    "CWE-16": {
-        "baseScore": 6.5,
-        "severity": "MEDIUM",
-        "confidence": "FALLBACK",
-        "rationale": "Configuration weaknesses vary widely; medium is used as a conservative representative weight."
-    },
-    "CWE-78": {
-        "baseScore": 9.1,
-        "severity": "CRITICAL",
-        "confidence": "FALLBACK",
-        "rationale": "Command injection commonly enables direct command execution in a trusted context."
-    },
-    "CWE-269": {
-        "baseScore": 8.8,
-        "severity": "HIGH",
-        "confidence": "FALLBACK",
-        "rationale": "Privilege management failures can give attackers excessive access after compromise."
-    },
-    "CWE-345": {
-        "baseScore": 7.4,
-        "severity": "HIGH",
-        "confidence": "FALLBACK",
-        "rationale": "Authenticity failures can allow untrusted artifacts or images to be accepted."
-    },
-    "CWE-494": {
-        "baseScore": 8.1,
-        "severity": "HIGH",
-        "confidence": "FALLBACK",
-        "rationale": "Executing downloaded code without integrity verification can lead to trusted code execution."
-    },
-    "CWE-532": {
-        "baseScore": 5.3,
-        "severity": "MEDIUM",
-        "confidence": "FALLBACK",
-        "rationale": "Log disclosure depends on log exposure, but can reveal sensitive CI/CD values."
-    },
-    "CWE-798": {
-        "baseScore": 7.5,
-        "severity": "HIGH",
-        "confidence": "FALLBACK",
-        "rationale": "Hardcoded credentials can enable unauthorized access if exposed."
-    },
-    "CWE-829": {
-        "baseScore": 8.0,
-        "severity": "HIGH",
-        "confidence": "FALLBACK",
-        "rationale": "Untrusted dependency resolution can introduce attacker-controlled functionality."
-    }
-}
-
-
 def severity_from_score(score):
     if score >= 9.0:
         return "CRITICAL"
@@ -99,8 +47,12 @@ def extract_cvss_scores(payload):
     return scores
 
 
-def query_nvd(cwe, timeout):
-    query = urllib.parse.urlencode({"cweId": cwe, "resultsPerPage": 100})
+def query_nvd(cwe, timeout, start_index, results_per_page):
+    query = urllib.parse.urlencode({
+        "cweId": cwe,
+        "resultsPerPage": results_per_page,
+        "startIndex": start_index
+    })
     request = urllib.request.Request(
         f"https://services.nvd.nist.gov/rest/json/cves/2.0?{query}",
         headers={"User-Agent": "CICDSecurityLab/1.0"}
@@ -109,44 +61,71 @@ def query_nvd(cwe, timeout):
         return json.loads(response.read().decode("utf-8"))
 
 
-def nvd_entry(cwe, timeout):
-    payload = query_nvd(cwe, timeout)
-    scores = extract_cvss_scores(payload)
+def fetch_nvd_scores(cwe, timeout, max_cves):
+    scores = []
+    total_results = None
+    fetched_cves = 0
+    start_index = 0
+    results_per_page = min(2000, max(1, max_cves))
+
+    while fetched_cves < max_cves:
+        payload = query_nvd(cwe, timeout, start_index, results_per_page)
+        vulnerabilities = payload.get("vulnerabilities", [])
+        if total_results is None:
+            total_results = int(payload.get("totalResults") or 0)
+        scores.extend(extract_cvss_scores(payload))
+        fetched_cves += len(vulnerabilities)
+        start_index += int(payload.get("resultsPerPage") or len(vulnerabilities) or results_per_page)
+        if not vulnerabilities or start_index >= total_results or fetched_cves >= max_cves:
+            break
+        time.sleep(0.7)
+
+    return scores, total_results or 0, min(fetched_cves, total_results or fetched_cves)
+
+
+def nvd_entry(cwe, timeout, max_cves):
+    scores, total_results, fetched_cves = fetch_nvd_scores(cwe, timeout, max_cves)
     if not scores:
-        return None
+        return unavailable_entry(
+            cwe,
+            "NVD returned no CVSS base scores for this CWE in the fetched CVE records.",
+            total_results=total_results,
+            fetched_cves=fetched_cves
+        )
     avg = round(sum(scores) / len(scores), 1)
+    complete = fetched_cves >= total_results
     return {
         "cwe": cwe,
         "baseScore": avg,
         "severity": severity_from_score(avg),
-        "confidence": "NVD_AVERAGE",
+        "confidence": "NVD_AVERAGE_ALL_MATCHING_CVES" if complete else "NVD_AVERAGE_PARTIAL_CVES",
         "sampleSize": len(scores),
+        "totalMatchingCves": total_results,
+        "fetchedCves": fetched_cves,
+        "complete": complete,
         "scoreMin": min(scores),
         "scoreMax": max(scores),
         "scoreMedian": round(statistics.median(scores), 1),
         "source": "NVD CVE API grouped by CWE",
-        "rationale": "Representative score calculated from available CVE CVSS base scores for this CWE."
+        "rationale": "Representative score calculated from CVSS base scores in NVD CVEs mapped to this CWE."
     }
 
 
-def fallback_entry(cwe):
-    data = FALLBACK.get(cwe, {
-        "baseScore": 0,
-        "severity": "UNKNOWN",
-        "confidence": "UNKNOWN",
-        "rationale": "No local fallback score is available for this CWE."
-    })
+def unavailable_entry(cwe, reason, total_results=0, fetched_cves=0):
     return {
         "cwe": cwe,
-        "baseScore": data["baseScore"],
-        "severity": data["severity"],
-        "confidence": data["confidence"],
+        "baseScore": None,
+        "severity": "UNKNOWN",
+        "confidence": "UNAVAILABLE",
         "sampleSize": 0,
-        "scoreMin": data["baseScore"],
-        "scoreMax": data["baseScore"],
-        "scoreMedian": data["baseScore"],
-        "source": "Local representative CWE severity fallback",
-        "rationale": data["rationale"]
+        "totalMatchingCves": total_results,
+        "fetchedCves": fetched_cves,
+        "complete": fetched_cves >= total_results if total_results else False,
+        "scoreMin": None,
+        "scoreMax": None,
+        "scoreMedian": None,
+        "source": "NVD CVE API grouped by CWE",
+        "rationale": reason
     }
 
 
@@ -156,23 +135,23 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--fetch", default=os.environ.get("CWE_CVSS_FETCH", "auto"))
     parser.add_argument("--timeout", type=float, default=float(os.environ.get("CWE_CVSS_TIMEOUT", "2.5")))
+    parser.add_argument("--max-cves-per-cwe", type=int, default=int(os.environ.get("CWE_CVSS_MAX_CVES_PER_CWE", "2000")))
     args = parser.parse_args()
 
     cwes = load_scenario_cwes(args.project_dir)
     entries = []
     fetch_enabled = args.fetch.lower() not in {"0", "false", "no", "off"}
-    nvd_disabled_after_error = False
 
     for cwe in cwes:
-        entry = None
-        if fetch_enabled and not nvd_disabled_after_error:
+        if fetch_enabled:
             try:
-                entry = nvd_entry(cwe, args.timeout)
+                entry = nvd_entry(cwe, args.timeout, args.max_cves_per_cwe)
                 time.sleep(0.7)
             except Exception as error:
-                nvd_disabled_after_error = True
-                entry = None
-        entries.append(entry or fallback_entry(cwe))
+                entry = unavailable_entry(cwe, f"NVD lookup failed: {error}")
+        else:
+            entry = unavailable_entry(cwe, "NVD lookup disabled by CWE_CVSS_FETCH.")
+        entries.append(entry)
 
     generated_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     payload = {
@@ -181,7 +160,9 @@ def main():
         "cwes": cwes,
         "notes": [
             "CVSS is defined for concrete vulnerabilities, not CWE classes.",
-            "This table provides representative CWE severity weights for lab analysis.",
+            "This table derives representative CWE severity weights from NVD CVEs mapped to each CWE.",
+            "No local fallback CVSS values are used; missing lookup data is marked UNKNOWN.",
+            "If totalMatchingCves is larger than fetchedCves, the entry is based on a capped partial NVD sample.",
             "Scenario coverage is still calculated from mapped scanner detections."
         ],
         "entries": entries

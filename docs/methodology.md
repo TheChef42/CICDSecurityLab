@@ -12,7 +12,7 @@ Actual scanner output is the only source of coverage. A scenario is covered by a
 
 Results depend on tool version, rule configuration, scan target, network availability for vulnerability databases, and parser quality. The dashboard separates raw findings, mapped findings, coverage, and diagnostics so those influences remain visible.
 
-The lab also produces a representative CWE CVSS weighting table. This is used to add a severity-weighted view of coverage, so that coverage of higher-impact CWE scenarios can be interpreted separately from simple scenario count. This does not replace the primary coverage metric, because CVSS belongs to concrete vulnerabilities rather than CWE classes.
+The lab also produces a CWE CVSS context table from NVD CVEs mapped to each implemented CWE. This is used to add a severity-weighted view of coverage when usable CVSS data exists, so that coverage of higher-impact CWE scenarios can be interpreted separately from simple scenario count. This does not replace the primary coverage metric, because CVSS belongs to concrete vulnerabilities rather than CWE classes. The lab does not use local fallback scores; if NVD lookup fails or no CVSS data is available, the CWE severity context is shown as `UNKNOWN`.
 
 Custom Semgrep rules are treated as scanner configuration, not ground truth. They may improve coverage for policy patterns such as risky workflow interpolation, broad permissions, mutable image tags, and unsafe download execution, but they are not a replacement for specialized tools such as Gitleaks for secret detection, Checkov for configuration/IaC checks, or Grype/Snyk for dependency vulnerability analysis.
 

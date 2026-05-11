@@ -94,13 +94,13 @@ Coverage is calculated from mapped scenario detections only:
 - Per-tool coverage = unique mapped scenarios detected by that tool / 10.
 - Per-scenario coverage = reporting profiles detecting that scenario / number of reporting profiles.
 - Combined coverage = union of mapped scenarios detected by selected tools / 10.
-- CVSS-weighted coverage = union of mapped scenarios weighted by representative CWE CVSS score.
+- CVSS-weighted coverage = union of mapped scenarios weighted by generated NVD-derived CWE CVSS context, when that data is available.
 
 Raw finding count is not a coverage metric. A tool with many unmapped findings is not automatically better than a tool with fewer findings mapped to relevant lab scenarios.
 
 The selected scanner families are the six original tools. The dashboard separates Semgrep into `semgrep-default`, `semgrep-custom`, and `semgrep-combined`, so the UI may show eight reporting profiles. This split is intentional and prevents custom policy rules from being mistaken for out-of-the-box Semgrep behavior.
 
-CVSS is formally defined for concrete vulnerabilities, not CWE classes. The lab therefore uses a generated representative CWE severity table only as analysis context. It does not replace the original scenario coverage metric. The table is refreshed when the CWE set changes, when it is missing, or when it is older than 30 days.
+CVSS is formally defined for concrete vulnerabilities, not CWE classes. The lab therefore uses a generated CWE severity table only as analysis context, based on NVD CVEs mapped to each CWE. It does not replace the original scenario coverage metric. The table is refreshed when the CWE set changes, when it is missing, or when it is older than 30 days. If NVD data cannot be fetched or a CWE has no usable CVSS data, the table records `UNKNOWN` instead of inventing a local score.
 
 ## Expected Coverage
 

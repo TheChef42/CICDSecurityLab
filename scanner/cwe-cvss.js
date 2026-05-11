@@ -2,17 +2,6 @@ const { spawnSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-const FALLBACK_ENTRIES = {
-  "CWE-16": { baseScore: 6.5, severity: "MEDIUM", confidence: "FALLBACK" },
-  "CWE-78": { baseScore: 9.1, severity: "CRITICAL", confidence: "FALLBACK" },
-  "CWE-269": { baseScore: 8.8, severity: "HIGH", confidence: "FALLBACK" },
-  "CWE-345": { baseScore: 7.4, severity: "HIGH", confidence: "FALLBACK" },
-  "CWE-494": { baseScore: 8.1, severity: "HIGH", confidence: "FALLBACK" },
-  "CWE-532": { baseScore: 5.3, severity: "MEDIUM", confidence: "FALLBACK" },
-  "CWE-798": { baseScore: 7.5, severity: "HIGH", confidence: "FALLBACK" },
-  "CWE-829": { baseScore: 8.0, severity: "HIGH", confidence: "FALLBACK" }
-};
-
 function readJson(file) {
   if (!fs.existsSync(file)) return null;
   const content = fs.readFileSync(file, "utf8").trim();
@@ -29,28 +18,43 @@ function sameCwes(left, right) {
 
 function isFresh(table, cwes, maxAgeDays = 30) {
   if (!table || !sameCwes(table.cwes, cwes) || !table.generatedAt) return false;
+  if ((table.entries || []).some((entry) => {
+    const confidence = String(entry.confidence || "").toUpperCase();
+    const source = String(entry.source || "").toLowerCase();
+    return confidence === "FALLBACK" || source.includes("fallback");
+  })) {
+    return false;
+  }
   const generatedAt = new Date(table.generatedAt).getTime();
   if (Number.isNaN(generatedAt)) return false;
   return Date.now() - generatedAt < maxAgeDays * 24 * 60 * 60 * 1000;
 }
 
-function fallbackTable(cwes) {
+function unavailableTable(cwes, reason) {
   return {
     generatedAt: new Date().toISOString(),
     validForDays: 30,
     cwes,
     notes: [
       "CVSS is defined for concrete vulnerabilities, not CWE classes.",
-      "This table provides representative CWE severity weights for lab analysis.",
+      "This table derives representative CWE severity weights from NVD CVEs mapped to each CWE.",
+      "No local fallback CVSS values are used; missing lookup data is marked UNKNOWN.",
       "Scenario coverage is still calculated from mapped scanner detections."
     ],
     entries: cwes.map((cwe) => ({
       cwe,
-      baseScore: FALLBACK_ENTRIES[cwe]?.baseScore || 0,
-      severity: FALLBACK_ENTRIES[cwe]?.severity || "UNKNOWN",
-      confidence: FALLBACK_ENTRIES[cwe]?.confidence || "UNKNOWN",
+      baseScore: null,
+      severity: "UNKNOWN",
+      confidence: "UNAVAILABLE",
       sampleSize: 0,
-      source: "Node fallback representative CWE severity table"
+      totalMatchingCves: 0,
+      fetchedCves: 0,
+      complete: false,
+      scoreMin: null,
+      scoreMax: null,
+      scoreMedian: null,
+      source: "NVD CVE API grouped by CWE",
+      rationale: reason
     }))
   };
 }
@@ -83,9 +87,9 @@ function ensureCweCvssTable(projectDir, resultsDir, scenarios) {
   const generated = runPythonGenerator(projectDir, tablePath);
   if (generated && sameCwes(generated.cwes, cwes)) return generated;
 
-  const fallback = fallbackTable(cwes);
-  writeJson(tablePath, fallback);
-  return fallback;
+  const unavailable = unavailableTable(cwes, "Python CVSS generator was unavailable or failed before producing a valid table.");
+  writeJson(tablePath, unavailable);
+  return unavailable;
 }
 
 function enrichScenariosWithCvss(scenarios, table) {
