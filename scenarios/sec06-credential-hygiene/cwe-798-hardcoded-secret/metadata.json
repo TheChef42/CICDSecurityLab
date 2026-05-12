@@ -17,7 +17,7 @@
     "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/fixed/app.env.example"
   ],
   "remediation": "Store secrets in environment variables or a secret manager and never commit credential values.",
-  "intendedVulnerabilityCount": 7,
+  "intendedVulnerabilityCount": 6,
   "intendedVulnerabilityNotes": "Fake test credentials are intentionally present across vulnerable files.",
   "mappingHints": {
     "keywords": [
