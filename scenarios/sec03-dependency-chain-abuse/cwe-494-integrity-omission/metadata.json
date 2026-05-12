@@ -1,9 +1,12 @@
 {
   "id": "SEC03-CWE494",
-  "title": "Integrity Omission",
+  "title": "Download of Code Without Integrity Check",
   "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
   "cwe": "CWE-494",
   "cweTitle": "Download of Code Without Integrity Check",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 105,
+  "cweTransition": "unchanged",
   "description": "Pipeline downloads or executes code without validating checksum, digest, or signature.",
   "vulnerableFiles": [
     "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/vulnerable/install-unverified.sh",

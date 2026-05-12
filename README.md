@@ -31,20 +31,20 @@ This is separate from `SNYK_TOKEN`. The org ID is not the authentication token.
 
 The lab uses exactly ten stable scenario IDs:
 
-| Scenario ID | Title | OWASP CI/CD category | CWE |
-|---|---|---|---|
-| SEC03-CWE494 | Integrity Omission | CICD-SEC-03: Dependency Chain Abuse | CWE-494 |
-| SEC03-CWE829 | Untrusted Dependency Resolution | CICD-SEC-03: Dependency Chain Abuse | CWE-829 |
-| SEC04-CWE78 | Tainted Command Injection | CICD-SEC-04: Poisoned Pipeline Execution | CWE-78 |
-| SEC04-CWE269 | Token Over-privilege | CICD-SEC-04: Poisoned Pipeline Execution | CWE-269 |
-| SEC06-CWE798 | Hardcoded Secret | CICD-SEC-06: Insufficient Credential Hygiene | CWE-798 |
-| SEC06-CWE532 | Verbose Log Leak | CICD-SEC-06: Insufficient Credential Hygiene | CWE-532 |
-| SEC07-CWE250 | Insecure Container Default | CICD-SEC-07: Insecure System Configuration | CWE-250 |
-| SEC07-CWE269 | Overprivileged Cloud Identity | CICD-SEC-07: Insecure System Configuration | CWE-269 |
-| SEC09-CWE345-A | Mutable Image Tags | CICD-SEC-09: Improper Artifact Integrity Validation | CWE-345 |
-| SEC09-CWE345-B | Unverified Provenance | CICD-SEC-09: Improper Artifact Integrity Validation | CWE-345 |
+| Scenario ID | Title | OWASP CI/CD category | CWE | Mapping | NVD CVEs |
+|---|---|---|---|---|---:|
+| SEC03-CWE494 | Download of Code Without Integrity Check | CICD-SEC-03: Dependency Chain Abuse | CWE-494 | ALLOWED | 105 |
+| SEC03-CWE829 | Inclusion of Functionality from Untrusted Control Sphere | CICD-SEC-03: Dependency Chain Abuse | CWE-829 | ALLOWED | 141 |
+| SEC04-CWE78 | Improper Neutralization of Special Elements used in an OS Command | CICD-SEC-04: Poisoned Pipeline Execution | CWE-78 | ALLOWED | 3,809 |
+| SEC04-CWE266 | Incorrect Privilege Assignment | CICD-SEC-04: Poisoned Pipeline Execution | CWE-266 | ALLOWED | 144 |
+| SEC06-CWE798 | Use of Hard-coded Credentials | CICD-SEC-06: Insufficient Credential Hygiene | CWE-798 | ALLOWED | 1,219 |
+| SEC06-CWE532 | Insertion of Sensitive Information into Log File | CICD-SEC-06: Insufficient Credential Hygiene | CWE-532 | ALLOWED | 687 |
+| SEC07-CWE250 | Execution with Unnecessary Privileges | CICD-SEC-07: Insecure System Configuration | CWE-250 | ALLOWED | 29 |
+| SEC07-CWE732 | Incorrect Permission Assignment for Critical Resource | CICD-SEC-07: Insecure System Configuration | CWE-732 | ALLOWED | 1,197 |
+| SEC09-CWE354 | Improper Validation of Integrity Check Value | CICD-SEC-09: Improper Artifact Integrity Validation | CWE-354 | ALLOWED | 107 |
+| SEC09-CWE347 | Improper Verification of Cryptographic Signature | CICD-SEC-09: Improper Artifact Integrity Validation | CWE-347 | ALLOWED | 387 |
 
-The mapping is a lab-specific teaching model, not an official one-to-one OWASP-to-CWE mapping. See [docs/methodology.md](docs/methodology.md) for the methodology and notes on CWE selection, including why the container privilege scenario uses CWE-250 instead of the discouraged CWE-16 category.
+The mapping is a lab-specific teaching model, not an official one-to-one OWASP-to-CWE mapping. See [docs/methodology.md](docs/methodology.md) for the methodology and notes on CWE selection. The current table replaces broader earlier mappings where a more precise CWE is available, for example CWE-266 for token over-privilege, CWE-732 for IAM permission assignment, CWE-354 for mutable image integrity, and CWE-347 for provenance/signature verification.
 
 ## Run The Lab
 

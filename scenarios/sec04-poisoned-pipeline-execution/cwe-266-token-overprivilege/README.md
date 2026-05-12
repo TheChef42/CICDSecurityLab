@@ -1,4 +1,4 @@
-# Token Over-privilege
+# Incorrect Privilege Assignment
 
 ## OWASP CI/CD Category
 
@@ -6,11 +6,11 @@ CICD-SEC-04: Poisoned Pipeline Execution
 
 ## CWE
 
-CWE-269: Improper Privilege Management
+CWE-266: Incorrect Privilege Assignment
 
 ## Why It Maps To The CWE
 
-The vulnerable workflow grants `permissions: write-all`, giving the CI token broad write access when the build job only needs read access.
+The vulnerable workflow grants `permissions: write-all`, assigning the CI token broader privileges than the build job needs. This maps to CWE-266 because the weakness is an incorrect assignment of privilege in the workflow configuration.
 
 ## Affected Vulnerable Files
 

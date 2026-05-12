@@ -1,9 +1,12 @@
 {
   "id": "SEC03-CWE829",
-  "title": "Untrusted Dependency Resolution",
+  "title": "Inclusion of Functionality from Untrusted Control Sphere",
   "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
   "cwe": "CWE-829",
   "cweTitle": "Inclusion of Functionality from Untrusted Control Sphere",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 141,
+  "cweTransition": "unchanged",
   "description": "Pipeline dependency installation resolves packages without a deterministic lockfile.",
   "vulnerableFiles": [
     "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/package.json",

@@ -1,9 +1,12 @@
 {
   "id": "SEC04-CWE78",
-  "title": "Tainted Command Injection",
+  "title": "Improper Neutralization of Special Elements used in an OS Command",
   "owaspCategory": "CICD-SEC-04: Poisoned Pipeline Execution",
   "cwe": "CWE-78",
   "cweTitle": "Improper Neutralization of Special Elements used in an OS Command",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 3809,
+  "cweTransition": "unchanged",
   "description": "Untrusted CI event context is interpolated directly into a shell command.",
   "vulnerableFiles": [
     "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/vulnerable/issue-title-search.yml"

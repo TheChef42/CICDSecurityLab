@@ -1,9 +1,12 @@
 {
   "id": "SEC06-CWE532",
-  "title": "Verbose Log Leak",
+  "title": "Insertion of Sensitive Information into Log File",
   "owaspCategory": "CICD-SEC-06: Insufficient Credential Hygiene",
   "cwe": "CWE-532",
   "cweTitle": "Insertion of Sensitive Information into Log File",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 687,
+  "cweTransition": "unchanged",
   "description": "Workflow debug output can print secret-bearing environment variables to plaintext build logs.",
   "vulnerableFiles": [
     "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/vulnerable/debug-workflow.yml"

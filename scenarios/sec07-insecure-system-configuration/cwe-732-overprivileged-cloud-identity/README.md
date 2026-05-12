@@ -1,4 +1,4 @@
-# Overprivileged Cloud Identity
+# Incorrect Permission Assignment for Critical Resource
 
 ## OWASP CI/CD Category
 
@@ -6,11 +6,11 @@ CICD-SEC-07: Insecure System Configuration
 
 ## CWE
 
-CWE-269: Improper Privilege Management
+CWE-732: Incorrect Permission Assignment for Critical Resource
 
 ## Why It Maps To The CWE
 
-The vulnerable Terraform assigns an administrator policy to a CI/CD role, granting more privilege than the pipeline requires.
+The vulnerable Terraform assigns an administrator policy to a CI/CD role. This maps to CWE-732 because a critical pipeline resource receives broader permissions than it needs.
 
 ## Affected Vulnerable Files
 

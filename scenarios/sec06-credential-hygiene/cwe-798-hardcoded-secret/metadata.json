@@ -1,9 +1,12 @@
 {
   "id": "SEC06-CWE798",
-  "title": "Hardcoded Secret",
+  "title": "Use of Hard-coded Credentials",
   "owaspCategory": "CICD-SEC-06: Insufficient Credential Hygiene",
   "cwe": "CWE-798",
   "cweTitle": "Use of Hard-coded Credentials",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 1219,
+  "cweTransition": "unchanged",
   "description": "High-entropy fake credentials are committed in CI/CD scripts or configuration.",
   "vulnerableFiles": [
     "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh",

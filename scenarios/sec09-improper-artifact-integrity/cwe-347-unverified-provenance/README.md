@@ -1,4 +1,4 @@
-# Unverified Provenance
+# Improper Verification of Cryptographic Signature
 
 ## OWASP CI/CD Category
 
@@ -6,11 +6,11 @@ CICD-SEC-09: Improper Artifact Integrity Validation
 
 ## CWE
 
-CWE-345: Insufficient Verification of Data Authenticity
+CWE-347: Improper Verification of Cryptographic Signature
 
 ## Why It Maps To The CWE
 
-The vulnerable deployment script accepts a local artifact without requiring a provenance file, signature, attestation, or trusted builder identity. CWE-345 is appropriate because the artifact's authenticity is not sufficiently verified.
+The vulnerable deployment script accepts a local artifact without requiring a provenance file, signature, attestation, or trusted builder identity. This maps to CWE-347 because the deployment does not verify the cryptographic evidence that should authenticate the artifact.
 
 ## Affected Vulnerable Files
 

@@ -15,6 +15,14 @@ export default function ScenarioCatalog({ scenarios }) {
           <p>{scenario.description}</p>
           <dl className="scenario-meta">
             <div>
+              <dt>Mapping</dt>
+              <dd>
+                {scenario.mappingStatus || "n/a"}
+                {typeof scenario.nvdCveCount === "number" ? `, ${scenario.nvdCveCount.toLocaleString()} NVD CVEs` : ""}
+                {scenario.cweTransition ? `, ${scenario.cweTransition}` : ""}
+              </dd>
+            </div>
+            <div>
               <dt>Representative CVSS</dt>
               <dd>
                 {typeof scenario.cvss?.baseScore === "number"

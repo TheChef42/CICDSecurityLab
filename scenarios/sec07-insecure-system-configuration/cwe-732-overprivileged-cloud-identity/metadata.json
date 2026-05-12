@@ -1,15 +1,18 @@
 {
-  "id": "SEC07-CWE269",
-  "title": "Overprivileged Cloud Identity",
+  "id": "SEC07-CWE732",
+  "title": "Incorrect Permission Assignment for Critical Resource",
   "owaspCategory": "CICD-SEC-07: Insecure System Configuration",
-  "cwe": "CWE-269",
-  "cweTitle": "Improper Privilege Management",
+  "cwe": "CWE-732",
+  "cweTitle": "Incorrect Permission Assignment for Critical Resource",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 1197,
+  "cweTransition": "CWE-269 -> CWE-732",
   "description": "Terraform grants a CI/CD role AdministratorAccess instead of scoped permissions.",
   "vulnerableFiles": [
-    "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/vulnerable/main.tf"
+    "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/vulnerable/main.tf"
   ],
   "fixedFiles": [
-    "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/fixed/main.tf"
+    "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/fixed/main.tf"
   ],
   "remediation": "Use scoped IAM policies with only the actions required by the pipeline.",
   "intendedVulnerabilityCount": 1,
@@ -22,7 +25,7 @@
       "least privilege"
     ],
     "filePatterns": [
-      "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/**"
+      "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/**"
     ]
   }
 }

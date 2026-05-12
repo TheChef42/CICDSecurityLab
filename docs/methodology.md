@@ -24,7 +24,11 @@ Custom Semgrep rules are treated as scanner configuration, not ground truth. The
 
 CWE-250 is used for the insecure container default scenario because the Dockerfile omits a `USER` directive and the CI/build container therefore executes with unnecessary root privileges. This is a better fit than CWE-16 because CWE-16 is a broad category and MITRE marks it as discouraged for vulnerability mapping.
 
-CWE-345 is also broad. It covers insufficient verification of data authenticity, which fits two artifact integrity cases in the lab: mutable image tags and unverified provenance. Both scenarios are about accepting an artifact identity without strong authenticity guarantees. The lab splits them into `SEC09-CWE345-A` and `SEC09-CWE345-B` so the dashboard can distinguish tag mutability from missing provenance checks while keeping the underlying CWE stable.
+CWE-266 is used for the token over-privilege scenario because the workflow assigns broader GitHub token privileges than the job needs. This is narrower than the earlier CWE-269 grouping and better describes the incorrect privilege assignment in the CI configuration.
+
+CWE-732 is used for the overprivileged cloud identity scenario because the Terraform example assigns overly broad permissions to a CI/CD role. This is narrower than the earlier CWE-269 grouping and focuses on incorrect permission assignment for a resource used by the pipeline.
+
+CWE-354 is used for mutable image tags because the deployment accepts an image reference without validating an immutable integrity value such as a digest. CWE-347 is used for unverified provenance because the deployment accepts an artifact without verifying the cryptographic signature or provenance evidence that should authenticate it. These replace the earlier broad CWE-345 grouping with more specific artifact integrity mappings.
 
 ## Mapping Rules
 

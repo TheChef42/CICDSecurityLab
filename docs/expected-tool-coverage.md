@@ -6,13 +6,13 @@ All tools are executed against the full lab. Actual coverage is calculated only 
 
 | Scenario | Gitleaks | Checkov | Semgrep Default | Semgrep Custom | Semgrep Combined | Trivy | Grype | Snyk |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| SEC03-CWE494 Integrity Omission | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC03-CWE829 Untrusted Dependency Resolution | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC04-CWE78 Tainted Command Injection | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC04-CWE269 Token Over-privilege | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC06-CWE798 Hardcoded Secret | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC06-CWE532 Verbose Log Leak | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC07-CWE250 Insecure Container Default | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC07-CWE269 Overprivileged Cloud Identity | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC09-CWE345-A Mutable Image Tags | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| SEC09-CWE345-B Unverified Provenance | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC03-CWE494 Download of Code Without Integrity Check | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC03-CWE829 Inclusion of Functionality from Untrusted Control Sphere | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC04-CWE78 Improper Neutralization of Special Elements used in an OS Command | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC04-CWE266 Incorrect Privilege Assignment | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC06-CWE798 Use of Hard-coded Credentials | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC06-CWE532 Insertion of Sensitive Information into Log File | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC07-CWE250 Execution with Unnecessary Privileges | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC07-CWE732 Incorrect Permission Assignment for Critical Resource | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC09-CWE354 Improper Validation of Integrity Check Value | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| SEC09-CWE347 Improper Verification of Cryptographic Signature | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |

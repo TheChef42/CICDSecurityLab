@@ -1,9 +1,12 @@
 {
   "id": "SEC07-CWE250",
-  "title": "Insecure Container Default",
+  "title": "Execution with Unnecessary Privileges",
   "owaspCategory": "CICD-SEC-07: Insecure System Configuration",
   "cwe": "CWE-250",
   "cweTitle": "Execution with Unnecessary Privileges",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 29,
+  "cweTransition": "unchanged",
   "description": "CI/build container Dockerfile lacks a USER directive, so it runs with unnecessary root privileges by default.",
   "vulnerableFiles": [
     "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/vulnerable/Dockerfile"

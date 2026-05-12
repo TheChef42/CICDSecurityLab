@@ -1,0 +1,35 @@
+{
+  "id": "SEC09-CWE347",
+  "title": "Improper Verification of Cryptographic Signature",
+  "owaspCategory": "CICD-SEC-09: Improper Artifact Integrity Validation",
+  "cwe": "CWE-347",
+  "cweTitle": "Improper Verification of Cryptographic Signature",
+  "mappingStatus": "ALLOWED",
+  "nvdCveCount": 387,
+  "cweTransition": "CWE-345 -> CWE-347",
+  "description": "Deployment logic accepts artifacts without requiring or verifying provenance, signature, attestation, or trusted builder identity.",
+  "vulnerableFiles": [
+    "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/vulnerable/deploy-artifact.sh",
+    "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/vulnerable/artifact.txt"
+  ],
+  "fixedFiles": [
+    "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/fixed/deploy-artifact.sh",
+    "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/fixed/artifact.txt",
+    "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/fixed/provenance.json"
+  ],
+  "remediation": "Require provenance or signature verification and fail closed when verification is missing or invalid.",
+  "intendedVulnerabilityCount": 1,
+  "intendedVulnerabilityNotes": "Deployment accepts a local mock artifact without requiring provenance verification.",
+  "mappingHints": {
+    "keywords": [
+      "provenance",
+      "attestation",
+      "signature",
+      "trusted builder",
+      "ALLOW_MISSING_PROVENANCE"
+    ],
+    "filePatterns": [
+      "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/**"
+    ]
+  }
+}
