@@ -6,10 +6,10 @@
   "cweTitle": "Execution with Unnecessary Privileges",
   "description": "CI/build container Dockerfile lacks a USER directive, so it runs with unnecessary root privileges by default.",
   "vulnerableFiles": [
-    "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/vulnerable/Dockerfile"
+    "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/vulnerable/Dockerfile"
   ],
   "fixedFiles": [
-    "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/fixed/Dockerfile"
+    "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/fixed/Dockerfile"
   ],
   "remediation": "Create and use a non-root user in build and runner containers.",
   "intendedVulnerabilityCount": 2,
@@ -22,7 +22,7 @@
       "container default"
     ],
     "filePatterns": [
-      "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/**"
+      "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/**"
     ]
   }
 }
