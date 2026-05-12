@@ -43,6 +43,9 @@ export default function CombinedCoverage({ findings, scenarios, tools }) {
         </div>
         <p>{coverage.coveredScenarioIds.length} of {scenarios.length || 10} scenarios covered by selected tools</p>
         <p>
+          Partial-credit scenario coverage: {coverage.coveragePercent}% after capping each scenario at its intended vulnerability count.
+        </p>
+        <p>
           CVSS impact coverage: {coverage.weightedCoverage.coveragePercent}% ({coverage.weightedCoverage.coveredWeight} of {coverage.weightedCoverage.totalWeight} median CVSS weight)
         </p>
       </div>
@@ -59,6 +62,10 @@ export default function CombinedCoverage({ findings, scenarios, tools }) {
         <section>
           <h3>Missed scenario IDs</h3>
           <p>{coverage.missedScenarioIds.join(", ") || "none"}</p>
+        </section>
+        <section>
+          <h3>Partially covered scenario IDs</h3>
+          <p>{coverage.partiallyCoveredScenarioIds.join(", ") || "none"}</p>
         </section>
         <section>
           <h3>Detected by only one selected tool</h3>

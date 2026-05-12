@@ -13,6 +13,36 @@ export function countMappedFindings(findings, tool, scenarioId) {
   ).length;
 }
 
+function roundOne(value) {
+  return Math.round(value * 10) / 10;
+}
+
+function intendedCount(scenario) {
+  return Math.max(Number(scenario?.intendedVulnerabilityCount) || 1, 1);
+}
+
+function coverageEligibleCount(findings, scenarioId, selectedTools = TOOLS) {
+  const selected = new Set(selectedTools);
+  return findings.filter((finding) => (
+    isCoverageEligible(finding) &&
+    finding.scenarioId === scenarioId &&
+    selected.has(finding.tool)
+  )).length;
+}
+
+export function scenarioCoverageCredit(findings, scenario, selectedTools = TOOLS) {
+  const intended = intendedCount(scenario);
+  const detected = coverageEligibleCount(findings, scenario.id, selectedTools);
+  const credited = Math.min(detected, intended);
+  return {
+    detected,
+    credited,
+    intended,
+    fraction: credited / intended,
+    percent: roundOne((credited / intended) * 100)
+  };
+}
+
 export function scenarioWeight(scenario) {
   const score = Number(scenario?.cvss?.baseScore);
   return Number.isFinite(score) && score > 0 ? score : 0;
@@ -45,16 +75,18 @@ export function detectionStats(findings, tool, scenario) {
     (finding) => finding.mapped && finding.tool === tool && finding.scenarioId === scenario.id
   ).length;
   const rawCount = scenarioFindings.length;
-  const intendedCount = Number(scenario.intendedVulnerabilityCount) || 1;
-  const creditedCount = Math.min(rawCount, intendedCount);
+  const intended = intendedCount(scenario);
+  const creditedCount = Math.min(rawCount, intended);
 
   return {
     rawCount,
     mappedRawCount,
-    intendedCount,
+    intendedCount: intended,
     creditedCount,
     extraCount: Math.max(rawCount - creditedCount, 0),
     nonCreditedMappedCount: Math.max(mappedRawCount - rawCount, 0),
+    coverageFraction: creditedCount / intended,
+    coveragePercent: roundOne((creditedCount / intended) * 100),
     detected: creditedCount > 0
   };
 }
@@ -78,20 +110,35 @@ export function scenarioTools(findings, scenarioId, selectedTools = TOOLS) {
 
 export function combinedCoverage(findings, scenarios, selectedTools) {
   const selected = selectedTools.length ? selectedTools : TOOLS;
-  const covered = new Set();
   const scenarioToTools = {};
+  const scenarioCredits = {};
   const totalWeight = scenarios.reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
+  let totalCredit = 0;
+  let coveredWeight = 0;
 
   for (const scenario of scenarios) {
     const tools = scenarioTools(findings, scenario.id, selected);
+    const credit = scenarioCoverageCredit(findings, scenario, selected);
     scenarioToTools[scenario.id] = tools;
-    if (tools.length > 0) covered.add(scenario.id);
+    scenarioCredits[scenario.id] = credit;
+    totalCredit += credit.fraction;
+    coveredWeight += scenarioWeight(scenario) * credit.fraction;
   }
 
-  const coveredScenarioIds = Array.from(covered).sort();
+  const coveredScenarioIds = scenarios
+    .filter((scenario) => scenarioCredits[scenario.id]?.fraction > 0)
+    .map((scenario) => scenario.id)
+    .sort();
   const missedScenarioIds = scenarios
     .map((scenario) => scenario.id)
-    .filter((id) => !covered.has(id));
+    .filter((id) => !scenarioCredits[id]?.fraction);
+  const partiallyCoveredScenarioIds = scenarios
+    .filter((scenario) => {
+      const fraction = scenarioCredits[scenario.id]?.fraction || 0;
+      return fraction > 0 && fraction < 1;
+    })
+    .map((scenario) => scenario.id)
+    .sort();
 
   const singleToolDetections = Object.entries(scenarioToTools)
     .filter(([, tools]) => tools.length === 1)
@@ -112,21 +159,19 @@ export function combinedCoverage(findings, scenarios, selectedTools) {
     }
   }
 
-  const coveredWeight = coveredScenarioIds.reduce((sum, scenarioId) => {
-    return sum + scenarioWeight(scenarios.find((scenario) => scenario.id === scenarioId));
-  }, 0);
-
   return {
     selectedTools: selected,
     coveredScenarioIds,
     missedScenarioIds,
+    partiallyCoveredScenarioIds,
+    scenarioCredits,
     singleToolDetections,
     overlap,
-    coveragePercent: scenarios.length ? Math.round((covered.size / scenarios.length) * 1000) / 10 : 0,
+    coveragePercent: scenarios.length ? roundOne((totalCredit / scenarios.length) * 100) : 0,
     weightedCoverage: {
-      coveredWeight: Math.round(coveredWeight * 10) / 10,
-      totalWeight: Math.round(totalWeight * 10) / 10,
-      coveragePercent: totalWeight ? Math.round((coveredWeight / totalWeight) * 1000) / 10 : 0
+      coveredWeight: roundOne(coveredWeight),
+      totalWeight: roundOne(totalWeight),
+      coveragePercent: totalWeight ? roundOne((coveredWeight / totalWeight) * 100) : 0
     }
   };
 }
@@ -144,13 +189,8 @@ function combinations(items, size, start = 0, prefix = [], output = []) {
 }
 
 function coveredByTools(findings, scenarioIds, tools) {
-  const selectedTools = new Set(tools);
   return scenarioIds.filter((scenarioId) => (
-    findings.some((finding) => (
-      isCoverageEligible(finding) &&
-      finding.scenarioId === scenarioId &&
-      selectedTools.has(finding.tool)
-    ))
+    coverageEligibleCount(findings, scenarioId, tools) > 0
   ));
 }
 
@@ -182,12 +222,29 @@ export function recommendToolSets(findings, scenarios, selectedScenarioIds, tool
   for (let size = 1; size <= availableTools.length; size += 1) {
     const recommendationSets = combinations(availableTools, size)
       .map((toolSet) => {
-        const coveredScenarioIds = coveredByTools(findings, coverableScenarioIds, toolSet);
+        const scenarioCredits = Object.fromEntries(
+          scenarios
+            .filter((scenario) => coverableScenarioIds.includes(scenario.id))
+            .map((scenario) => [scenario.id, scenarioCoverageCredit(findings, scenario, toolSet)])
+        );
+        const coveredScenarioIds = Object.entries(scenarioCredits)
+          .filter(([, credit]) => credit.fraction > 0)
+          .map(([scenarioId]) => scenarioId)
+          .sort();
+        const fullyCoveredScenarioIds = Object.entries(scenarioCredits)
+          .filter(([, credit]) => credit.fraction >= 1)
+          .map(([scenarioId]) => scenarioId)
+          .sort();
+        const partiallyCoveredScenarioIds = Object.entries(scenarioCredits)
+          .filter(([, credit]) => credit.fraction > 0 && credit.fraction < 1)
+          .map(([scenarioId]) => scenarioId)
+          .sort();
         const covered = new Set(coveredScenarioIds);
         const missedScenarioIds = coverableScenarioIds.filter((scenarioId) => !covered.has(scenarioId));
+        const totalCredit = Object.values(scenarioCredits).reduce((sum, credit) => sum + credit.fraction, 0);
         const coveredWeight = scenarios
-          .filter((scenario) => covered.has(scenario.id))
-          .reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
+          .filter((scenario) => Object.hasOwn(scenarioCredits, scenario.id))
+          .reduce((sum, scenario) => sum + (scenarioWeight(scenario) * scenarioCredits[scenario.id].fraction), 0);
         const findingsCount = findings.filter((finding) => (
           isCoverageEligible(finding) &&
           covered.has(finding.scenarioId) &&
@@ -196,19 +253,22 @@ export function recommendToolSets(findings, scenarios, selectedScenarioIds, tool
         return {
           tools: toolSet,
           coveredScenarioIds,
+          fullyCoveredScenarioIds,
+          partiallyCoveredScenarioIds,
           missedScenarioIds,
+          scenarioCredits,
           findingsCount,
           coveragePercent: coverableScenarioIds.length
-            ? Math.round((coveredScenarioIds.length / coverableScenarioIds.length) * 1000) / 10
+            ? roundOne((totalCredit / coverableScenarioIds.length) * 100)
             : 0,
           weightedCoverage: {
-            coveredWeight: Math.round(coveredWeight * 10) / 10,
-            totalWeight: Math.round(totalWeight * 10) / 10,
-            coveragePercent: totalWeight ? Math.round((coveredWeight / totalWeight) * 1000) / 10 : 0
+            coveredWeight: roundOne(coveredWeight),
+            totalWeight: roundOne(totalWeight),
+            coveragePercent: totalWeight ? roundOne((coveredWeight / totalWeight) * 100) : 0
           }
         };
       })
-      .filter((recommendation) => recommendation.missedScenarioIds.length === 0);
+      .filter((recommendation) => recommendation.fullyCoveredScenarioIds.length === coverableScenarioIds.length);
 
     if (recommendationSets.length) {
       recommendationSets.sort((left, right) => (

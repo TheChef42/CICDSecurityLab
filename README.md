@@ -91,15 +91,41 @@ If no scan has run yet, the lab initializes empty but valid JSON files for findi
 
 Coverage is calculated from mapped vulnerable-side scenario detections only:
 
-- Per-tool coverage = unique scenarios where that tool reports at least one finding in the vulnerable example / 10.
-- Per-scenario coverage = reporting profiles detecting that scenario / number of reporting profiles.
-- Combined coverage = union of mapped scenarios detected by selected tools / 10.
-- CVSS-weighted coverage = union of mapped scenarios weighted by generated NVD-derived CWE CVSS context, when that data is available. The generated table stores mean, median, and 75th percentile; the selected score defaults to the median.
+- Per-tool coverage = the average partial scenario credit for that tool across the 10 scenarios.
+- Per-scenario coverage = the average partial scenario credit across reporting profiles.
+- Combined coverage = the average partial scenario credit from the selected tools.
+- CVSS-weighted coverage = the same partial scenario credit weighted by generated NVD-derived CWE CVSS context, when that data is available. The generated table stores mean, median, and 75th percentile; the selected score defaults to the median.
 - Tool recommendations = the smallest reporting-profile combinations that cover selected scenarios, calculated only from mapped findings.
+
+The partial-credit formula is:
+
+```text
+credit(t, s) = min(detections(t, s), intended(s)) / intended(s)
+
+coverage(t) = (sum over scenarios credit(t, s)) / number_of_scenarios
+```
+
+For combined coverage over a selected tool set `T`, the same formula is used with detections from all selected tools:
+
+```text
+credit(T, s) = min(detections(T, s), intended(s)) / intended(s)
+
+coverage(T) = (sum over scenarios credit(T, s)) / number_of_scenarios
+```
+
+For example, if a scenario has 7 intended vulnerable instances and a tool produces 2 coverage-eligible findings for that scenario, the scenario contributes `2/7 = 28.6%` credit for that tool, not full scenario credit.
+
+CVSS-weighted coverage uses the same credit value:
+
+```text
+cvss_weighted_coverage(T) =
+  sum over scenarios (cvss_weight(s) * credit(T, s))
+  / sum over scenarios cvss_weight(s)
+```
 
 Raw finding count is not a coverage metric. A tool with many unmapped findings is not automatically better than a tool with fewer findings mapped to relevant lab scenarios.
 
-The dashboard also separates raw finding volume from scenario credit. A tool may produce several findings for one scenario because it reports multiple package CVEs, multiple IaC rule hits, or repeated evidence in the same vulnerable example. Those findings remain visible in the raw findings view, but the matrix caps credited detections at the scenario's intended vulnerability count and labels the remaining entries as extra raw findings. Findings in fixed examples or outside scenario evidence can still be mapped for auditability, but they are marked as non-coverage evidence and do not count as scenario detection. This prevents duplicate, fixed-side, or unrelated project findings from making coverage look stronger than it is.
+The dashboard also separates raw finding volume from scenario credit. A tool may produce several findings for one scenario because it reports multiple package CVEs, multiple IaC rule hits, or repeated evidence in the same vulnerable example. Those findings remain visible in the raw findings view, but the matrix caps credited detections at the scenario's intended vulnerability count and labels the remaining entries as extra raw findings. Findings in fixed examples or outside scenario evidence can still be mapped for auditability, but they are marked as non-coverage evidence and do not count as scenario detection. This prevents duplicate, fixed-side, or unrelated project findings from making coverage look stronger than it is. The MVP does not manually label each individual intended vulnerability instance, so partial credit is based on coverage-eligible finding counts capped by `intendedVulnerabilityCount`.
 
 The selected scanner families are the six original tools. The dashboard separates Semgrep into `semgrep-default`, `semgrep-custom`, and `semgrep-combined`, so the UI may show eight reporting profiles. This split is intentional and prevents custom policy rules from being mistaken for out-of-the-box Semgrep behavior.
 

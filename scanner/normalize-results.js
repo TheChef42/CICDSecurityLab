@@ -69,6 +69,31 @@ function scenarioWeight(scenario) {
   return Number.isFinite(score) && score > 0 ? score : 0;
 }
 
+function roundOne(value) {
+  return Math.round(value * 10) / 10;
+}
+
+function intendedCount(scenario) {
+  return Math.max(Number(scenario?.intendedVulnerabilityCount) || 1, 1);
+}
+
+function coverageCreditFor(findings, scenario, predicate) {
+  const detected = findings.filter((finding) => (
+    finding.coverageEligible &&
+    finding.scenarioId === scenario.id &&
+    predicate(finding)
+  )).length;
+  const intended = intendedCount(scenario);
+  const credited = Math.min(detected, intended);
+  return {
+    detected,
+    credited,
+    intended,
+    fraction: credited / intended,
+    percent: roundOne((credited / intended) * 100)
+  };
+}
+
 function impactLevelFromScore(score) {
   const value = Number(score);
   if (!Number.isFinite(value) || value <= 0) return "UNKNOWN";
@@ -79,20 +104,15 @@ function impactLevelFromScore(score) {
 }
 
 function weightedCoverageFor(findings, scenarios, predicate) {
-  const byId = new Map(scenarios.map((scenario) => [scenario.id, scenario]));
   const totalWeight = scenarios.reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
-  const coveredIds = new Set(
-    findings
-      .filter((finding) => finding.coverageEligible && predicate(finding))
-      .map((finding) => finding.scenarioId)
-  );
-  const coveredWeight = Array.from(coveredIds).reduce((sum, scenarioId) => {
-    return sum + scenarioWeight(byId.get(scenarioId) || {});
+  const coveredWeight = scenarios.reduce((sum, scenario) => {
+    const credit = coverageCreditFor(findings, scenario, predicate);
+    return sum + (scenarioWeight(scenario) * credit.fraction);
   }, 0);
   return {
-    coveredWeight: Math.round(coveredWeight * 10) / 10,
-    totalWeight: Math.round(totalWeight * 10) / 10,
-    coveragePercent: totalWeight ? Math.round((coveredWeight / totalWeight) * 1000) / 10 : 0
+    coveredWeight: roundOne(coveredWeight),
+    totalWeight: roundOne(totalWeight),
+    coveragePercent: totalWeight ? roundOne((coveredWeight / totalWeight) * 100) : 0
   };
 }
 
@@ -139,17 +159,23 @@ function buildSummary(findings, scenarios, diagnostics) {
 
   const perToolCoverage = {};
   for (const tool of TOOLS) {
-    const covered = new Set(
-      findings
-        .filter((finding) => finding.tool === tool && finding.coverageEligible)
-        .map((finding) => finding.scenarioId)
+    const scenarioCredits = Object.fromEntries(
+      scenarios.map((scenario) => [scenario.id, coverageCreditFor(findings, scenario, (finding) => finding.tool === tool)])
     );
+    const coveredScenarioIds = scenarios
+      .filter((scenario) => scenarioCredits[scenario.id].fraction > 0)
+      .map((scenario) => scenario.id)
+      .sort();
+    const coveredScenarioEquivalents = scenarios.reduce((sum, scenario) => {
+      return sum + scenarioCredits[scenario.id].fraction;
+    }, 0);
     perToolCoverage[tool] = {
-      coveredScenarioIds: Array.from(covered).sort(),
-      coveredCount: covered.size,
+      coveredScenarioIds,
+      coveredCount: roundOne(coveredScenarioEquivalents),
       totalScenarios: scenarios.length,
-      coveragePercent: scenarios.length ? Math.round((covered.size / scenarios.length) * 1000) / 10 : 0,
+      coveragePercent: scenarios.length ? roundOne((coveredScenarioEquivalents / scenarios.length) * 100) : 0,
       weightedCoverage: weightedCoverageFor(findings, scenarios, (finding) => finding.tool === tool),
+      scenarioCredits,
       mappedFindings: findings.filter((finding) => finding.tool === tool && finding.mapped).length,
       coverageEligibleFindings: findings.filter((finding) => finding.tool === tool && finding.coverageEligible).length
     };
@@ -157,6 +183,10 @@ function buildSummary(findings, scenarios, diagnostics) {
 
   const perScenarioCoverage = {};
   for (const scenario of scenarios) {
+    const toolCredits = Object.fromEntries(
+      TOOLS.map((tool) => [tool, coverageCreditFor(findings, scenario, (finding) => finding.tool === tool)])
+    );
+    const totalToolCredit = Object.values(toolCredits).reduce((sum, credit) => sum + credit.fraction, 0);
     const tools = new Set(
       findings
         .filter((finding) => finding.coverageEligible && finding.scenarioId === scenario.id)
@@ -166,7 +196,8 @@ function buildSummary(findings, scenarios, diagnostics) {
       detectingTools: Array.from(tools).sort(),
       detectingToolCount: tools.size,
       totalTools: TOOLS.length,
-      coveragePercent: Math.round((tools.size / TOOLS.length) * 1000) / 10,
+      coveragePercent: TOOLS.length ? roundOne((totalToolCredit / TOOLS.length) * 100) : 0,
+      toolCredits,
       intendedVulnerabilityCount: scenario.intendedVulnerabilityCount || 1,
       cvss: scenario.cvss || null
     };
@@ -175,7 +206,21 @@ function buildSummary(findings, scenarios, diagnostics) {
   const mappedFindings = findings.filter((finding) => finding.mapped).length;
   const coverageEligibleFindings = findings.filter((finding) => finding.coverageEligible).length;
   const toolsReporting = Array.from(new Set(findings.map((finding) => finding.tool))).sort();
-  const coveredScenarios = new Set(findings.filter((finding) => finding.coverageEligible).map((finding) => finding.scenarioId));
+  const scenarioCredits = Object.fromEntries(
+    scenarios.map((scenario) => [scenario.id, coverageCreditFor(findings, scenario, () => true)])
+  );
+  const coveredScenarioIds = scenarios
+    .filter((scenario) => scenarioCredits[scenario.id].fraction > 0)
+    .map((scenario) => scenario.id)
+    .sort();
+  const partialScenarioIds = scenarios
+    .filter((scenario) => {
+      const fraction = scenarioCredits[scenario.id].fraction;
+      return fraction > 0 && fraction < 1;
+    })
+    .map((scenario) => scenario.id)
+    .sort();
+  const coveredScenarioEquivalents = Object.values(scenarioCredits).reduce((sum, credit) => sum + credit.fraction, 0);
   const duplicateGroups = new Set(findings.filter((finding) => finding.duplicateCount > 1).map((finding) => finding.duplicateGroupId));
   const totalIntendedVulnerabilities = scenarios.reduce((sum, scenario) => {
     return sum + (Number(scenario.intendedVulnerabilityCount) || 1);
@@ -197,9 +242,12 @@ function buildSummary(findings, scenarios, diagnostics) {
     duplicateGroups: duplicateGroups.size,
     extraScenarioFindings: findings.filter((finding) => finding.coverageExtra).length,
     combinedCoverage: {
-      coveredScenarioIds: Array.from(coveredScenarios).sort(),
-      coveredCount: coveredScenarios.size,
-      coveragePercent: scenarios.length ? Math.round((coveredScenarios.size / scenarios.length) * 1000) / 10 : 0,
+      coveredScenarioIds,
+      partiallyCoveredScenarioIds: partialScenarioIds,
+      coveredCount: roundOne(coveredScenarioEquivalents),
+      totalScenarios: scenarios.length,
+      scenarioCredits,
+      coveragePercent: scenarios.length ? roundOne((coveredScenarioEquivalents / scenarios.length) * 100) : 0,
       weightedCoverage: weightedCoverageFor(findings, scenarios, () => true)
     },
     perToolCoverage,

@@ -1,5 +1,5 @@
 import { AlertTriangle, BadgeCheck, Binary, Bug, Gauge, ListChecks, ShieldAlert, ShieldQuestion, Target } from "lucide-react";
-import { impactLevelFromScore, isCoverageEligible, uniqueCoveredScenarioIds } from "../utils/coverage.js";
+import { combinedCoverage, impactLevelFromScore, isCoverageEligible } from "../utils/coverage.js";
 
 function countSeverity(findings, severity) {
   return findings.filter((finding) => finding.severity === severity).length;
@@ -9,17 +9,10 @@ export default function SummaryCards({ findings, scenarios }) {
   const mapped = findings.filter((finding) => finding.mapped).length;
   const unmapped = findings.length - mapped;
   const toolsReporting = new Set(findings.map((finding) => finding.tool)).size;
-  const coveredScenarioIds = uniqueCoveredScenarioIds(findings);
+  const coverage = combinedCoverage(findings, scenarios, []);
+  const coveredScenarioIds = coverage.coveredScenarioIds;
   const coveredScenarioSet = new Set(coveredScenarioIds);
-  const coveredScenarios = coveredScenarioIds.length;
   const totalScenarios = scenarios.length;
-  const coverage = totalScenarios ? Math.round((coveredScenarios / totalScenarios) * 1000) / 10 : 0;
-  const totalWeight = scenarios.reduce((sum, scenario) => sum + (Number(scenario.cvss?.baseScore) || 0), 0);
-  const coveredWeight = coveredScenarioIds.reduce((sum, scenarioId) => {
-    const scenario = scenarios.find((item) => item.id === scenarioId);
-    return sum + (Number(scenario?.cvss?.baseScore) || 0);
-  }, 0);
-  const weightedCoverage = totalWeight ? Math.round((coveredWeight / totalWeight) * 1000) / 10 : 0;
   const intendedVulnerabilities = scenarios.reduce((sum, scenario) => sum + (Number(scenario.intendedVulnerabilityCount) || 1), 0);
   const extraScenarioFindings = findings.filter((finding) => finding.coverageExtra).length;
   const nonCoverageMapped = findings.filter((finding) => finding.mapped && !isCoverageEligible(finding)).length;
@@ -40,8 +33,8 @@ export default function SummaryCards({ findings, scenarios }) {
     { label: "Intended Vulns", value: intendedVulnerabilities, icon: Target, tone: "green" },
     { label: "Extra Raw Findings", value: extraScenarioFindings, icon: ShieldQuestion, tone: "amber" },
     { label: "Mapped Non-Coverage", value: nonCoverageMapped, icon: ShieldQuestion, tone: "amber" },
-    { label: "Scenario Coverage", value: `${coverage}%`, icon: Gauge, tone: "amber" },
-    { label: "CVSS Impact Coverage", value: `${weightedCoverage}%`, icon: ShieldAlert, tone: "red" },
+    { label: "Scenario Coverage", value: `${coverage.coveragePercent}%`, icon: Gauge, tone: "amber" },
+    { label: "CVSS Impact Coverage", value: `${coverage.weightedCoverage.coveragePercent}%`, icon: ShieldAlert, tone: "red" },
     { label: "High Impact Covered", value: `${highImpactCovered}/${highImpactScenarios.length}`, icon: AlertTriangle, tone: "orange" }
   ];
 
