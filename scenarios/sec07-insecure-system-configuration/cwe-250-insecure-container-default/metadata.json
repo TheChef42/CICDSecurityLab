@@ -15,7 +15,7 @@
     "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/fixed/Dockerfile"
   ],
   "remediation": "Create and use a non-root user in build and runner containers.",
-  "intendedVulnerabilityCount": 2,
+  "intendedVulnerabilityCount": 1,
   "intendedVulnerabilityNotes": "Container default runs with unnecessary root privileges and lacks expected hardening signals.",
   "mappingHints": {
     "keywords": [

@@ -3,7 +3,7 @@
   "status": "OK",
   "message": "Semgrep custom lab rules scan completed.",
   "rawOutputPath": "results/raw/semgrep-custom.json",
-  "details": "               \n               \n┌─────────────┐\n│ Scan Status │\n└─────────────┘\n  Scanning 113 files tracked by git with 6 Code rules:\n  Scanning 37 files with 6 <multilang> rules.\n                \n                \n┌──────────────┐\n│ Scan Summary │\n└──────────────┘\n✅ Scan completed successfully.\n • Findings: 9 (9 blocking)\n • Rules run: 6\n • Targets scanned: 37\n • Parsed lines: ~100.0%\n • Scan skipped: \n   ◦ Matching --exclude patterns: 22\n • Scan was limited to files tracked by git\n • For a detailed list of skipped files and lines, run semgrep with the --verbose flag\nRan 6 rules on 37 files: 9 findings.",
-  "runtimeMs": 3978,
-  "runtimeSeconds": 4
+  "details": "               \n               \n┌─────────────┐\n│ Scan Status │\n└─────────────┘\n  Scanning 113 files tracked by git with 6 Code rules:\n  Scanning 37 files with 6 <multilang> rules.\n                \n                \n┌──────────────┐\n│ Scan Summary │\n└──────────────┘\n✅ Scan completed successfully.\n • Findings: 9 (9 blocking)\n • Rules run: 6\n • Targets scanned: 37\n • Parsed lines: ~100.0%\n • Scan skipped: \n   ◦ Matching --exclude patterns: 20\n • Scan was limited to files tracked by git\n • For a detailed list of skipped files and lines, run semgrep with the --verbose flag\nRan 6 rules on 37 files: 9 findings.",
+  "runtimeMs": 1701,
+  "runtimeSeconds": 1.7
 }

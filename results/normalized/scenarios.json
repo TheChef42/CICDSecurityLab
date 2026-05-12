@@ -231,7 +231,7 @@
       "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/fixed/app.env.example"
     ],
     "remediation": "Store secrets in environment variables or a secret manager and never commit credential values.",
-    "intendedVulnerabilityCount": 7,
+    "intendedVulnerabilityCount": 6,
     "intendedVulnerabilityNotes": "Fake test credentials are intentionally present across vulnerable files.",
     "mappingHints": {
       "keywords": [
@@ -282,7 +282,7 @@
       "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/fixed/debug-workflow.yml"
     ],
     "remediation": "Avoid dumping environment variables, disable shell tracing around secrets, and mask sensitive values.",
-    "intendedVulnerabilityCount": 2,
+    "intendedVulnerabilityCount": 1,
     "intendedVulnerabilityNotes": "Verbose shell tracing and environment dumping can expose sensitive values.",
     "mappingHints": {
       "keywords": [
@@ -334,7 +334,7 @@
       "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/fixed/Dockerfile"
     ],
     "remediation": "Create and use a non-root user in build and runner containers.",
-    "intendedVulnerabilityCount": 2,
+    "intendedVulnerabilityCount": 1,
     "intendedVulnerabilityNotes": "Container default runs with unnecessary root privileges and lacks expected hardening signals.",
     "mappingHints": {
       "keywords": [

@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-12T11:05:14.580Z",
+  "generatedAt": "2026-05-12T11:37:27.863Z",
   "scanCompleted": true,
-  "totalFindings": 91,
-  "mappedFindings": 61,
-  "coverageEligibleFindings": 53,
+  "totalFindings": 94,
+  "mappedFindings": 64,
+  "coverageEligibleFindings": 60,
   "unmappedFindings": 30,
   "severityCounts": {
-    "CRITICAL": 2,
-    "HIGH": 31,
-    "MEDIUM": 52,
-    "LOW": 6,
+    "CRITICAL": 4,
+    "HIGH": 38,
+    "MEDIUM": 48,
+    "LOW": 4,
     "INFO": 0,
     "UNKNOWN": 0
   },
@@ -24,11 +24,11 @@
     "trivy"
   ],
   "totalScenarios": 10,
-  "totalIntendedVulnerabilities": 19,
+  "totalIntendedVulnerabilities": 16,
   "totalTools": 8,
   "duplicateFindings": 4,
   "duplicateGroups": 2,
-  "extraScenarioFindings": 17,
+  "extraScenarioFindings": 19,
   "combinedCoverage": {
     "coveredScenarioIds": [
       "SEC03-CWE494",
@@ -41,10 +41,8 @@
       "SEC07-CWE732",
       "SEC09-CWE354"
     ],
-    "partiallyCoveredScenarioIds": [
-      "SEC06-CWE798"
-    ],
-    "coveredCount": 8.6,
+    "partiallyCoveredScenarioIds": [],
+    "coveredCount": 9,
     "totalScenarios": 10,
     "scenarioCredits": {
       "SEC03-CWE494": {
@@ -76,23 +74,23 @@
         "percent": 100
       },
       "SEC06-CWE798": {
-        "detected": 4,
-        "credited": 4,
-        "intended": 7,
-        "fraction": 0.5714285714285714,
-        "percent": 57.1
+        "detected": 14,
+        "credited": 6,
+        "intended": 6,
+        "fraction": 1,
+        "percent": 100
       },
       "SEC06-CWE532": {
-        "detected": 7,
-        "credited": 2,
-        "intended": 2,
+        "detected": 8,
+        "credited": 1,
+        "intended": 1,
         "fraction": 1,
         "percent": 100
       },
       "SEC07-CWE250": {
         "detected": 6,
-        "credited": 2,
-        "intended": 2,
+        "credited": 1,
+        "intended": 1,
         "fraction": 1,
         "percent": 100
       },
@@ -104,7 +102,7 @@
         "percent": 100
       },
       "SEC09-CWE354": {
-        "detected": 10,
+        "detected": 6,
         "credited": 2,
         "intended": 2,
         "fraction": 1,
@@ -118,25 +116,26 @@
         "percent": 0
       }
     },
-    "coveragePercent": 85.7,
+    "coveragePercent": 90,
     "weightedCoverage": {
-      "coveredWeight": 64.4,
+      "coveredWeight": 68.3,
       "totalWeight": 75.8,
-      "coveragePercent": 85
+      "coveragePercent": 90.1
     }
   },
   "perToolCoverage": {
     "gitleaks": {
       "coveredScenarioIds": [
+        "SEC06-CWE532",
         "SEC06-CWE798"
       ],
-      "coveredCount": 0.3,
+      "coveredCount": 2,
       "totalScenarios": 10,
-      "coveragePercent": 2.9,
+      "coveragePercent": 20,
       "weightedCoverage": {
-        "coveredWeight": 2.6,
+        "coveredWeight": 14.6,
         "totalWeight": 75.8,
-        "coveragePercent": 3.4
+        "coveragePercent": 19.3
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -168,23 +167,23 @@
           "percent": 0
         },
         "SEC06-CWE798": {
-          "detected": 2,
-          "credited": 2,
-          "intended": 7,
-          "fraction": 0.2857142857142857,
-          "percent": 28.6
+          "detected": 6,
+          "credited": 6,
+          "intended": 6,
+          "fraction": 1,
+          "percent": 100
         },
         "SEC06-CWE532": {
-          "detected": 0,
-          "credited": 0,
-          "intended": 2,
-          "fraction": 0,
-          "percent": 0
+          "detected": 1,
+          "credited": 1,
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "SEC07-CWE250": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
@@ -210,8 +209,8 @@
           "percent": 0
         }
       },
-      "mappedFindings": 2,
-      "coverageEligibleFindings": 2
+      "mappedFindings": 7,
+      "coverageEligibleFindings": 7
     },
     "checkov": {
       "coveredScenarioIds": [
@@ -224,9 +223,9 @@
       "totalScenarios": 10,
       "coveragePercent": 35,
       "weightedCoverage": {
-        "coveredWeight": 25.3,
+        "coveredWeight": 24.4,
         "totalWeight": 75.8,
-        "coveragePercent": 33.3
+        "coveragePercent": 32.2
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -260,21 +259,21 @@
         "SEC06-CWE798": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         },
         "SEC06-CWE532": {
           "detected": 1,
           "credited": 1,
-          "intended": 2,
-          "fraction": 0.5,
-          "percent": 50
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "SEC07-CWE250": {
           "detected": 2,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
@@ -286,11 +285,11 @@
           "percent": 100
         },
         "SEC09-CWE354": {
-          "detected": 3,
-          "credited": 2,
+          "detected": 1,
+          "credited": 1,
           "intended": 2,
-          "fraction": 1,
-          "percent": 100
+          "fraction": 0.5,
+          "percent": 50
         },
         "SEC09-CWE347": {
           "detected": 0,
@@ -300,21 +299,22 @@
           "percent": 0
         }
       },
-      "mappedFindings": 12,
-      "coverageEligibleFindings": 7
+      "mappedFindings": 8,
+      "coverageEligibleFindings": 5
     },
     "semgrep-default": {
       "coveredScenarioIds": [
         "SEC04-CWE78",
+        "SEC06-CWE798",
         "SEC07-CWE250"
       ],
-      "coveredCount": 1.5,
+      "coveredCount": 2.3,
       "totalScenarios": 10,
-      "coveragePercent": 15,
+      "coveragePercent": 23.3,
       "weightedCoverage": {
-        "coveredWeight": 12.7,
+        "coveredWeight": 19.6,
         "totalWeight": 75.8,
-        "coveragePercent": 16.8
+        "coveragePercent": 25.9
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -346,25 +346,25 @@
           "percent": 0
         },
         "SEC06-CWE798": {
-          "detected": 0,
-          "credited": 0,
-          "intended": 7,
-          "fraction": 0,
-          "percent": 0
+          "detected": 2,
+          "credited": 2,
+          "intended": 6,
+          "fraction": 0.3333333333333333,
+          "percent": 33.3
         },
         "SEC06-CWE532": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "SEC07-CWE250": {
           "detected": 1,
           "credited": 1,
-          "intended": 2,
-          "fraction": 0.5,
-          "percent": 50
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "SEC07-CWE732": {
           "detected": 0,
@@ -388,8 +388,8 @@
           "percent": 0
         }
       },
-      "mappedFindings": 2,
-      "coverageEligibleFindings": 2
+      "mappedFindings": 4,
+      "coverageEligibleFindings": 4
     },
     "semgrep-custom": {
       "coveredScenarioIds": [
@@ -440,21 +440,21 @@
         "SEC06-CWE798": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         },
         "SEC06-CWE532": {
           "detected": 3,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
         "SEC07-CWE250": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
@@ -489,17 +489,18 @@
         "SEC04-CWE266",
         "SEC04-CWE78",
         "SEC06-CWE532",
+        "SEC06-CWE798",
         "SEC07-CWE250",
         "SEC07-CWE732",
         "SEC09-CWE354"
       ],
-      "coveredCount": 6.5,
+      "coveredCount": 7.3,
       "totalScenarios": 10,
-      "coveragePercent": 65,
+      "coveragePercent": 73.3,
       "weightedCoverage": {
-        "coveredWeight": 47.3,
+        "coveredWeight": 54.2,
         "totalWeight": 75.8,
-        "coveragePercent": 62.4
+        "coveragePercent": 71.5
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -531,25 +532,25 @@
           "percent": 100
         },
         "SEC06-CWE798": {
-          "detected": 0,
-          "credited": 0,
-          "intended": 7,
-          "fraction": 0,
-          "percent": 0
+          "detected": 2,
+          "credited": 2,
+          "intended": 6,
+          "fraction": 0.3333333333333333,
+          "percent": 33.3
         },
         "SEC06-CWE532": {
           "detected": 3,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
         "SEC07-CWE250": {
           "detected": 1,
           "credited": 1,
-          "intended": 2,
-          "fraction": 0.5,
-          "percent": 50
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "SEC07-CWE732": {
           "detected": 1,
@@ -573,8 +574,8 @@
           "percent": 0
         }
       },
-      "mappedFindings": 11,
-      "coverageEligibleFindings": 11
+      "mappedFindings": 13,
+      "coverageEligibleFindings": 13
     },
     "trivy": {
       "coveredScenarioIds": [
@@ -583,13 +584,13 @@
         "SEC07-CWE250",
         "SEC09-CWE354"
       ],
-      "coveredCount": 3.3,
+      "coveredCount": 3.2,
       "totalScenarios": 10,
-      "coveragePercent": 32.9,
+      "coveragePercent": 31.7,
       "weightedCoverage": {
-        "coveredWeight": 25.6,
+        "coveredWeight": 25.5,
         "totalWeight": 75.8,
-        "coveragePercent": 33.8
+        "coveragePercent": 33.6
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -621,23 +622,23 @@
           "percent": 0
         },
         "SEC06-CWE798": {
-          "detected": 2,
-          "credited": 2,
-          "intended": 7,
-          "fraction": 0.2857142857142857,
-          "percent": 28.6
+          "detected": 4,
+          "credited": 4,
+          "intended": 6,
+          "fraction": 0.6666666666666666,
+          "percent": 66.7
         },
         "SEC06-CWE532": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "SEC07-CWE250": {
           "detected": 2,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
@@ -649,11 +650,11 @@
           "percent": 0
         },
         "SEC09-CWE354": {
-          "detected": 3,
-          "credited": 2,
+          "detected": 1,
+          "credited": 1,
           "intended": 2,
-          "fraction": 1,
-          "percent": 100
+          "fraction": 0.5,
+          "percent": 50
         },
         "SEC09-CWE347": {
           "detected": 0,
@@ -663,7 +664,7 @@
           "percent": 0
         }
       },
-      "mappedFindings": 15,
+      "mappedFindings": 13,
       "coverageEligibleFindings": 12
     },
     "grype": {
@@ -710,21 +711,21 @@
         "SEC06-CWE798": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         },
         "SEC06-CWE532": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "SEC07-CWE250": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
@@ -797,21 +798,21 @@
         "SEC06-CWE798": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         },
         "SEC06-CWE532": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "SEC07-CWE250": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
@@ -1191,70 +1192,72 @@
     "SEC06-CWE798": {
       "detectingTools": [
         "gitleaks",
+        "semgrep-combined",
+        "semgrep-default",
         "trivy"
       ],
-      "detectingToolCount": 2,
+      "detectingToolCount": 4,
       "totalTools": 8,
-      "coveragePercent": 7.1,
+      "coveragePercent": 29.2,
       "toolCredits": {
         "gitleaks": {
-          "detected": 2,
-          "credited": 2,
-          "intended": 7,
-          "fraction": 0.2857142857142857,
-          "percent": 28.6
+          "detected": 6,
+          "credited": 6,
+          "intended": 6,
+          "fraction": 1,
+          "percent": 100
         },
         "checkov": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         },
         "semgrep-default": {
-          "detected": 0,
-          "credited": 0,
-          "intended": 7,
-          "fraction": 0,
-          "percent": 0
+          "detected": 2,
+          "credited": 2,
+          "intended": 6,
+          "fraction": 0.3333333333333333,
+          "percent": 33.3
         },
         "semgrep-custom": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         },
         "semgrep-combined": {
-          "detected": 0,
-          "credited": 0,
-          "intended": 7,
-          "fraction": 0,
-          "percent": 0
-        },
-        "trivy": {
           "detected": 2,
           "credited": 2,
-          "intended": 7,
-          "fraction": 0.2857142857142857,
-          "percent": 28.6
+          "intended": 6,
+          "fraction": 0.3333333333333333,
+          "percent": 33.3
+        },
+        "trivy": {
+          "detected": 4,
+          "credited": 4,
+          "intended": 6,
+          "fraction": 0.6666666666666666,
+          "percent": 66.7
         },
         "grype": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         },
         "snyk": {
           "detected": 0,
           "credited": 0,
-          "intended": 7,
+          "intended": 6,
           "fraction": 0,
           "percent": 0
         }
       },
-      "intendedVulnerabilityCount": 7,
+      "intendedVulnerabilityCount": 6,
       "cvss": {
         "cwe": "CWE-798",
         "baseScore": 9.1,
@@ -1277,71 +1280,72 @@
     "SEC06-CWE532": {
       "detectingTools": [
         "checkov",
+        "gitleaks",
         "semgrep-combined",
         "semgrep-custom"
       ],
-      "detectingToolCount": 3,
+      "detectingToolCount": 4,
       "totalTools": 8,
-      "coveragePercent": 31.3,
+      "coveragePercent": 50,
       "toolCredits": {
         "gitleaks": {
-          "detected": 0,
-          "credited": 0,
-          "intended": 2,
-          "fraction": 0,
-          "percent": 0
+          "detected": 1,
+          "credited": 1,
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "checkov": {
           "detected": 1,
           "credited": 1,
-          "intended": 2,
-          "fraction": 0.5,
-          "percent": 50
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "semgrep-default": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "semgrep-custom": {
           "detected": 3,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
         "semgrep-combined": {
           "detected": 3,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
         "trivy": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "grype": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "snyk": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         }
       },
-      "intendedVulnerabilityCount": 2,
+      "intendedVulnerabilityCount": 1,
       "cvss": {
         "cwe": "CWE-532",
         "baseScore": 5.5,
@@ -1370,66 +1374,66 @@
       ],
       "detectingToolCount": 4,
       "totalTools": 8,
-      "coveragePercent": 37.5,
+      "coveragePercent": 50,
       "toolCredits": {
         "gitleaks": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "checkov": {
           "detected": 2,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
         "semgrep-default": {
           "detected": 1,
           "credited": 1,
-          "intended": 2,
-          "fraction": 0.5,
-          "percent": 50
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "semgrep-custom": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "semgrep-combined": {
           "detected": 1,
           "credited": 1,
-          "intended": 2,
-          "fraction": 0.5,
-          "percent": 50
+          "intended": 1,
+          "fraction": 1,
+          "percent": 100
         },
         "trivy": {
           "detected": 2,
-          "credited": 2,
-          "intended": 2,
+          "credited": 1,
+          "intended": 1,
           "fraction": 1,
           "percent": 100
         },
         "grype": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         },
         "snyk": {
           "detected": 0,
           "credited": 0,
-          "intended": 2,
+          "intended": 1,
           "fraction": 0,
           "percent": 0
         }
       },
-      "intendedVulnerabilityCount": 2,
+      "intendedVulnerabilityCount": 1,
       "cvss": {
         "cwe": "CWE-250",
         "baseScore": 7.8,
@@ -1545,7 +1549,7 @@
       ],
       "detectingToolCount": 4,
       "totalTools": 8,
-      "coveragePercent": 50,
+      "coveragePercent": 37.5,
       "toolCredits": {
         "gitleaks": {
           "detected": 0,
@@ -1555,11 +1559,11 @@
           "percent": 0
         },
         "checkov": {
-          "detected": 3,
-          "credited": 2,
+          "detected": 1,
+          "credited": 1,
           "intended": 2,
-          "fraction": 1,
-          "percent": 100
+          "fraction": 0.5,
+          "percent": 50
         },
         "semgrep-default": {
           "detected": 0,
@@ -1583,11 +1587,11 @@
           "percent": 100
         },
         "trivy": {
-          "detected": 3,
-          "credited": 2,
+          "detected": 1,
+          "credited": 1,
           "intended": 2,
-          "fraction": 1,
-          "percent": 100
+          "fraction": 0.5,
+          "percent": 50
         },
         "grype": {
           "detected": 0,
