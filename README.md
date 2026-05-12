@@ -39,12 +39,12 @@ The lab uses exactly ten stable scenario IDs:
 | SEC04-CWE269 | Token Over-privilege | CICD-SEC-04: Poisoned Pipeline Execution | CWE-269 |
 | SEC06-CWE798 | Hardcoded Secret | CICD-SEC-06: Insufficient Credential Hygiene | CWE-798 |
 | SEC06-CWE532 | Verbose Log Leak | CICD-SEC-06: Insufficient Credential Hygiene | CWE-532 |
-| SEC07-CWE16 | Insecure Container Default | CICD-SEC-07: Insecure System Configuration | CWE-16 |
+| SEC07-CWE250 | Insecure Container Default | CICD-SEC-07: Insecure System Configuration | CWE-250 |
 | SEC07-CWE269 | Overprivileged Cloud Identity | CICD-SEC-07: Insecure System Configuration | CWE-269 |
 | SEC09-CWE345-A | Mutable Image Tags | CICD-SEC-09: Improper Artifact Integrity Validation | CWE-345 |
 | SEC09-CWE345-B | Unverified Provenance | CICD-SEC-09: Improper Artifact Integrity Validation | CWE-345 |
 
-The mapping is a lab-specific teaching model, not an official one-to-one OWASP-to-CWE mapping. See [docs/methodology.md](docs/methodology.md) for the methodology and notes on broad CWEs such as CWE-16 and CWE-345.
+The mapping is a lab-specific teaching model, not an official one-to-one OWASP-to-CWE mapping. See [docs/methodology.md](docs/methodology.md) for the methodology and notes on CWE selection, including why the container privilege scenario uses CWE-250 instead of the discouraged CWE-16 category.
 
 ## Run The Lab
 

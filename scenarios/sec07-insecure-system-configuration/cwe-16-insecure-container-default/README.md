@@ -6,11 +6,11 @@ CICD-SEC-07: Insecure System Configuration
 
 ## CWE
 
-CWE-16: Configuration
+CWE-250: Execution with Unnecessary Privileges
 
 ## Why It Maps To The CWE
 
-The Dockerfile omits a `USER` directive, so the container defaults to root. CWE-16 is broad, but it is suitable here because the weakness is an insecure configuration default rather than a language-specific coding flaw.
+The Dockerfile omits a `USER` directive, so the container defaults to root. This maps to CWE-250 because the build container executes with privileges that are not required for the demonstrated CI task.
 
 ## Affected Vulnerable Files
 

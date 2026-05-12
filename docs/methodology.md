@@ -20,9 +20,9 @@ The lab also produces a CWE CVSS context table from NVD CVEs mapped to each impl
 
 Custom Semgrep rules are treated as scanner configuration, not ground truth. They may improve coverage for policy patterns such as risky workflow interpolation, broad permissions, mutable image tags, and unsafe download execution, but they are not a replacement for specialized tools such as Gitleaks for secret detection, Checkov for configuration/IaC checks, or Grype/Snyk for dependency vulnerability analysis.
 
-## Broad CWE Notes
+## CWE Selection Notes
 
-CWE-16 is a broad configuration category. It is suitable for the insecure container default scenario because the weakness is a configuration-level default: a CI/build container has no `USER` directive and therefore runs as root. The scenario uses CWE-16 to represent the insecure configuration pattern rather than a language-specific coding flaw.
+CWE-250 is used for the insecure container default scenario because the Dockerfile omits a `USER` directive and the CI/build container therefore executes with unnecessary root privileges. This is a better fit than CWE-16 because CWE-16 is a broad category and MITRE marks it as discouraged for vulnerability mapping.
 
 CWE-345 is also broad. It covers insufficient verification of data authenticity, which fits two artifact integrity cases in the lab: mutable image tags and unverified provenance. Both scenarios are about accepting an artifact identity without strong authenticity guarantees. The lab splits them into `SEC09-CWE345-A` and `SEC09-CWE345-B` so the dashboard can distinguish tag mutability from missing provenance checks while keeping the underlying CWE stable.
 
