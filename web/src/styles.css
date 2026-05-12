@@ -378,6 +378,7 @@ h1 {
 .badge.mapped { color: #60f2a7; background: #0f2a21; border-color: #236f4e; }
 .badge.unmapped { color: #f5d36d; background: #2a240e; border-color: #6f5a1b; }
 .badge.extra { color: #ffd08a; background: #2c1f11; border-color: #7d5428; }
+.badge.noncoverage { color: #c8d2e2; background: #202938; border-color: #4a5870; }
 .badge.status.ok { color: #60f2a7; background: #0f2a21; }
 .badge.status.warn { color: #f5d36d; background: #2a240e; }
 .badge.status.error { color: #ff7d85; background: #31161b; }

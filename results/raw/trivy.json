@@ -3,15 +3,15 @@
   "Trivy": {
     "Version": "0.70.0"
   },
-  "ReportID": "019e06b4-dd68-7666-ad69-3d77c47bcc7b",
-  "CreatedAt": "2026-05-08T08:29:37.000424742Z",
-  "ArtifactID": "sha256:caa959e3b3afca51284bedbbebdb1cf58f11f1653dcbfd42220d9d569217cd2e",
+  "ReportID": "019e1b3c-7ea3-7d4f-bf1b-adebea185178",
+  "CreatedAt": "2026-05-12T08:10:09.955876024Z",
+  "ArtifactID": "sha256:177ac2559cfa9034ec6b12e5d0de4541c312f838bd2a3251f8a2fc94e9c251f4",
   "ArtifactName": "/workspace",
   "ArtifactType": "repository",
   "Metadata": {
     "Branch": "main",
-    "Commit": "4be1a36a8d45165c01d9b1591fa61541f8af3904",
-    "CommitMsg": "woop",
+    "Commit": "85f8de023ea7dfef451d7f5b8c0526b7080c23ca",
+    "CommitMsg": "Clarify duplicate findings and CVSS impact",
     "Author": "TheChef42 \u003cdanielflute@gmail.com\u003e",
     "Committer": "TheChef42 \u003cdanielflute@gmail.com\u003e"
   },
@@ -85,7 +85,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:ba4f6e8909fbea548cf0682ffdbdd87ddec7d9ff76f4f105a110669536a87eff",
+          "Fingerprint": "sha256:f1c5aebb5775e4b3013e82b2631c94a7127a2a9d1ff7625e3ca2d256b452e821",
           "Title": "nodejs-lodash: command injection via template",
           "Description": "Lodash versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
           "Severity": "HIGH",
@@ -164,7 +164,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:942f8d7d83337849928d1d532454b29db21c7cd907b7b7b7d5eeedd577d10478",
+          "Fingerprint": "sha256:cd66c4135f288031c7677af18c9ddaf1fc145190b0eb04ea0ed7cc4b94542fb8",
           "Title": "lodash: lodash: Arbitrary code execution via untrusted input in template imports",
           "Description": "Impact:\n\nThe fix for CVE-2021-23337 (https://github.com/advisories/GHSA-35jh-r3h4-6jhm) added validation for the variable option in _.template but did not apply the same validation to options.imports key names. Both paths flow into the same Function() constructor sink.\n\nWhen an application passes untrusted input as options.imports key names, an attacker can inject default-parameter expressions that execute arbitrary code at template compilation time.\n\nAdditionally, _.template uses assignInWith to merge imports, which enumerates inherited properties via for..in. If Object.prototype has been polluted by any other vector, the polluted keys are copied into the imports object and passed to Function().\n\nPatches:\n\nUsers should upgrade to version 4.18.0.\n\nWorkarounds:\n\nDo not pass untrusted input as key names in options.imports. Only use developer-controlled, static key names.",
           "Severity": "HIGH",
@@ -231,7 +231,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:54b3f486ee52e725a788caf67a730b0295f3943831202ad9538542b3cc6250d3",
+          "Fingerprint": "sha256:c01b9f3e8cea0fe8fc4408af0546aa4dec686c7d843cfe9595ff34d82c050679",
           "Title": "nodejs-lodash: ReDoS via the toNumber, trim and trimEnd functions",
           "Description": "Lodash versions prior to 4.17.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the toNumber, trim and trimEnd functions.",
           "Severity": "MEDIUM",
@@ -310,7 +310,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:54c862545a5d84b1350f7d6c1427c66bdb05e3521b28016893c513f4c0d6c632",
+          "Fingerprint": "sha256:20eb7a7328233f733308303e2752032de59e06e69fe12f860d48b35bba9ece11",
           "Title": "lodash: prototype pollution in _.unset and _.omit functions",
           "Description": "Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the _.unset and _.omit functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes.\n\nThe issue permits deletion of properties but does not allow overwriting their original behavior.\n\nThis issue is patched on 4.17.23",
           "Severity": "MEDIUM",
@@ -377,7 +377,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:6daf1adbbee422c229c2592440e4cbe0ac123d0e968e95a55f08a2b774f0d8c0",
+          "Fingerprint": "sha256:b729239e76608cb89f6eb14fc0f618504bfe384f0a2993de6744f9a23471f788",
           "Title": "lodash: Lodash: Prototype pollution allows deletion of built-in prototype properties via array path bypass",
           "Description": "Impact:\n\nLodash versions 4.17.23 and earlier are vulnerable to prototype pollution in the _.unset and _.omit functions. The fix for (CVE-2025-13465: https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg) only guards against string key members, so an attacker can bypass the check by passing array-wrapped path segments. This allows deletion of properties from built-in prototypes such as Object.prototype, Number.prototype, and String.prototype.\n\nThe issue permits deletion of prototype properties but does not allow overwriting their original behavior.\n\nPatches:\n\nThis issue is patched in 4.18.0.\n\nWorkarounds:\n\nNone. Upgrade to the patched version.",
           "Severity": "MEDIUM",

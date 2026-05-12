@@ -2,9 +2,14 @@ export const TOOLS = ["gitleaks", "checkov", "semgrep-default", "semgrep-custom"
 
 export const SEVERITIES = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO", "UNKNOWN"];
 
+export function isCoverageEligible(finding) {
+  if (Object.hasOwn(finding, "coverageEligible")) return finding.coverageEligible === true;
+  return finding.mapped === true;
+}
+
 export function countMappedFindings(findings, tool, scenarioId) {
   return findings.filter(
-    (finding) => finding.mapped && finding.tool === tool && finding.scenarioId === scenarioId
+    (finding) => isCoverageEligible(finding) && finding.tool === tool && finding.scenarioId === scenarioId
   ).length;
 }
 
@@ -34,24 +39,29 @@ export function scenarioImpact(scenario) {
 
 export function detectionStats(findings, tool, scenario) {
   const scenarioFindings = findings.filter(
-    (finding) => finding.mapped && finding.tool === tool && finding.scenarioId === scenario.id
+    (finding) => isCoverageEligible(finding) && finding.tool === tool && finding.scenarioId === scenario.id
   );
+  const mappedRawCount = findings.filter(
+    (finding) => finding.mapped && finding.tool === tool && finding.scenarioId === scenario.id
+  ).length;
   const rawCount = scenarioFindings.length;
   const intendedCount = Number(scenario.intendedVulnerabilityCount) || 1;
   const creditedCount = Math.min(rawCount, intendedCount);
 
   return {
     rawCount,
+    mappedRawCount,
     intendedCount,
     creditedCount,
     extraCount: Math.max(rawCount - creditedCount, 0),
+    nonCreditedMappedCount: Math.max(mappedRawCount - rawCount, 0),
     detected: creditedCount > 0
   };
 }
 
 export function uniqueCoveredScenarioIds(findings) {
   return Array.from(
-    new Set(findings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId))
+    new Set(findings.filter((finding) => isCoverageEligible(finding)).map((finding) => finding.scenarioId))
   ).sort();
 }
 
@@ -60,7 +70,7 @@ export function scenarioTools(findings, scenarioId, selectedTools = TOOLS) {
   return Array.from(
     new Set(
       findings
-        .filter((finding) => finding.mapped && finding.scenarioId === scenarioId && selected.has(finding.tool))
+        .filter((finding) => isCoverageEligible(finding) && finding.scenarioId === scenarioId && selected.has(finding.tool))
         .map((finding) => finding.tool)
     )
   ).sort();
@@ -137,7 +147,7 @@ function coveredByTools(findings, scenarioIds, tools) {
   const selectedTools = new Set(tools);
   return scenarioIds.filter((scenarioId) => (
     findings.some((finding) => (
-      finding.mapped &&
+      isCoverageEligible(finding) &&
       finding.scenarioId === scenarioId &&
       selectedTools.has(finding.tool)
     ))
@@ -148,7 +158,7 @@ export function recommendToolSets(findings, scenarios, selectedScenarioIds, tool
   const scenarioIds = selectedScenarioIds;
   const scenarioSet = new Set(scenarioIds);
   const availableTools = tools.filter((tool) => (
-    findings.some((finding) => finding.mapped && finding.tool === tool && scenarioSet.has(finding.scenarioId))
+    findings.some((finding) => isCoverageEligible(finding) && finding.tool === tool && scenarioSet.has(finding.scenarioId))
   ));
   const scenarioToTools = Object.fromEntries(
     scenarioIds.map((scenarioId) => [scenarioId, scenarioTools(findings, scenarioId, availableTools)])
@@ -179,7 +189,7 @@ export function recommendToolSets(findings, scenarios, selectedScenarioIds, tool
           .filter((scenario) => covered.has(scenario.id))
           .reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
         const findingsCount = findings.filter((finding) => (
-          finding.mapped &&
+          isCoverageEligible(finding) &&
           covered.has(finding.scenarioId) &&
           toolSet.includes(finding.tool)
         )).length;

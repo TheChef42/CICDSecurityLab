@@ -89,9 +89,9 @@ If no scan has run yet, the lab initializes empty but valid JSON files for findi
 
 ## Coverage Calculation
 
-Coverage is calculated from mapped scenario detections only:
+Coverage is calculated from mapped vulnerable-side scenario detections only:
 
-- Per-tool coverage = unique mapped scenarios detected by that tool / 10.
+- Per-tool coverage = unique scenarios where that tool reports at least one finding in the vulnerable example / 10.
 - Per-scenario coverage = reporting profiles detecting that scenario / number of reporting profiles.
 - Combined coverage = union of mapped scenarios detected by selected tools / 10.
 - CVSS-weighted coverage = union of mapped scenarios weighted by generated NVD-derived CWE CVSS context, when that data is available. The generated table stores mean, median, and 75th percentile; the selected score defaults to the median.
@@ -99,7 +99,7 @@ Coverage is calculated from mapped scenario detections only:
 
 Raw finding count is not a coverage metric. A tool with many unmapped findings is not automatically better than a tool with fewer findings mapped to relevant lab scenarios.
 
-The dashboard also separates raw finding volume from scenario credit. A tool may produce several findings for one scenario because it reports multiple package CVEs, multiple IaC rule hits, or repeated evidence in the same vulnerable example. Those findings remain visible in the raw findings view, but the matrix caps credited detections at the scenario's intended vulnerability count and labels the remaining entries as extra raw findings. This prevents duplicate or repeated evidence from making coverage look stronger than it is.
+The dashboard also separates raw finding volume from scenario credit. A tool may produce several findings for one scenario because it reports multiple package CVEs, multiple IaC rule hits, or repeated evidence in the same vulnerable example. Those findings remain visible in the raw findings view, but the matrix caps credited detections at the scenario's intended vulnerability count and labels the remaining entries as extra raw findings. Findings in fixed examples or outside scenario evidence can still be mapped for auditability, but they are marked as non-coverage evidence and do not count as scenario detection. This prevents duplicate, fixed-side, or unrelated project findings from making coverage look stronger than it is.
 
 The selected scanner families are the six original tools. The dashboard separates Semgrep into `semgrep-default`, `semgrep-custom`, and `semgrep-combined`, so the UI may show eight reporting profiles. This split is intentional and prevents custom policy rules from being mistaken for out-of-the-box Semgrep behavior.
 

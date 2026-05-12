@@ -1,3 +1,5 @@
+import { isCoverageEligible } from "../utils/coverage.js";
+
 function SeverityBadge({ severity }) {
   return <span className={`badge severity ${String(severity).toLowerCase()}`}>{severity}</span>;
 }
@@ -31,6 +33,7 @@ export default function RawFindings({ findings }) {
             </span>
             {finding.duplicate ? <span className="badge unmapped">duplicate {finding.duplicateIndex}/{finding.duplicateCount}</span> : null}
             {finding.coverageExtra ? <span className="badge extra">extra raw finding</span> : null}
+            {finding.mapped && !isCoverageEligible(finding) ? <span className="badge noncoverage">not coverage evidence</span> : null}
             <ImpactBadge finding={finding} />
           </div>
           <h3>{finding.title || "Unmapped finding"}</h3>
@@ -67,6 +70,9 @@ export default function RawFindings({ findings }) {
           <p className="finding-message">{finding.message || "No tool message provided."}</p>
           {finding.coverageExtra ? (
             <p className="finding-note">{finding.coverageExtraReason}</p>
+          ) : null}
+          {finding.mapped && !isCoverageEligible(finding) ? (
+            <p className="finding-note">{finding.coverageExclusionReason}</p>
           ) : null}
         </article>
       ))}

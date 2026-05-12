@@ -83,7 +83,7 @@ function weightedCoverageFor(findings, scenarios, predicate) {
   const totalWeight = scenarios.reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
   const coveredIds = new Set(
     findings
-      .filter((finding) => finding.mapped && predicate(finding))
+      .filter((finding) => finding.coverageEligible && predicate(finding))
       .map((finding) => finding.scenarioId)
   );
   const coveredWeight = Array.from(coveredIds).reduce((sum, scenarioId) => {
@@ -141,7 +141,7 @@ function buildSummary(findings, scenarios, diagnostics) {
   for (const tool of TOOLS) {
     const covered = new Set(
       findings
-        .filter((finding) => finding.tool === tool && finding.mapped)
+        .filter((finding) => finding.tool === tool && finding.coverageEligible)
         .map((finding) => finding.scenarioId)
     );
     perToolCoverage[tool] = {
@@ -150,7 +150,8 @@ function buildSummary(findings, scenarios, diagnostics) {
       totalScenarios: scenarios.length,
       coveragePercent: scenarios.length ? Math.round((covered.size / scenarios.length) * 1000) / 10 : 0,
       weightedCoverage: weightedCoverageFor(findings, scenarios, (finding) => finding.tool === tool),
-      mappedFindings: findings.filter((finding) => finding.tool === tool && finding.mapped).length
+      mappedFindings: findings.filter((finding) => finding.tool === tool && finding.mapped).length,
+      coverageEligibleFindings: findings.filter((finding) => finding.tool === tool && finding.coverageEligible).length
     };
   }
 
@@ -158,7 +159,7 @@ function buildSummary(findings, scenarios, diagnostics) {
   for (const scenario of scenarios) {
     const tools = new Set(
       findings
-        .filter((finding) => finding.mapped && finding.scenarioId === scenario.id)
+        .filter((finding) => finding.coverageEligible && finding.scenarioId === scenario.id)
         .map((finding) => finding.tool)
     );
     perScenarioCoverage[scenario.id] = {
@@ -172,8 +173,9 @@ function buildSummary(findings, scenarios, diagnostics) {
   }
 
   const mappedFindings = findings.filter((finding) => finding.mapped).length;
+  const coverageEligibleFindings = findings.filter((finding) => finding.coverageEligible).length;
   const toolsReporting = Array.from(new Set(findings.map((finding) => finding.tool))).sort();
-  const coveredScenarios = new Set(findings.filter((finding) => finding.mapped).map((finding) => finding.scenarioId));
+  const coveredScenarios = new Set(findings.filter((finding) => finding.coverageEligible).map((finding) => finding.scenarioId));
   const duplicateGroups = new Set(findings.filter((finding) => finding.duplicateCount > 1).map((finding) => finding.duplicateGroupId));
   const totalIntendedVulnerabilities = scenarios.reduce((sum, scenario) => {
     return sum + (Number(scenario.intendedVulnerabilityCount) || 1);
@@ -184,6 +186,7 @@ function buildSummary(findings, scenarios, diagnostics) {
     scanCompleted: true,
     totalFindings: findings.length,
     mappedFindings,
+    coverageEligibleFindings,
     unmappedFindings: findings.length - mappedFindings,
     severityCounts,
     toolsReporting,
@@ -256,6 +259,12 @@ function main() {
       message: mapped.message || "",
       ruleId: mapped.ruleId || "",
       rawReference: mapped.rawReference || "",
+      mappingMethod: mapped.mappingMethod || "unmapped",
+      evidenceRole: mapped.evidenceRole || "unknown",
+      coverageEligible: Boolean(mapped.coverageEligible),
+      coverageExclusionReason: mapped.mapped && !mapped.coverageEligible
+        ? `Mapped to ${mapped.scenarioId}, but not counted for coverage because the finding is in ${mapped.evidenceRole} evidence rather than the vulnerable example.`
+        : "",
       impactScore: mapped.mapped ? cvssScore : 0,
       impactLevel: mapped.mapped ? impactLevelFromScore(cvssScore) : "UNMAPPED",
       impactSource: mapped.mapped ? (scenario?.cvss?.selectedStatistic || "scenario CVSS") : "UNMAPPED",
@@ -283,7 +292,7 @@ function main() {
 
   const toolScenarioGroups = new Map();
   for (const finding of findings) {
-    if (!finding.mapped) continue;
+    if (!finding.coverageEligible) continue;
     const key = `${finding.tool}|${finding.scenarioId}`;
     if (!toolScenarioGroups.has(key)) toolScenarioGroups.set(key, []);
     toolScenarioGroups.get(key).push(finding);

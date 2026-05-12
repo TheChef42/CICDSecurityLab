@@ -16,6 +16,8 @@
       "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/fixed/trusted-install.sh.sha256"
     ],
     "remediation": "Pin versions and verify checksums, signatures, or digests before execution.",
+    "intendedVulnerabilityCount": 1,
+    "intendedVulnerabilityNotes": "Unsafe execution without checksum, digest, or signature verification.",
     "mappingHints": {
       "keywords": [
         "curl | sh",
@@ -29,7 +31,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission",
-    "metadataPath": "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/metadata.json"
+    "metadataPath": "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/metadata.json",
+    "cvss": {
+      "cwe": "CWE-494",
+      "baseScore": 8.1,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 103,
+      "totalMatchingCves": 105,
+      "fetchedCves": 105,
+      "complete": true,
+      "scoreMin": 3.1,
+      "scoreMax": 9.8,
+      "scoreMean": 8,
+      "scoreMedian": 8.1,
+      "scoreP75": 8.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC03-CWE829",
@@ -50,6 +70,8 @@
       "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/fixed/install-dependencies.sh"
     ],
     "remediation": "Commit lockfiles, pin versions, and use deterministic installers such as npm ci.",
+    "intendedVulnerabilityCount": 1,
+    "intendedVulnerabilityNotes": "Untrusted dependency resolution through missing deterministic lockfile protection.",
     "mappingHints": {
       "keywords": [
         "package-lock",
@@ -62,7 +84,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution",
-    "metadataPath": "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/metadata.json"
+    "metadataPath": "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/metadata.json",
+    "cvss": {
+      "cwe": "CWE-829",
+      "baseScore": 8,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 140,
+      "totalMatchingCves": 140,
+      "fetchedCves": 140,
+      "complete": true,
+      "scoreMin": 2.7,
+      "scoreMax": 10,
+      "scoreMean": 7.9,
+      "scoreMedian": 8,
+      "scoreP75": 8.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC04-CWE78",
@@ -78,6 +118,8 @@
       "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/fixed/issue-title-search.yml"
     ],
     "remediation": "Pass untrusted values through environment variables, validate input, quote safely, or avoid shell interpolation.",
+    "intendedVulnerabilityCount": 1,
+    "intendedVulnerabilityNotes": "Untrusted GitHub context interpolated into a shell command.",
     "mappingHints": {
       "keywords": [
         "github.event.issue.title",
@@ -90,7 +132,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection",
-    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/metadata.json"
+    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/metadata.json",
+    "cvss": {
+      "cwe": "CWE-78",
+      "baseScore": 8.8,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_PARTIAL_CVES",
+      "sampleSize": 1806,
+      "totalMatchingCves": 3810,
+      "fetchedCves": 2000,
+      "complete": false,
+      "scoreMin": 3.3,
+      "scoreMax": 10,
+      "scoreMean": 8.6,
+      "scoreMedian": 8.8,
+      "scoreP75": 9.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC04-CWE269",
@@ -106,6 +166,8 @@
       "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/fixed/build.yml"
     ],
     "remediation": "Use least-privilege workflow permissions such as contents: read.",
+    "intendedVulnerabilityCount": 1,
+    "intendedVulnerabilityNotes": "Workflow grants write-all permissions instead of least privilege.",
     "mappingHints": {
       "keywords": [
         "write-all",
@@ -118,7 +180,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege",
-    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/metadata.json"
+    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/metadata.json",
+    "cvss": {
+      "cwe": "CWE-269",
+      "baseScore": 7.8,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 1326,
+      "totalMatchingCves": 1359,
+      "fetchedCves": 1359,
+      "complete": true,
+      "scoreMin": 2.1,
+      "scoreMax": 10,
+      "scoreMean": 7.6,
+      "scoreMedian": 7.8,
+      "scoreP75": 8.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC06-CWE798",
@@ -136,6 +216,8 @@
       "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/fixed/app.env.example"
     ],
     "remediation": "Store secrets in environment variables or a secret manager and never commit credential values.",
+    "intendedVulnerabilityCount": 7,
+    "intendedVulnerabilityNotes": "Fake test credentials are intentionally present across vulnerable files.",
     "mappingHints": {
       "keywords": [
         "AKIAIOSFODNN7EXAMPLE",
@@ -148,7 +230,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret",
-    "metadataPath": "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/metadata.json"
+    "metadataPath": "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/metadata.json",
+    "cvss": {
+      "cwe": "CWE-798",
+      "baseScore": 9.1,
+      "selectedStatistic": "scoreMedian",
+      "severity": "CRITICAL",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 1209,
+      "totalMatchingCves": 1219,
+      "fetchedCves": 1219,
+      "complete": true,
+      "scoreMin": 2.1,
+      "scoreMax": 10,
+      "scoreMean": 8.5,
+      "scoreMedian": 9.1,
+      "scoreP75": 9.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC06-CWE532",
@@ -164,6 +264,8 @@
       "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/fixed/debug-workflow.yml"
     ],
     "remediation": "Avoid dumping environment variables, disable shell tracing around secrets, and mask sensitive values.",
+    "intendedVulnerabilityCount": 2,
+    "intendedVulnerabilityNotes": "Verbose shell tracing and environment dumping can expose sensitive values.",
     "mappingHints": {
       "keywords": [
         "set -x",
@@ -177,7 +279,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak",
-    "metadataPath": "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/metadata.json"
+    "metadataPath": "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/metadata.json",
+    "cvss": {
+      "cwe": "CWE-532",
+      "baseScore": 5.5,
+      "selectedStatistic": "scoreMedian",
+      "severity": "MEDIUM",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 682,
+      "totalMatchingCves": 687,
+      "fetchedCves": 687,
+      "complete": true,
+      "scoreMin": 1.9,
+      "scoreMax": 10,
+      "scoreMean": 6.1,
+      "scoreMedian": 5.5,
+      "scoreP75": 7.5,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC07-CWE16",
@@ -193,6 +313,8 @@
       "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/fixed/Dockerfile"
     ],
     "remediation": "Create and use a non-root user in build and runner containers.",
+    "intendedVulnerabilityCount": 2,
+    "intendedVulnerabilityNotes": "Container default runs as root and lacks expected hardening signals.",
     "mappingHints": {
       "keywords": [
         "missing user",
@@ -205,7 +327,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default",
-    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/metadata.json"
+    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/metadata.json",
+    "cvss": {
+      "cwe": "CWE-16",
+      "baseScore": 8.8,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 6,
+      "totalMatchingCves": 257,
+      "fetchedCves": 257,
+      "complete": true,
+      "scoreMin": 7.5,
+      "scoreMax": 9.8,
+      "scoreMean": 8.8,
+      "scoreMedian": 8.8,
+      "scoreP75": 9.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC07-CWE269",
@@ -221,6 +361,8 @@
       "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/fixed/main.tf"
     ],
     "remediation": "Use scoped IAM policies with only the actions required by the pipeline.",
+    "intendedVulnerabilityCount": 1,
+    "intendedVulnerabilityNotes": "IaC grants broad administrator access to a CI/CD identity.",
     "mappingHints": {
       "keywords": [
         "AdministratorAccess",
@@ -233,7 +375,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity",
-    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/metadata.json"
+    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/metadata.json",
+    "cvss": {
+      "cwe": "CWE-269",
+      "baseScore": 7.8,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 1326,
+      "totalMatchingCves": 1359,
+      "fetchedCves": 1359,
+      "complete": true,
+      "scoreMin": 2.1,
+      "scoreMax": 10,
+      "scoreMean": 7.6,
+      "scoreMedian": 7.8,
+      "scoreP75": 8.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC09-CWE345-A",
@@ -251,6 +411,8 @@
       "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/docker-compose.yml"
     ],
     "remediation": "Pin container images by immutable SHA-256 digest instead of mutable tags.",
+    "intendedVulnerabilityCount": 2,
+    "intendedVulnerabilityNotes": "Mutable latest tags are used in container build/deployment configuration.",
     "mappingHints": {
       "keywords": [
         "latest",
@@ -263,7 +425,25 @@
       ]
     },
     "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags",
-    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/metadata.json"
+    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/metadata.json",
+    "cvss": {
+      "cwe": "CWE-345",
+      "baseScore": 7.5,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 342,
+      "totalMatchingCves": 357,
+      "fetchedCves": 357,
+      "complete": true,
+      "scoreMin": 3.1,
+      "scoreMax": 10,
+      "scoreMean": 7.2,
+      "scoreMedian": 7.5,
+      "scoreP75": 8.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   },
   {
     "id": "SEC09-CWE345-B",
@@ -282,6 +462,8 @@
       "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/provenance.json"
     ],
     "remediation": "Require provenance or signature verification and fail closed when verification is missing or invalid.",
+    "intendedVulnerabilityCount": 1,
+    "intendedVulnerabilityNotes": "Deployment accepts a local mock artifact without requiring provenance verification.",
     "mappingHints": {
       "keywords": [
         "provenance",
@@ -295,6 +477,24 @@
       ]
     },
     "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance",
-    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/metadata.json"
+    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/metadata.json",
+    "cvss": {
+      "cwe": "CWE-345",
+      "baseScore": 7.5,
+      "selectedStatistic": "scoreMedian",
+      "severity": "HIGH",
+      "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
+      "sampleSize": 342,
+      "totalMatchingCves": 357,
+      "fetchedCves": 357,
+      "complete": true,
+      "scoreMin": 3.1,
+      "scoreMax": 10,
+      "scoreMean": 7.2,
+      "scoreMedian": 7.5,
+      "scoreP75": 8.8,
+      "source": "NVD CVE API grouped by CWE",
+      "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
+    }
   }
 ]

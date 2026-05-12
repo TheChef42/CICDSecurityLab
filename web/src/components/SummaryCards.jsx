@@ -1,5 +1,5 @@
 import { AlertTriangle, BadgeCheck, Binary, Bug, Gauge, ListChecks, ShieldAlert, ShieldQuestion, Target } from "lucide-react";
-import { impactLevelFromScore, uniqueCoveredScenarioIds } from "../utils/coverage.js";
+import { impactLevelFromScore, isCoverageEligible, uniqueCoveredScenarioIds } from "../utils/coverage.js";
 
 function countSeverity(findings, severity) {
   return findings.filter((finding) => finding.severity === severity).length;
@@ -22,6 +22,7 @@ export default function SummaryCards({ findings, scenarios }) {
   const weightedCoverage = totalWeight ? Math.round((coveredWeight / totalWeight) * 1000) / 10 : 0;
   const intendedVulnerabilities = scenarios.reduce((sum, scenario) => sum + (Number(scenario.intendedVulnerabilityCount) || 1), 0);
   const extraScenarioFindings = findings.filter((finding) => finding.coverageExtra).length;
+  const nonCoverageMapped = findings.filter((finding) => finding.mapped && !isCoverageEligible(finding)).length;
   const highImpactScenarios = scenarios.filter((scenario) => {
     const level = impactLevelFromScore(scenario.cvss?.baseScore);
     return level === "HIGH" || level === "CRITICAL";
@@ -38,6 +39,7 @@ export default function SummaryCards({ findings, scenarios }) {
     { label: "CWE Scenarios", value: totalScenarios, icon: ListChecks, tone: "green" },
     { label: "Intended Vulns", value: intendedVulnerabilities, icon: Target, tone: "green" },
     { label: "Extra Raw Findings", value: extraScenarioFindings, icon: ShieldQuestion, tone: "amber" },
+    { label: "Mapped Non-Coverage", value: nonCoverageMapped, icon: ShieldQuestion, tone: "amber" },
     { label: "Scenario Coverage", value: `${coverage}%`, icon: Gauge, tone: "amber" },
     { label: "CVSS Impact Coverage", value: `${weightedCoverage}%`, icon: ShieldAlert, tone: "red" },
     { label: "High Impact Covered", value: `${highImpactCovered}/${highImpactScenarios.length}`, icon: AlertTriangle, tone: "orange" }

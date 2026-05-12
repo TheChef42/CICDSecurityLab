@@ -48,6 +48,9 @@ export default function ToolScenarioMatrix({ findings, scenarios, tools }) {
                           {stats.rawCount} raw{stats.extraCount ? `, ${stats.extraCount} extra` : ""}
                         </em>
                       ) : null}
+                      {stats.nonCreditedMappedCount > 0 ? (
+                        <em>{stats.nonCreditedMappedCount} mapped but not coverage evidence</em>
+                      ) : null}
                     </span>
                   </td>
                 );
