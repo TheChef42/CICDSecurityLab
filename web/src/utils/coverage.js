@@ -219,9 +219,10 @@ export function recommendToolSets(findings, scenarios, selectedScenarioIds, tool
     .filter((scenario) => coverableScenarioIds.includes(scenario.id))
     .reduce((sum, scenario) => sum + scenarioWeight(scenario), 0);
 
+  const recommendationSets = [];
   for (let size = 1; size <= availableTools.length; size += 1) {
-    const recommendationSets = combinations(availableTools, size)
-      .map((toolSet) => {
+    recommendationSets.push(
+      ...combinations(availableTools, size).map((toolSet) => {
         const scenarioCredits = Object.fromEntries(
           scenarios
             .filter((scenario) => coverableScenarioIds.includes(scenario.id))
@@ -258,6 +259,7 @@ export function recommendToolSets(findings, scenarios, selectedScenarioIds, tool
           missedScenarioIds,
           scenarioCredits,
           findingsCount,
+          fullyCoversSelected: fullyCoveredScenarioIds.length === coverableScenarioIds.length,
           coveragePercent: coverableScenarioIds.length
             ? roundOne((totalCredit / coverableScenarioIds.length) * 100)
             : 0,
@@ -268,28 +270,26 @@ export function recommendToolSets(findings, scenarios, selectedScenarioIds, tool
           }
         };
       })
-      .filter((recommendation) => recommendation.fullyCoveredScenarioIds.length === coverableScenarioIds.length);
-
-    if (recommendationSets.length) {
-      recommendationSets.sort((left, right) => (
-        right.coveredScenarioIds.length - left.coveredScenarioIds.length ||
-        right.weightedCoverage.coveragePercent - left.weightedCoverage.coveragePercent ||
-        left.tools.join("|").localeCompare(right.tools.join("|"))
-      ));
-
-      return {
-        selectedScenarioIds: scenarioIds,
-        coverableScenarioIds,
-        unavailableScenarioIds,
-        recommendations: recommendationSets.slice(0, maxRecommendations)
-      };
-    }
+    );
   }
+
+  const fullCoverageSets = recommendationSets.filter((recommendation) => recommendation.fullyCoversSelected);
+  const candidates = fullCoverageSets.length ? fullCoverageSets : recommendationSets;
+  const bestCoverage = Math.max(...candidates.map((recommendation) => recommendation.coveragePercent));
+  const bestSets = candidates
+    .filter((recommendation) => recommendation.coveragePercent === bestCoverage)
+    .sort((left, right) => (
+      left.tools.length - right.tools.length ||
+      right.weightedCoverage.coveragePercent - left.weightedCoverage.coveragePercent ||
+      right.fullyCoveredScenarioIds.length - left.fullyCoveredScenarioIds.length ||
+      left.tools.join("|").localeCompare(right.tools.join("|"))
+    ));
 
   return {
     selectedScenarioIds: scenarioIds,
     coverableScenarioIds,
     unavailableScenarioIds,
-    recommendations: []
+    recommendationMode: fullCoverageSets.length ? "full" : "best-partial",
+    recommendations: bestSets.slice(0, maxRecommendations)
   };
 }

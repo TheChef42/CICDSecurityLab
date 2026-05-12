@@ -105,6 +105,13 @@ export default function ToolRecommendations({ findings, scenarios, tools, diagno
           </div>
         ) : null}
 
+        {recommendationData.recommendationMode === "best-partial" ? (
+          <div className="recommendation-warning">
+            <CircleSlash size={18} />
+            <span>No tool set fully covers every coverable selected scenario. Showing the best partial coverage available from current scanner output.</span>
+          </div>
+        ) : null}
+
         {!selectedScenarioIds.length ? (
           <p className="empty-inline">Select at least one scenario to calculate recommendations.</p>
         ) : recommendationData.recommendations.length ? (
@@ -116,6 +123,7 @@ export default function ToolRecommendations({ findings, scenarios, tools, diagno
                   <div className="recommendation-card-heading">
                     <div>
                       <span className="badge mapped">Recommendation {index + 1}</span>
+                      {recommendation.fullyCoversSelected ? null : <span className="badge extra">best partial</span>}
                       <h3>{recommendation.tools.join(" + ")}</h3>
                     </div>
                     <Layers3 size={22} />
@@ -142,7 +150,15 @@ export default function ToolRecommendations({ findings, scenarios, tools, diagno
 
                   <div className="recommendation-covered">
                     {recommendation.coveredScenarioIds.map((scenarioId) => (
-                      <span className="badge mapped" key={scenarioId}>{scenarioId}</span>
+                      <span
+                        className={recommendation.fullyCoveredScenarioIds.includes(scenarioId) ? "badge mapped" : "badge extra"}
+                        key={scenarioId}
+                      >
+                        {scenarioId}
+                        {recommendation.scenarioCredits?.[scenarioId]
+                          ? ` ${recommendation.scenarioCredits[scenarioId].credited}/${recommendation.scenarioCredits[scenarioId].intended}`
+                          : ""}
+                      </span>
                     ))}
                   </div>
 
