@@ -1,0 +1,384 @@
+\section{Implemented Scenario Code Snippets}
+\label{app:implemented-scenario-code}
+
+This appendix shows the concrete vulnerable and fixed code patterns implemented for each CWE scenario in the lab. The snippets are shortened only where the surrounding boilerplate is not needed to show the weakness.
+
+Required packages:
+
+\begin{lstlisting}
+\usepackage{listings}
+\usepackage{xcolor}
+\end{lstlisting}
+
+Suggested listing setup:
+
+\begin{lstlisting}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  showstringspaces=false,
+  tabsize=2
+}
+\end{lstlisting}
+
+\subsection{SEC03-CWE494: Download of Code Without Integrity Check}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC03-CWE494 vulnerable shell script}]
+#!/usr/bin/env sh
+set -eu
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Vulnerable pattern retained for scanners and academic discussion:
+# curl -fsSL https://example.invalid/install.sh | sh
+
+echo "Executing local mock installer without checksum verification."
+sh "$SCRIPT_DIR/remote-install-example.sh"
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC03-CWE494 fixed checksum verification}]
+#!/usr/bin/env sh
+set -eu
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ARTIFACT="$SCRIPT_DIR/trusted-install.sh"
+CHECKSUM_FILE="$SCRIPT_DIR/trusted-install.sh.sha256"
+
+EXPECTED_SHA256="$(awk '{print $1}' "$CHECKSUM_FILE")"
+ACTUAL_SHA256="$(sha256sum "$ARTIFACT" | awk '{print $1}')"
+
+if [ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]; then
+  echo "Checksum verification failed; refusing to execute artifact." >&2
+  exit 1
+fi
+
+echo "Checksum verified; executing trusted local artifact."
+sh "$ARTIFACT"
+\end{lstlisting}
+
+\subsection{SEC03-CWE829: Inclusion of Functionality from Untrusted Control Sphere}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC03-CWE829 vulnerable dependency manifest and install command}]
+{
+  "name": "sec03-cwe829-vulnerable",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.20"
+  }
+}
+
+# install-dependencies.sh
+# Vulnerable for CI: resolves dependency ranges because no package-lock.json is present.
+npm install
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC03-CWE829 fixed deterministic install}]
+{
+  "name": "sec03-cwe829-fixed",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "lodash": "4.17.21"
+  }
+}
+
+# package-lock.json is committed in the fixed directory.
+# install-dependencies.sh
+npm ci
+\end{lstlisting}
+
+\subsection{SEC04-CWE78: Improper Neutralization of Special Elements used in an OS Command}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC04-CWE78 vulnerable GitHub Actions shell interpolation}]
+name: vulnerable issue title search
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Search docs using untrusted title
+        run: |
+          echo "Searching for ${{ github.event.issue.title }}"
+          grep -R "${{ github.event.issue.title }}" docs || true
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC04-CWE78 fixed environment variable and validation}]
+name: fixed issue title search
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Search docs using validated title
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          case "$ISSUE_TITLE" in
+            (*[!a-zA-Z0-9._ -]*)
+              echo "Issue title contains unsupported characters."
+              exit 1
+              ;;
+          esac
+          grep -R -- "$ISSUE_TITLE" docs || true
+\end{lstlisting}
+
+\subsection{SEC04-CWE266: Incorrect Privilege Assignment}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC04-CWE266 vulnerable workflow token permissions}]
+name: vulnerable overprivileged build
+
+on:
+  pull_request:
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "safe build placeholder"
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC04-CWE266 fixed least-privilege workflow permissions}]
+name: fixed least-privilege build
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "safe build placeholder"
+\end{lstlisting}
+
+\subsection{SEC06-CWE798: Use of Hard-coded Credentials}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC06-CWE798 vulnerable fake hard-coded credentials}]
+#!/usr/bin/env sh
+set -eu
+
+# FAKE TEST CREDENTIALS ONLY. These values are intentionally invalid.
+export AWS_ACCESS_KEY_ID="AKIAI53GZYXMPQR8UVWX"
+export GITHUB_TOKEN="ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ"
+export STRIPE_KEY="sk_test_FAKE1234567890abcdef"
+
+echo "Deploying with fake test credentials for scanner demonstration only."
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC06-CWE798 fixed runtime-supplied credentials}]
+#!/usr/bin/env sh
+set -eu
+
+: "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID must be supplied by the environment}"
+: "${GITHUB_TOKEN:?GITHUB_TOKEN must be supplied by the environment}"
+: "${STRIPE_KEY:?STRIPE_KEY must be supplied by the environment}"
+
+echo "Deploying with credentials supplied by the runtime environment."
+\end{lstlisting}
+
+\subsection{SEC06-CWE532: Insertion of Sensitive Information into Log File}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC06-CWE532 vulnerable verbose environment logging}]
+name: vulnerable verbose logging
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    env:
+      FAKE_DEPLOY_TOKEN: ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ
+
+    steps:
+      - name: Dump environment
+        run: |
+          set -x
+          printenv
+          env
+          echo "debug complete"
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC06-CWE532 fixed controlled logging}]
+name: fixed controlled logging
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    env:
+      FAKE_DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+    steps:
+      - name: Log safe metadata
+        run: |
+          set +x
+          echo "::add-mask::$FAKE_DEPLOY_TOKEN"
+          echo "debug mode enabled without dumping environment variables"
+\end{lstlisting}
+
+\subsection{SEC07-CWE250: Execution with Unnecessary Privileges}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC07-CWE250 vulnerable Dockerfile without USER directive}]
+FROM node:20-bookworm
+
+WORKDIR /app
+COPY package.json ./
+RUN npm install --ignore-scripts
+
+CMD ["node", "-e", "console.log('running as default user')"]
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC07-CWE250 fixed Dockerfile with non-root user}]
+FROM node:20-bookworm
+
+WORKDIR /app
+COPY package.json ./
+RUN npm install --ignore-scripts \
+    && groupadd --system appgroup \
+    && useradd --system --gid appgroup --home-dir /app appuser \
+    && chown -R appuser:appgroup /app
+
+USER appuser
+
+CMD ["node", "-e", "console.log('running as non-root user')"]
+\end{lstlisting}
+
+\subsection{SEC07-CWE732: Incorrect Permission Assignment for Critical Resource}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC07-CWE732 vulnerable administrator IAM policy attachment}]
+resource "aws_iam_role_policy_attachment" "ci_admin" {
+  role       = aws_iam_role.ci_runner.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC07-CWE732 fixed scoped IAM policy attachment}]
+resource "aws_iam_policy" "ci_limited" {
+  name = "lab-ci-runner-limited-example"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ci_limited" {
+  role       = aws_iam_role.ci_runner.name
+  policy_arn = aws_iam_policy.ci_limited.arn
+}
+\end{lstlisting}
+
+\subsection{SEC09-CWE354: Improper Validation of Integrity Check Value}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC09-CWE354 vulnerable mutable image tags}]
+# Dockerfile
+FROM alpine:latest
+
+# docker-compose.yml
+services:
+  app:
+    image: node:latest
+    command: ["node", "-e", "console.log('mutable image tag example')"]
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC09-CWE354 fixed digest-pinned image references}]
+# Dockerfile
+FROM alpine@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+# docker-compose.yml
+services:
+  app:
+    image: node@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    command: ["node", "-e", "console.log('digest-pinned image example')"]
+\end{lstlisting}
+
+\subsection{SEC09-CWE347: Improper Verification of Cryptographic Signature}
+
+\textbf{Vulnerable implementation:}
+\begin{lstlisting}[caption={SEC09-CWE347 vulnerable artifact deployment without provenance verification}]
+#!/usr/bin/env sh
+set -eu
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ARTIFACT="${1:-$SCRIPT_DIR/artifact.txt}"
+ALLOW_MISSING_PROVENANCE=true
+
+if [ "$ALLOW_MISSING_PROVENANCE" = "true" ]; then
+  echo "Deploying $ARTIFACT without provenance verification."
+fi
+\end{lstlisting}
+
+\textbf{Fixed implementation:}
+\begin{lstlisting}[caption={SEC09-CWE347 fixed local provenance verification}]
+#!/usr/bin/env sh
+set -eu
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ARTIFACT="${1:-$SCRIPT_DIR/artifact.txt}"
+PROVENANCE="${2:-$SCRIPT_DIR/provenance.json}"
+TRUSTED_BUILDER="https://ci.example.invalid/trusted-builder"
+
+if [ ! -f "$PROVENANCE" ]; then
+  echo "Missing provenance; refusing deployment." >&2
+  exit 1
+fi
+
+EXPECTED_SHA256="$(node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync(process.argv[1],'utf8')); console.log(p.subject.sha256)" "$PROVENANCE")"
+ACTUAL_SHA256="$(sha256sum "$ARTIFACT" | awk '{print $1}')"
+BUILDER_ID="$(node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync(process.argv[1],'utf8')); console.log(p.builder.id)" "$PROVENANCE")"
+
+if [ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]; then
+  echo "Artifact digest mismatch; refusing deployment." >&2
+  exit 1
+fi
+
+if [ "$BUILDER_ID" != "$TRUSTED_BUILDER" ]; then
+  echo "Untrusted builder identity; refusing deployment." >&2
+  exit 1
+fi
+
+echo "Provenance verified; deploying $ARTIFACT."
+\end{lstlisting}

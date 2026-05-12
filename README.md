@@ -96,6 +96,7 @@ Coverage is calculated from mapped vulnerable-side scenario detections only:
 - Combined coverage = the average partial scenario credit from the selected tools.
 - CVSS-weighted coverage = the same partial scenario credit weighted by generated NVD-derived CWE CVSS context, when that data is available. The generated table stores mean, median, and 75th percentile; the selected score defaults to the median.
 - Tool recommendations = the smallest reporting-profile combinations that cover selected scenarios, calculated only from mapped findings.
+- Coverage radar = a spider chart using the same partial-credit scenario coverage values to compare individual reporting profiles against a selected tool combination.
 
 The partial-credit formula is:
 

@@ -16,6 +16,7 @@ import RawFindings from "./components/RawFindings.jsx";
 import ToolScenarioMatrix from "./components/ToolScenarioMatrix.jsx";
 import ScenarioCatalog from "./components/ScenarioCatalog.jsx";
 import CombinedCoverage from "./components/CombinedCoverage.jsx";
+import ToolCoverageRadar from "./components/ToolCoverageRadar.jsx";
 import ToolDiagnostics from "./components/ToolDiagnostics.jsx";
 import ToolRecommendations from "./components/ToolRecommendations.jsx";
 import { TOOLS, SEVERITIES } from "./utils/coverage.js";
@@ -26,6 +27,7 @@ const tabs = [
   { id: "matrix", label: "Tool × Scenario Matrix", icon: Columns3 },
   { id: "catalog", label: "CWE Scenario Catalog", icon: ShieldCheck },
   { id: "coverage", label: "Combined Coverage", icon: Radar },
+  { id: "radar", label: "Coverage Radar", icon: Gauge },
   { id: "recommendations", label: "Tool Recommendations", icon: Route },
   { id: "diagnostics", label: "Tool Diagnostics", icon: Activity }
 ];
@@ -248,6 +250,14 @@ export default function App() {
           {activeTab === "matrix" && <ToolScenarioMatrix findings={filteredFindings} scenarios={filteredScenarios} tools={filteredTools} />}
           {activeTab === "catalog" && <ScenarioCatalog scenarios={filteredScenarios} />}
           {activeTab === "coverage" && <CombinedCoverage findings={filteredFindings} scenarios={filteredScenarios} tools={filteredTools} />}
+          {activeTab === "radar" && (
+            <ToolCoverageRadar
+              findings={filteredFindings}
+              scenarios={filteredScenarios}
+              tools={filteredTools}
+              diagnostics={filteredDiagnostics}
+            />
+          )}
           {activeTab === "recommendations" && (
             <ToolRecommendations
               findings={filteredFindings}

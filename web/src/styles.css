@@ -118,6 +118,7 @@ h1 {
 .scenario-card,
 .diagnostic-card,
 .recommendation-card,
+.radar-profile,
 .overlap-card {
   border: 1px solid #263142;
   border-radius: 8px;
@@ -752,6 +753,161 @@ dd {
   overflow-wrap: anywhere;
 }
 
+.radar-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(420px, 1.35fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.radar-controls,
+.radar-legend {
+  display: grid;
+  gap: 12px;
+}
+
+.radar-controls > div,
+.radar-stage {
+  border: 1px solid #263142;
+  border-radius: 8px;
+  background: #101722;
+}
+
+.radar-controls > div {
+  padding: 14px;
+}
+
+.radar-controls h3,
+.radar-profile h3 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+
+.radar-controls p,
+.radar-profile p {
+  margin: 0 0 10px;
+  color: #bac6d8;
+  line-height: 1.5;
+}
+
+.radar-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.radar-stage {
+  min-height: 560px;
+  padding: 10px;
+}
+
+.radar-chart {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+}
+
+.radar-ring {
+  fill: none;
+  stroke: #29374b;
+  stroke-width: 1;
+}
+
+.radar-ring.zero {
+  stroke: #3b4b62;
+  stroke-dasharray: 4 5;
+}
+
+.radar-axis {
+  stroke: #253246;
+  stroke-width: 1;
+}
+
+.radar-label {
+  fill: #aebbd0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-anchor: middle;
+  text-transform: uppercase;
+}
+
+.radar-area {
+  fill: var(--radar-color);
+  fill-opacity: 0.08;
+  stroke: none;
+}
+
+.radar-area.combo {
+  fill-opacity: 0.12;
+}
+
+.radar-line {
+  fill: none;
+  stroke: var(--radar-color);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+.radar-line.combo {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.radar-point {
+  fill: var(--radar-color);
+  stroke: #0f1622;
+  stroke-width: 1.4;
+}
+
+.radar-point.zero {
+  fill: #111827;
+  stroke: var(--radar-color);
+  stroke-width: 1.6;
+}
+
+.radar-center-label,
+.radar-center-value {
+  fill: #edf2f7;
+  text-anchor: middle;
+}
+
+.radar-center-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.radar-center-value {
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.radar-legend {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.radar-profile {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  padding: 14px;
+}
+
+.radar-profile.combo {
+  border-color: #59697f;
+  background: rgba(22, 31, 46, 0.96);
+}
+
+.radar-swatch {
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+}
+
 .details-text {
   white-space: pre-wrap;
   max-height: 260px;
@@ -764,6 +920,8 @@ dd {
   .recommendation-layout,
   .recommendation-summary,
   .recommendation-tools,
+  .radar-layout,
+  .radar-legend,
   .overlap-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -798,6 +956,8 @@ dd {
   .recommendation-layout,
   .recommendation-summary,
   .recommendation-tools,
+  .radar-layout,
+  .radar-legend,
   .overlap-grid,
   .finding-meta,
   .recommendation-meta {
@@ -806,5 +966,13 @@ dd {
 
   .tabs {
     align-items: stretch;
+  }
+
+  .radar-stage {
+    min-height: 420px;
+  }
+
+  .radar-chart {
+    min-height: 390px;
   }
 }

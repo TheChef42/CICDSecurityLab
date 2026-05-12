@@ -3,6 +3,17 @@ export default function ScenarioCatalog({ scenarios }) {
     return <div className="empty-inline">No scenarios are available yet.</div>;
   }
 
+  const totalCvssWeight = scenarios.reduce((sum, scenario) => {
+    const score = Number(scenario.cvss?.baseScore);
+    return sum + (Number.isFinite(score) && score > 0 ? score : 0);
+  }, 0);
+
+  function cvssWeightShare(scenario) {
+    const score = Number(scenario.cvss?.baseScore);
+    if (!totalCvssWeight || !Number.isFinite(score) || score <= 0) return "n/a";
+    return `${Math.round((score / totalCvssWeight) * 1000) / 10}%`;
+  }
+
   return (
     <div className="catalog-grid">
       {scenarios.map((scenario) => (
@@ -29,6 +40,10 @@ export default function ScenarioCatalog({ scenarios }) {
                   ? `${scenario.cvss.baseScore} ${scenario.cvss.severity} (${scenario.cvss.selectedStatistic || "selected"})`
                   : "n/a"}
               </dd>
+            </div>
+            <div>
+              <dt>CVSS weight share</dt>
+              <dd>{cvssWeightShare(scenario)} of weighted coverage denominator</dd>
             </div>
             <div>
               <dt>CVSS statistics</dt>
