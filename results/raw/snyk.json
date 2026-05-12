@@ -1316,9 +1316,9 @@
     "summary": "No known vulnerabilities",
     "filesystemPolicy": false,
     "uniqueCount": 0,
-    "projectName": "sec07-cwe16-fixed",
+    "projectName": "sec07-cwe250-fixed",
     "foundProjectCount": 1,
-    "displayTargetFile": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/fixed/package.json",
+    "displayTargetFile": "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/fixed/package.json",
     "hasUnknownVersions": false,
     "path": "/workspace"
   },
@@ -1423,9 +1423,9 @@
     "summary": "No known vulnerabilities",
     "filesystemPolicy": false,
     "uniqueCount": 0,
-    "projectName": "sec07-cwe16-vulnerable",
+    "projectName": "sec07-cwe250-vulnerable",
     "foundProjectCount": 1,
-    "displayTargetFile": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/vulnerable/package.json",
+    "displayTargetFile": "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/vulnerable/package.json",
     "hasUnknownVersions": false,
     "path": "/workspace"
   },

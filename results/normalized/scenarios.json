@@ -1,10 +1,13 @@
 [
   {
     "id": "SEC03-CWE494",
-    "title": "Integrity Omission",
+    "title": "Download of Code Without Integrity Check",
     "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
     "cwe": "CWE-494",
     "cweTitle": "Download of Code Without Integrity Check",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 105,
+    "cweTransition": "unchanged",
     "description": "Pipeline downloads or executes code without validating checksum, digest, or signature.",
     "vulnerableFiles": [
       "scenarios/sec03-dependency-chain-abuse/cwe-494-integrity-omission/vulnerable/install-unverified.sh",
@@ -53,10 +56,13 @@
   },
   {
     "id": "SEC03-CWE829",
-    "title": "Untrusted Dependency Resolution",
+    "title": "Inclusion of Functionality from Untrusted Control Sphere",
     "owaspCategory": "CICD-SEC-03: Dependency Chain Abuse",
     "cwe": "CWE-829",
     "cweTitle": "Inclusion of Functionality from Untrusted Control Sphere",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 141,
+    "cweTransition": "unchanged",
     "description": "Pipeline dependency installation resolves packages without a deterministic lockfile.",
     "vulnerableFiles": [
       "scenarios/sec03-dependency-chain-abuse/cwe-829-untrusted-dependency-resolution/vulnerable/package.json",
@@ -106,10 +112,13 @@
   },
   {
     "id": "SEC04-CWE78",
-    "title": "Tainted Command Injection",
+    "title": "Improper Neutralization of Special Elements used in an OS Command",
     "owaspCategory": "CICD-SEC-04: Poisoned Pipeline Execution",
     "cwe": "CWE-78",
     "cweTitle": "Improper Neutralization of Special Elements used in an OS Command",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 3809,
+    "cweTransition": "unchanged",
     "description": "Untrusted CI event context is interpolated directly into a shell command.",
     "vulnerableFiles": [
       "scenarios/sec04-poisoned-pipeline-execution/cwe-78-tainted-command-injection/vulnerable/issue-title-search.yml"
@@ -140,7 +149,7 @@
       "severity": "HIGH",
       "confidence": "NVD_DERIVED_PARTIAL_CVES",
       "sampleSize": 1806,
-      "totalMatchingCves": 3810,
+      "totalMatchingCves": 3811,
       "fetchedCves": 2000,
       "complete": false,
       "scoreMin": 3.3,
@@ -153,17 +162,20 @@
     }
   },
   {
-    "id": "SEC04-CWE269",
-    "title": "Token Over-privilege",
+    "id": "SEC04-CWE266",
+    "title": "Incorrect Privilege Assignment",
     "owaspCategory": "CICD-SEC-04: Poisoned Pipeline Execution",
-    "cwe": "CWE-269",
-    "cweTitle": "Improper Privilege Management",
+    "cwe": "CWE-266",
+    "cweTitle": "Incorrect Privilege Assignment",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 144,
+    "cweTransition": "CWE-269 -> CWE-266",
     "description": "GitHub Actions workflow grants unnecessary write-all token permissions during build/test.",
     "vulnerableFiles": [
-      "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/vulnerable/build.yml"
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-266-token-overprivilege/vulnerable/build.yml"
     ],
     "fixedFiles": [
-      "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/fixed/build.yml"
+      "scenarios/sec04-poisoned-pipeline-execution/cwe-266-token-overprivilege/fixed/build.yml"
     ],
     "remediation": "Use least-privilege workflow permissions such as contents: read.",
     "intendedVulnerabilityCount": 1,
@@ -176,25 +188,25 @@
         "least privilege"
       ],
       "filePatterns": [
-        "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/**"
+        "scenarios/sec04-poisoned-pipeline-execution/cwe-266-token-overprivilege/**"
       ]
     },
-    "scenarioRoot": "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege",
-    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-269-token-overprivilege/metadata.json",
+    "scenarioRoot": "scenarios/sec04-poisoned-pipeline-execution/cwe-266-token-overprivilege",
+    "metadataPath": "scenarios/sec04-poisoned-pipeline-execution/cwe-266-token-overprivilege/metadata.json",
     "cvss": {
-      "cwe": "CWE-269",
-      "baseScore": 7.8,
+      "cwe": "CWE-266",
+      "baseScore": 6.3,
       "selectedStatistic": "scoreMedian",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-      "sampleSize": 1326,
-      "totalMatchingCves": 1359,
-      "fetchedCves": 1359,
+      "sampleSize": 144,
+      "totalMatchingCves": 144,
+      "fetchedCves": 144,
       "complete": true,
-      "scoreMin": 2.1,
+      "scoreMin": 3.1,
       "scoreMax": 10,
-      "scoreMean": 7.6,
-      "scoreMedian": 7.8,
+      "scoreMean": 6.7,
+      "scoreMedian": 6.3,
       "scoreP75": 8.8,
       "source": "NVD CVE API grouped by CWE",
       "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
@@ -202,10 +214,13 @@
   },
   {
     "id": "SEC06-CWE798",
-    "title": "Hardcoded Secret",
+    "title": "Use of Hard-coded Credentials",
     "owaspCategory": "CICD-SEC-06: Insufficient Credential Hygiene",
     "cwe": "CWE-798",
     "cweTitle": "Use of Hard-coded Credentials",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 1219,
+    "cweTransition": "unchanged",
     "description": "High-entropy fake credentials are committed in CI/CD scripts or configuration.",
     "vulnerableFiles": [
       "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/deploy.sh",
@@ -237,9 +252,9 @@
       "selectedStatistic": "scoreMedian",
       "severity": "CRITICAL",
       "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-      "sampleSize": 1209,
-      "totalMatchingCves": 1219,
-      "fetchedCves": 1219,
+      "sampleSize": 1210,
+      "totalMatchingCves": 1220,
+      "fetchedCves": 1220,
       "complete": true,
       "scoreMin": 2.1,
       "scoreMax": 10,
@@ -252,10 +267,13 @@
   },
   {
     "id": "SEC06-CWE532",
-    "title": "Verbose Log Leak",
+    "title": "Insertion of Sensitive Information into Log File",
     "owaspCategory": "CICD-SEC-06: Insufficient Credential Hygiene",
     "cwe": "CWE-532",
     "cweTitle": "Insertion of Sensitive Information into Log File",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 687,
+    "cweTransition": "unchanged",
     "description": "Workflow debug output can print secret-bearing environment variables to plaintext build logs.",
     "vulnerableFiles": [
       "scenarios/sec06-credential-hygiene/cwe-532-verbose-log-leak/vulnerable/debug-workflow.yml"
@@ -300,21 +318,24 @@
     }
   },
   {
-    "id": "SEC07-CWE16",
-    "title": "Insecure Container Default",
+    "id": "SEC07-CWE250",
+    "title": "Execution with Unnecessary Privileges",
     "owaspCategory": "CICD-SEC-07: Insecure System Configuration",
-    "cwe": "CWE-16",
-    "cweTitle": "Configuration",
-    "description": "CI/build container Dockerfile lacks a USER directive, so it runs as root by default.",
+    "cwe": "CWE-250",
+    "cweTitle": "Execution with Unnecessary Privileges",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 29,
+    "cweTransition": "unchanged",
+    "description": "CI/build container Dockerfile lacks a USER directive, so it runs with unnecessary root privileges by default.",
     "vulnerableFiles": [
-      "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/vulnerable/Dockerfile"
+      "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/vulnerable/Dockerfile"
     ],
     "fixedFiles": [
-      "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/fixed/Dockerfile"
+      "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/fixed/Dockerfile"
     ],
     "remediation": "Create and use a non-root user in build and runner containers.",
     "intendedVulnerabilityCount": 2,
-    "intendedVulnerabilityNotes": "Container default runs as root and lacks expected hardening signals.",
+    "intendedVulnerabilityNotes": "Container default runs with unnecessary root privileges and lacks expected hardening signals.",
     "mappingHints": {
       "keywords": [
         "missing user",
@@ -323,42 +344,45 @@
         "container default"
       ],
       "filePatterns": [
-        "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/**"
+        "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/**"
       ]
     },
-    "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default",
-    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/metadata.json",
+    "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default",
+    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/metadata.json",
     "cvss": {
-      "cwe": "CWE-16",
-      "baseScore": 8.8,
+      "cwe": "CWE-250",
+      "baseScore": 7.8,
       "selectedStatistic": "scoreMedian",
       "severity": "HIGH",
       "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-      "sampleSize": 6,
-      "totalMatchingCves": 257,
-      "fetchedCves": 257,
+      "sampleSize": 26,
+      "totalMatchingCves": 29,
+      "fetchedCves": 29,
       "complete": true,
-      "scoreMin": 7.5,
+      "scoreMin": 4.3,
       "scoreMax": 9.8,
-      "scoreMean": 8.8,
-      "scoreMedian": 8.8,
-      "scoreP75": 9.8,
+      "scoreMean": 7.5,
+      "scoreMedian": 7.8,
+      "scoreP75": 8.8,
       "source": "NVD CVE API grouped by CWE",
       "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
     }
   },
   {
-    "id": "SEC07-CWE269",
-    "title": "Overprivileged Cloud Identity",
+    "id": "SEC07-CWE732",
+    "title": "Incorrect Permission Assignment for Critical Resource",
     "owaspCategory": "CICD-SEC-07: Insecure System Configuration",
-    "cwe": "CWE-269",
-    "cweTitle": "Improper Privilege Management",
+    "cwe": "CWE-732",
+    "cweTitle": "Incorrect Permission Assignment for Critical Resource",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 1197,
+    "cweTransition": "CWE-269 -> CWE-732",
     "description": "Terraform grants a CI/CD role AdministratorAccess instead of scoped permissions.",
     "vulnerableFiles": [
-      "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/vulnerable/main.tf"
+      "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/vulnerable/main.tf"
     ],
     "fixedFiles": [
-      "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/fixed/main.tf"
+      "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/fixed/main.tf"
     ],
     "remediation": "Use scoped IAM policies with only the actions required by the pipeline.",
     "intendedVulnerabilityCount": 1,
@@ -371,44 +395,47 @@
         "least privilege"
       ],
       "filePatterns": [
-        "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/**"
+        "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/**"
       ]
     },
-    "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity",
-    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/metadata.json",
+    "scenarioRoot": "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity",
+    "metadataPath": "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/metadata.json",
     "cvss": {
-      "cwe": "CWE-269",
-      "baseScore": 7.8,
+      "cwe": "CWE-732",
+      "baseScore": 7.5,
       "selectedStatistic": "scoreMedian",
       "severity": "HIGH",
       "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-      "sampleSize": 1326,
-      "totalMatchingCves": 1359,
-      "fetchedCves": 1359,
+      "sampleSize": 1186,
+      "totalMatchingCves": 1197,
+      "fetchedCves": 1197,
       "complete": true,
-      "scoreMin": 2.1,
-      "scoreMax": 10,
-      "scoreMean": 7.6,
-      "scoreMedian": 7.8,
-      "scoreP75": 8.8,
+      "scoreMin": 2.3,
+      "scoreMax": 9.9,
+      "scoreMean": 7.1,
+      "scoreMedian": 7.5,
+      "scoreP75": 7.8,
       "source": "NVD CVE API grouped by CWE",
       "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
     }
   },
   {
-    "id": "SEC09-CWE345-A",
-    "title": "Mutable Image Tags",
+    "id": "SEC09-CWE354",
+    "title": "Improper Validation of Integrity Check Value",
     "owaspCategory": "CICD-SEC-09: Improper Artifact Integrity Validation",
-    "cwe": "CWE-345",
-    "cweTitle": "Insufficient Verification of Data Authenticity",
+    "cwe": "CWE-354",
+    "cweTitle": "Improper Validation of Integrity Check Value",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 107,
+    "cweTransition": "CWE-345 -> CWE-354",
     "description": "Build or deployment configuration references container images by mutable tags such as latest instead of immutable digests.",
     "vulnerableFiles": [
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/vulnerable/Dockerfile",
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/vulnerable/docker-compose.yml"
+      "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/vulnerable/Dockerfile",
+      "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/vulnerable/docker-compose.yml"
     ],
     "fixedFiles": [
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/Dockerfile",
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/docker-compose.yml"
+      "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/fixed/Dockerfile",
+      "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/fixed/docker-compose.yml"
     ],
     "remediation": "Pin container images by immutable SHA-256 digest instead of mutable tags.",
     "intendedVulnerabilityCount": 2,
@@ -421,45 +448,48 @@
         "digest"
       ],
       "filePatterns": [
-        "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/**"
+        "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/**"
       ]
     },
-    "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags",
-    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/metadata.json",
+    "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags",
+    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/metadata.json",
     "cvss": {
-      "cwe": "CWE-345",
-      "baseScore": 7.5,
+      "cwe": "CWE-354",
+      "baseScore": 7.2,
       "selectedStatistic": "scoreMedian",
       "severity": "HIGH",
       "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-      "sampleSize": 342,
-      "totalMatchingCves": 357,
-      "fetchedCves": 357,
+      "sampleSize": 105,
+      "totalMatchingCves": 107,
+      "fetchedCves": 107,
       "complete": true,
       "scoreMin": 3.1,
-      "scoreMax": 10,
-      "scoreMean": 7.2,
-      "scoreMedian": 7.5,
-      "scoreP75": 8.8,
+      "scoreMax": 9.8,
+      "scoreMean": 6.9,
+      "scoreMedian": 7.2,
+      "scoreP75": 7.5,
       "source": "NVD CVE API grouped by CWE",
       "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
     }
   },
   {
-    "id": "SEC09-CWE345-B",
-    "title": "Unverified Provenance",
+    "id": "SEC09-CWE347",
+    "title": "Improper Verification of Cryptographic Signature",
     "owaspCategory": "CICD-SEC-09: Improper Artifact Integrity Validation",
-    "cwe": "CWE-345",
-    "cweTitle": "Insufficient Verification of Data Authenticity",
+    "cwe": "CWE-347",
+    "cweTitle": "Improper Verification of Cryptographic Signature",
+    "mappingStatus": "ALLOWED",
+    "nvdCveCount": 387,
+    "cweTransition": "CWE-345 -> CWE-347",
     "description": "Deployment logic accepts artifacts without requiring or verifying provenance, signature, attestation, or trusted builder identity.",
     "vulnerableFiles": [
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/vulnerable/deploy-artifact.sh",
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/vulnerable/artifact.txt"
+      "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/vulnerable/deploy-artifact.sh",
+      "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/vulnerable/artifact.txt"
     ],
     "fixedFiles": [
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/deploy-artifact.sh",
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/artifact.txt",
-      "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/fixed/provenance.json"
+      "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/fixed/deploy-artifact.sh",
+      "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/fixed/artifact.txt",
+      "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/fixed/provenance.json"
     ],
     "remediation": "Require provenance or signature verification and fail closed when verification is missing or invalid.",
     "intendedVulnerabilityCount": 1,
@@ -473,26 +503,26 @@
         "ALLOW_MISSING_PROVENANCE"
       ],
       "filePatterns": [
-        "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/**"
+        "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/**"
       ]
     },
-    "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance",
-    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-345-b-unverified-provenance/metadata.json",
+    "scenarioRoot": "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance",
+    "metadataPath": "scenarios/sec09-improper-artifact-integrity/cwe-347-unverified-provenance/metadata.json",
     "cvss": {
-      "cwe": "CWE-345",
+      "cwe": "CWE-347",
       "baseScore": 7.5,
       "selectedStatistic": "scoreMedian",
       "severity": "HIGH",
       "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-      "sampleSize": 342,
-      "totalMatchingCves": 357,
-      "fetchedCves": 357,
+      "sampleSize": 383,
+      "totalMatchingCves": 387,
+      "fetchedCves": 387,
       "complete": true,
-      "scoreMin": 3.1,
+      "scoreMin": 2.4,
       "scoreMax": 10,
-      "scoreMean": 7.2,
+      "scoreMean": 7.4,
       "scoreMedian": 7.5,
-      "scoreP75": 8.8,
+      "scoreP75": 8.1,
       "source": "NVD CVE API grouped by CWE",
       "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
     }

@@ -3,15 +3,15 @@
   "Trivy": {
     "Version": "0.70.0"
   },
-  "ReportID": "019e1b3c-7ea3-7d4f-bf1b-adebea185178",
-  "CreatedAt": "2026-05-12T08:10:09.955876024Z",
-  "ArtifactID": "sha256:177ac2559cfa9034ec6b12e5d0de4541c312f838bd2a3251f8a2fc94e9c251f4",
+  "ReportID": "019e1bd9-03bb-7590-96f2-e7f4f067bda0",
+  "CreatedAt": "2026-05-12T11:01:07.643368173Z",
+  "ArtifactID": "sha256:f4d8ed5557f6698212d96c4fb5acf19f1da7753491942d2e1b0f7d8910292a39",
   "ArtifactName": "/workspace",
   "ArtifactType": "repository",
   "Metadata": {
     "Branch": "main",
-    "Commit": "85f8de023ea7dfef451d7f5b8c0526b7080c23ca",
-    "CommitMsg": "Clarify duplicate findings and CVSS impact",
+    "Commit": "3a5e06a46b7948a5ebcdfce85286dffb53514885",
+    "CommitMsg": "Update scenario CWE mappings",
     "Author": "TheChef42 \u003cdanielflute@gmail.com\u003e",
     "Committer": "TheChef42 \u003cdanielflute@gmail.com\u003e"
   },
@@ -85,7 +85,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:f1c5aebb5775e4b3013e82b2631c94a7127a2a9d1ff7625e3ca2d256b452e821",
+          "Fingerprint": "sha256:f711959452406a4d3bd0d365612c6df8cc466f627481b1b2589400e7d2662a97",
           "Title": "nodejs-lodash: command injection via template",
           "Description": "Lodash versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
           "Severity": "HIGH",
@@ -164,7 +164,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:cd66c4135f288031c7677af18c9ddaf1fc145190b0eb04ea0ed7cc4b94542fb8",
+          "Fingerprint": "sha256:6b4157f5d23da404d133fe6f5b4b2298b11fb0a20e4e7591400e157865b74f17",
           "Title": "lodash: lodash: Arbitrary code execution via untrusted input in template imports",
           "Description": "Impact:\n\nThe fix for CVE-2021-23337 (https://github.com/advisories/GHSA-35jh-r3h4-6jhm) added validation for the variable option in _.template but did not apply the same validation to options.imports key names. Both paths flow into the same Function() constructor sink.\n\nWhen an application passes untrusted input as options.imports key names, an attacker can inject default-parameter expressions that execute arbitrary code at template compilation time.\n\nAdditionally, _.template uses assignInWith to merge imports, which enumerates inherited properties via for..in. If Object.prototype has been polluted by any other vector, the polluted keys are copied into the imports object and passed to Function().\n\nPatches:\n\nUsers should upgrade to version 4.18.0.\n\nWorkarounds:\n\nDo not pass untrusted input as key names in options.imports. Only use developer-controlled, static key names.",
           "Severity": "HIGH",
@@ -231,7 +231,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:c01b9f3e8cea0fe8fc4408af0546aa4dec686c7d843cfe9595ff34d82c050679",
+          "Fingerprint": "sha256:fd93a26a591d325ec58220f8962d3403167103fe1f3deec18c3bec7ddb37c9d4",
           "Title": "nodejs-lodash: ReDoS via the toNumber, trim and trimEnd functions",
           "Description": "Lodash versions prior to 4.17.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the toNumber, trim and trimEnd functions.",
           "Severity": "MEDIUM",
@@ -310,7 +310,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:20eb7a7328233f733308303e2752032de59e06e69fe12f860d48b35bba9ece11",
+          "Fingerprint": "sha256:a60c72f2dec84e15bbea6e4751388ccd154d7b0ea16cd1608c8c4a4752fa31c5",
           "Title": "lodash: prototype pollution in _.unset and _.omit functions",
           "Description": "Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the _.unset and _.omit functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes.\n\nThe issue permits deletion of properties but does not allow overwriting their original behavior.\n\nThis issue is patched on 4.17.23",
           "Severity": "MEDIUM",
@@ -377,7 +377,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:b729239e76608cb89f6eb14fc0f618504bfe384f0a2993de6744f9a23471f788",
+          "Fingerprint": "sha256:6a10a48bf47c94962df406fad48adb888517b7edf2d026354b823f6c8f23d86e",
           "Title": "lodash: Lodash: Prototype pollution allows deletion of built-in prototype properties via array path bypass",
           "Description": "Impact:\n\nLodash versions 4.17.23 and earlier are vulnerable to prototype pollution in the _.unset and _.omit functions. The fix for (CVE-2025-13465: https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg) only guards against string key members, so an attacker can bypass the check by passing array-wrapped path segments. This allows deletion of properties from built-in prototypes such as Object.prototype, Number.prototype, and String.prototype.\n\nThe issue permits deletion of prototype properties but does not allow overwriting their original behavior.\n\nPatches:\n\nThis issue is patched in 4.18.0.\n\nWorkarounds:\n\nNone. Upgrade to the patched version.",
           "Severity": "MEDIUM",
@@ -3107,7 +3107,7 @@
       ]
     },
     {
-      "Target": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/fixed/Dockerfile",
+      "Target": "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/fixed/Dockerfile",
       "Class": "config",
       "Type": "dockerfile",
       "MisconfSummary": {
@@ -3139,7 +3139,7 @@
       ]
     },
     {
-      "Target": "scenarios/sec07-insecure-system-configuration/cwe-16-insecure-container-default/vulnerable/Dockerfile",
+      "Target": "scenarios/sec07-insecure-system-configuration/cwe-250-insecure-container-default/vulnerable/Dockerfile",
       "Class": "config",
       "Type": "dockerfile",
       "MisconfSummary": {
@@ -3192,7 +3192,7 @@
       ]
     },
     {
-      "Target": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/fixed",
+      "Target": "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/fixed",
       "Class": "config",
       "Type": "terraform",
       "MisconfSummary": {
@@ -3201,7 +3201,7 @@
       }
     },
     {
-      "Target": "scenarios/sec07-insecure-system-configuration/cwe-269-overprivileged-cloud-identity/vulnerable",
+      "Target": "scenarios/sec07-insecure-system-configuration/cwe-732-overprivileged-cloud-identity/vulnerable",
       "Class": "config",
       "Type": "terraform",
       "MisconfSummary": {
@@ -3210,7 +3210,7 @@
       }
     },
     {
-      "Target": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/fixed/Dockerfile",
+      "Target": "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/fixed/Dockerfile",
       "Class": "config",
       "Type": "dockerfile",
       "MisconfSummary": {
@@ -3263,7 +3263,7 @@
       ]
     },
     {
-      "Target": "scenarios/sec09-improper-artifact-integrity/cwe-345-a-mutable-image-tags/vulnerable/Dockerfile",
+      "Target": "scenarios/sec09-improper-artifact-integrity/cwe-354-mutable-image-tags/vulnerable/Dockerfile",
       "Class": "config",
       "Type": "dockerfile",
       "MisconfSummary": {
