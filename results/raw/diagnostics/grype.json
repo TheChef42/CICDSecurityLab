@@ -4,6 +4,6 @@
   "message": "Grype filesystem vulnerability scan completed.",
   "rawOutputPath": "results/raw/grype.json",
   "details": "[0000]  WARN no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal) from=syft",
-  "runtimeMs": 4312,
-  "runtimeSeconds": 4.3
+  "runtimeMs": 20529,
+  "runtimeSeconds": 20.5
 }

@@ -3,7 +3,7 @@
   "status": "OK",
   "message": "Gitleaks repository scan completed.",
   "rawOutputPath": "results/raw/gitleaks.json",
-  "details": "\n    ○\n    │╲\n    │ ○\n    ○ ░\n    ░    gitleaks\n\n\u001b[90m11:34AM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mscanned ~182711 bytes (182.71 KB) in 143ms\u001b[0m\n\u001b[90m11:34AM\u001b[0m \u001b[33mWRN\u001b[0m \u001b[1mleaks found: 7\u001b[0m",
-  "runtimeMs": 1076,
-  "runtimeSeconds": 1.1
+  "details": "\n    ○\n    │╲\n    │ ○\n    ○ ░\n    ░    gitleaks\n\n\u001b[90m8:54AM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mscanned ~505680 bytes (505.68 KB) in 608ms\u001b[0m\n\u001b[90m8:54AM\u001b[0m \u001b[33mWRN\u001b[0m \u001b[1mleaks found: 14\u001b[0m",
+  "runtimeMs": 1470,
+  "runtimeSeconds": 1.5
 }

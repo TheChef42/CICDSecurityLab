@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-05-12T11:37:27.863Z",
+  "generatedAt": "2026-05-14T08:59:16.974Z",
   "scanCompleted": true,
-  "totalFindings": 94,
+  "totalFindings": 109,
   "mappedFindings": 64,
   "coverageEligibleFindings": 60,
-  "unmappedFindings": 30,
+  "unmappedFindings": 45,
   "severityCounts": {
-    "CRITICAL": 4,
-    "HIGH": 38,
+    "CRITICAL": 8,
+    "HIGH": 49,
     "MEDIUM": 48,
     "LOW": 4,
     "INFO": 0,
@@ -118,8 +118,8 @@
     },
     "coveragePercent": 90,
     "weightedCoverage": {
-      "coveredWeight": 68.3,
-      "totalWeight": 75.8,
+      "coveredWeight": 68.1,
+      "totalWeight": 75.6,
       "coveragePercent": 90.1
     }
   },
@@ -134,7 +134,7 @@
       "coveragePercent": 20,
       "weightedCoverage": {
         "coveredWeight": 14.6,
-        "totalWeight": 75.8,
+        "totalWeight": 75.6,
         "coveragePercent": 19.3
       },
       "scenarioCredits": {
@@ -224,8 +224,8 @@
       "coveragePercent": 35,
       "weightedCoverage": {
         "coveredWeight": 24.4,
-        "totalWeight": 75.8,
-        "coveragePercent": 32.2
+        "totalWeight": 75.6,
+        "coveragePercent": 32.3
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -313,8 +313,8 @@
       "coveragePercent": 23.3,
       "weightedCoverage": {
         "coveredWeight": 19.6,
-        "totalWeight": 75.8,
-        "coveragePercent": 25.9
+        "totalWeight": 75.6,
+        "coveragePercent": 26
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -405,8 +405,8 @@
       "coveragePercent": 60,
       "weightedCoverage": {
         "coveredWeight": 43.4,
-        "totalWeight": 75.8,
-        "coveragePercent": 57.3
+        "totalWeight": 75.6,
+        "coveragePercent": 57.4
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -499,8 +499,8 @@
       "coveragePercent": 73.3,
       "weightedCoverage": {
         "coveredWeight": 54.2,
-        "totalWeight": 75.8,
-        "coveragePercent": 71.5
+        "totalWeight": 75.6,
+        "coveragePercent": 71.7
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -588,9 +588,9 @@
       "totalScenarios": 10,
       "coveragePercent": 31.7,
       "weightedCoverage": {
-        "coveredWeight": 25.5,
-        "totalWeight": 75.8,
-        "coveragePercent": 33.6
+        "coveredWeight": 25.3,
+        "totalWeight": 75.6,
+        "coveragePercent": 33.4
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -675,9 +675,9 @@
       "totalScenarios": 10,
       "coveragePercent": 10,
       "weightedCoverage": {
-        "coveredWeight": 8,
-        "totalWeight": 75.8,
-        "coveragePercent": 10.6
+        "coveredWeight": 7.8,
+        "totalWeight": 75.6,
+        "coveragePercent": 10.3
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -762,9 +762,9 @@
       "totalScenarios": 10,
       "coveragePercent": 10,
       "weightedCoverage": {
-        "coveredWeight": 8,
-        "totalWeight": 75.8,
-        "coveragePercent": 10.6
+        "coveredWeight": 7.8,
+        "totalWeight": 75.6,
+        "coveragePercent": 10.3
       },
       "scenarioCredits": {
         "SEC03-CWE494": {
@@ -999,18 +999,18 @@
       "intendedVulnerabilityCount": 1,
       "cvss": {
         "cwe": "CWE-829",
-        "baseScore": 8,
+        "baseScore": 7.8,
         "selectedStatistic": "scoreMedian",
         "severity": "HIGH",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-        "sampleSize": 140,
-        "totalMatchingCves": 140,
-        "fetchedCves": 140,
+        "sampleSize": 138,
+        "totalMatchingCves": 138,
+        "fetchedCves": 138,
         "complete": true,
         "scoreMin": 2.7,
         "scoreMax": 10,
         "scoreMean": 7.9,
-        "scoreMedian": 8,
+        "scoreMedian": 7.8,
         "scoreP75": 8.8,
         "source": "NVD CVE API grouped by CWE",
         "rationale": "Representative score selected from scoreMedian; statistics are calculated from one preferred CVSS base score per NVD CVE mapped to this CWE."
@@ -1091,7 +1091,7 @@
         "severity": "HIGH",
         "confidence": "NVD_DERIVED_PARTIAL_CVES",
         "sampleSize": 1806,
-        "totalMatchingCves": 3811,
+        "totalMatchingCves": 3822,
         "fetchedCves": 2000,
         "complete": false,
         "scoreMin": 3.3,
@@ -1176,9 +1176,9 @@
         "selectedStatistic": "scoreMedian",
         "severity": "MEDIUM",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-        "sampleSize": 144,
-        "totalMatchingCves": 144,
-        "fetchedCves": 144,
+        "sampleSize": 145,
+        "totalMatchingCves": 145,
+        "fetchedCves": 145,
         "complete": true,
         "scoreMin": 3.1,
         "scoreMax": 10,
@@ -1265,8 +1265,8 @@
         "severity": "CRITICAL",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
         "sampleSize": 1210,
-        "totalMatchingCves": 1220,
-        "fetchedCves": 1220,
+        "totalMatchingCves": 1218,
+        "fetchedCves": 1218,
         "complete": true,
         "scoreMin": 2.1,
         "scoreMax": 10,
@@ -1352,9 +1352,9 @@
         "selectedStatistic": "scoreMedian",
         "severity": "MEDIUM",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-        "sampleSize": 682,
-        "totalMatchingCves": 687,
-        "fetchedCves": 687,
+        "sampleSize": 685,
+        "totalMatchingCves": 690,
+        "fetchedCves": 690,
         "complete": true,
         "scoreMin": 1.9,
         "scoreMax": 10,
@@ -1440,9 +1440,9 @@
         "selectedStatistic": "scoreMedian",
         "severity": "HIGH",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-        "sampleSize": 26,
-        "totalMatchingCves": 29,
-        "fetchedCves": 29,
+        "sampleSize": 29,
+        "totalMatchingCves": 33,
+        "fetchedCves": 33,
         "complete": true,
         "scoreMin": 4.3,
         "scoreMax": 9.8,
@@ -1527,13 +1527,13 @@
         "selectedStatistic": "scoreMedian",
         "severity": "HIGH",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-        "sampleSize": 1186,
-        "totalMatchingCves": 1197,
-        "fetchedCves": 1197,
+        "sampleSize": 1190,
+        "totalMatchingCves": 1199,
+        "fetchedCves": 1199,
         "complete": true,
         "scoreMin": 2.3,
         "scoreMax": 9.9,
-        "scoreMean": 7.1,
+        "scoreMean": 7,
         "scoreMedian": 7.5,
         "scoreP75": 7.8,
         "source": "NVD CVE API grouped by CWE",
@@ -1615,7 +1615,7 @@
         "selectedStatistic": "scoreMedian",
         "severity": "HIGH",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-        "sampleSize": 105,
+        "sampleSize": 106,
         "totalMatchingCves": 107,
         "fetchedCves": 107,
         "complete": true,
@@ -1698,9 +1698,9 @@
         "selectedStatistic": "scoreMedian",
         "severity": "HIGH",
         "confidence": "NVD_DERIVED_ALL_MATCHING_CVES",
-        "sampleSize": 383,
-        "totalMatchingCves": 387,
-        "fetchedCves": 387,
+        "sampleSize": 385,
+        "totalMatchingCves": 389,
+        "fetchedCves": 389,
         "complete": true,
         "scoreMin": 2.4,
         "scoreMax": 10,

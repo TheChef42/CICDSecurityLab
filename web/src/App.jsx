@@ -4,10 +4,12 @@ import {
   Columns3,
   Gauge,
   ListFilter,
+  Moon,
   Radar,
   Route,
   ScrollText,
   ShieldCheck,
+  Sun,
   TriangleAlert
 } from "lucide-react";
 
@@ -95,6 +97,12 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("findings");
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => localStorage.getItem("cicd-lab-theme") || "dark");
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("cicd-lab-theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     let mounted = true;
@@ -168,6 +176,15 @@ export default function App() {
           <Gauge size={18} />
           <span>{summary?.generatedAt ? new Date(summary.generatedAt).toLocaleString() : "No scan summary"}</span>
         </div>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+        >
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+        </button>
       </header>
 
       <SummaryCards findings={filteredFindings} scenarios={filteredScenarios} />

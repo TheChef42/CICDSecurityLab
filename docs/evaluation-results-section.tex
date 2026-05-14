@@ -1,0 +1,102 @@
+\section{Evaluation Results}
+\label{sec:evaluation-results}
+
+The final evaluation was calculated from the default scanner set: Gitleaks, Checkov, Semgrep default, Trivy, Grype, and Snyk. The lab-specific Semgrep custom and Semgrep combined results are excluded from this section so that the results represent the behaviour of the selected tools without project-specific Semgrep rule extensions. Coverage is calculated only from normalized scanner findings that can be mapped back to one of the implemented scenario identifiers. Findings that could not be mapped are retained as unmapped findings, but they are not counted as scenario coverage.
+
+Across the default scanner set, the framework produced 74 normalized findings. Of these, 42 findings were mapped to lab scenarios and 32 findings remained unmapped. The lab contained 10 scenarios and 16 intended vulnerable implementation points. The union of the default tools covered 7 out of 10 scenarios, corresponding to 70\% scenario coverage. When the median CVSS-derived CWE weights were applied, the default-tool weighted coverage was 71.1\%.
+
+\begin{table}[H]
+\centering
+\caption{Default-tool normalized scan result summary.}
+\label{tab:default-overall-normalized-results}
+\begin{tabular}{lr}
+\hline
+Metric & Value \\
+\hline
+Total normalized findings & 74 \\
+Mapped findings & 42 \\
+Coverage-eligible findings & 38 \\
+Unmapped findings & 32 \\
+Duplicate findings & 2 \\
+Implemented scenarios & 10 \\
+Intended vulnerable implementation points & 16 \\
+Covered scenarios & 7/10 \\
+Missed scenarios & 3/10 \\
+Default-tool scenario coverage & 70\% \\
+Default-tool CVSS-weighted coverage & 71.1\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The default scan still produced findings across several severity levels. The severity distribution is useful for understanding alert volume, but it should not be read as coverage by itself. A scanner can produce many findings in one scenario while missing another scenario completely.
+
+\begin{table}[H]
+\centering
+\caption{Default-tool normalized finding severity distribution.}
+\label{tab:default-normalized-severity-distribution}
+\begin{tabular}{lr}
+\hline
+Severity & Findings \\
+\hline
+CRITICAL & 8 \\
+HIGH & 33 \\
+MEDIUM & 29 \\
+LOW & 4 \\
+INFO & 0 \\
+UNKNOWN & 0 \\
+\hline
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:default-per-tool-coverage-results} shows the per-tool comparison. The coverage percentage is based on partial scenario credit, not raw finding count. If a scenario contains multiple intended vulnerable implementation points, detecting only part of them gives partial credit. The weighted percentage applies the selected CWE CVSS median score as a weight, so coverage of higher-impact CWE classes contributes more to the weighted score.
+
+\begin{table}[H]
+\centering
+\caption{Per-tool scenario coverage using default scanner configurations.}
+\label{tab:default-per-tool-coverage-results}
+\begin{tabular}{lrrrr}
+\hline
+Tool & Mapped findings & Coverage findings & Scenario coverage & CVSS-weighted coverage \\
+\hline
+Gitleaks & 7 & 7 & 20\% & 19.3\% \\
+Checkov & 8 & 5 & 35\% & 32.2\% \\
+Semgrep default & 4 & 4 & 23.3\% & 25.9\% \\
+Trivy & 13 & 12 & 31.7\% & 33.6\% \\
+Grype & 5 & 5 & 10\% & 10.6\% \\
+Snyk & 5 & 5 & 10\% & 10.6\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The highest individual default-tool coverage came from Checkov and Trivy for configuration-oriented scenarios, while Gitleaks mainly contributed to credential hygiene. Grype and Snyk were focused on dependency vulnerability evidence and both mapped to the dependency-resolution scenario. Semgrep default detected the shell-interpolation scenario and contributed to some source and container-related detections, but it did not cover the CI/CD policy scenarios that required more specific rules.
+
+\begin{table}[H]
+\centering
+\caption{Per-scenario coverage across default scanner configurations.}
+\label{tab:default-per-scenario-coverage-results}
+\begin{tabular}{llrrr}
+\hline
+Scenario & CWE & Intended points & Detecting tools & Union coverage \\
+\hline
+SEC03-CWE494 & CWE-494 & 1 & 0/6 & 0\% \\
+SEC03-CWE829 & CWE-829 & 1 & 3/6 & 100\% \\
+SEC04-CWE78 & CWE-78 & 1 & 1/6 & 100\% \\
+SEC04-CWE266 & CWE-266 & 1 & 0/6 & 0\% \\
+SEC06-CWE798 & CWE-798 & 6 & 3/6 & 100\% \\
+SEC06-CWE532 & CWE-532 & 1 & 2/6 & 100\% \\
+SEC07-CWE250 & CWE-250 & 1 & 3/6 & 100\% \\
+SEC07-CWE732 & CWE-732 & 1 & 1/6 & 100\% \\
+SEC09-CWE354 & CWE-354 & 2 & 2/6 & 100\% \\
+SEC09-CWE347 & CWE-347 & 1 & 0/6 & 0\% \\
+\hline
+\end{tabular}
+\end{table}
+
+With only default scanner configurations, the detected scenarios were SEC03-CWE829, SEC04-CWE78, SEC06-CWE798, SEC06-CWE532, SEC07-CWE250, SEC07-CWE732, SEC09-CWE354. The missed scenarios were SEC03-CWE494, SEC04-CWE266, SEC09-CWE347. This is a more conservative result than the full dashboard view because it excludes the lab-specific Semgrep rules.
+
+The missed scenarios are important for the interpretation of the experiment. SEC03-CWE494 represents code or script execution without integrity verification. This weakness depends on recognizing the absence of checksum, digest, or signature validation, which default scanners may not model directly. SEC04-CWE266 represents overprivileged workflow token permissions, which requires CI/CD-specific policy knowledge. SEC09-CWE347 represents missing provenance or signature verification for a local mock artifact. This is a process and trust-control weakness, and it may not appear as a directly dangerous line of code to general-purpose scanners.
+
+The default-tool results therefore show that scanner coverage is fragmented. Each tool contributes useful evidence when the weakness matches its core purpose: secret scanning, dependency vulnerability detection, infrastructure-as-code scanning, or common source-code patterns. However, no single default scanner configuration covered the full OWASP/CWE scenario set. This supports the project methodology: scanner effectiveness should be evaluated by mapped scenario coverage rather than by raw alert count.
+
+The excluded custom Semgrep rules are still useful, but they should be interpreted as an extension rather than as part of the baseline. They demonstrate that policy-as-code can close some of the gaps found in the default scan. The baseline result is therefore the default-tool evaluation presented here, while the custom rules can be discussed separately as a way to encode project-specific CI/CD security expectations.
+

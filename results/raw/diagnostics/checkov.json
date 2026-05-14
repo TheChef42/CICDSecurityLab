@@ -3,6 +3,6 @@
   "status": "OK",
   "message": "Checkov IaC/configuration scan completed.",
   "rawOutputPath": "results/raw/checkov.json",
-  "runtimeMs": 7674,
-  "runtimeSeconds": 7.7
+  "runtimeMs": 61953,
+  "runtimeSeconds": 62
 }

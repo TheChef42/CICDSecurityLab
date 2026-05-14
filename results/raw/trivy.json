@@ -3,18 +3,17 @@
   "Trivy": {
     "Version": "0.70.0"
   },
-  "ReportID": "019e1bf7-cb20-745b-aa4d-94c91d83163f",
-  "CreatedAt": "2026-05-12T11:34:44.768287299Z",
-  "ArtifactID": "sha256:380e9b1c9a53b46838ae4e5df79b99ddb0d881063452cbae1e2592d33e72bff6",
+  "ReportID": "019e25b0-9584-7f2d-8129-b7aabb16712a",
+  "CreatedAt": "2026-05-14T08:53:10.149002045Z",
+  "ArtifactID": "sha256:5e5cdc89a67c560adaedeefbd811efc976cf242f587986310e4008cf0ddcb229",
   "ArtifactName": "/workspace",
   "ArtifactType": "repository",
   "Metadata": {
-    "RepoURL": "git@github.com:TheChef42/CICDSecurityLab.git",
     "Branch": "main",
-    "Commit": "4d32379d19f0d50d791d9c09ee46b9e700bedc58",
-    "CommitMsg": "should fix",
-    "Author": "WraasTheOne \u003cnicholas.mazur.hansen@gmail.com\u003e",
-    "Committer": "WraasTheOne \u003cnicholas.mazur.hansen@gmail.com\u003e"
+    "Commit": "d9d695f7cc3286b3dd79ead8a664da34e8c5af09",
+    "CommitMsg": "woop",
+    "Author": "TheChef42 \u003cdanielflute@gmail.com\u003e",
+    "Committer": "TheChef42 \u003cdanielflute@gmail.com\u003e"
   },
   "Results": [
     {
@@ -86,7 +85,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:754f000f51010d30726ccc5bbd6649536395aa5dd574299a983a8594e1882edb",
+          "Fingerprint": "sha256:935ab204342494cfb9dc2e79fec87258ee175852a7e3f1eae613a6b8e77eec63",
           "Title": "nodejs-lodash: command injection via template",
           "Description": "Lodash versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
           "Severity": "HIGH",
@@ -165,7 +164,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:e975f9db0bbedaac3069ffaf392351d4c3930c21d643dcdd04a594ee1703ba8a",
+          "Fingerprint": "sha256:bda4811a778d31bda16c4fe4826122093401be781d9516c67aa48cc57fa7f29b",
           "Title": "lodash: lodash: Arbitrary code execution via untrusted input in template imports",
           "Description": "Impact:\n\nThe fix for CVE-2021-23337 (https://github.com/advisories/GHSA-35jh-r3h4-6jhm) added validation for the variable option in _.template but did not apply the same validation to options.imports key names. Both paths flow into the same Function() constructor sink.\n\nWhen an application passes untrusted input as options.imports key names, an attacker can inject default-parameter expressions that execute arbitrary code at template compilation time.\n\nAdditionally, _.template uses assignInWith to merge imports, which enumerates inherited properties via for..in. If Object.prototype has been polluted by any other vector, the polluted keys are copied into the imports object and passed to Function().\n\nPatches:\n\nUsers should upgrade to version 4.18.0.\n\nWorkarounds:\n\nDo not pass untrusted input as key names in options.imports. Only use developer-controlled, static key names.",
           "Severity": "HIGH",
@@ -232,7 +231,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:7781676607fe679b102b4fa5624de6b5686251691bbdee874139a1018cbcaa4d",
+          "Fingerprint": "sha256:a28f7c38e0387dc23eb1aea1239f65b7180068c6c7e3c1eff7a6c85fbdee9a59",
           "Title": "nodejs-lodash: ReDoS via the toNumber, trim and trimEnd functions",
           "Description": "Lodash versions prior to 4.17.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the toNumber, trim and trimEnd functions.",
           "Severity": "MEDIUM",
@@ -311,7 +310,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:47bbccdaf6f228116c542b19e3d7b0139dd7fc97cc9ca2d81f0a6987b4ed425a",
+          "Fingerprint": "sha256:f67a2cc095c3d95238a483baff6966dc7aa7a0045e220564cbf410e07d41735c",
           "Title": "lodash: prototype pollution in _.unset and _.omit functions",
           "Description": "Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the _.unset and _.omit functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes.\n\nThe issue permits deletion of properties but does not allow overwriting their original behavior.\n\nThis issue is patched on 4.17.23",
           "Severity": "MEDIUM",
@@ -378,7 +377,7 @@
             "Name": "GitHub Security Advisory npm",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
           },
-          "Fingerprint": "sha256:f6cffd320a2a8f99461d31e6d4ae7d167ed9a82e24e01b3654dd86e82daa386f",
+          "Fingerprint": "sha256:778547dfa933eda9bfe18b17a75666df94874c78240e5f4ad2616ec117559549",
           "Title": "lodash: Lodash: Prototype pollution allows deletion of built-in prototype properties via array path bypass",
           "Description": "Impact:\n\nLodash versions 4.17.23 and earlier are vulnerable to prototype pollution in the _.unset and _.omit functions. The fix for (CVE-2025-13465: https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg) only guards against string key members, so an attacker can bypass the check by passing array-wrapped path segments. This allows deletion of properties from built-in prototypes such as Object.prototype, Number.prototype, and String.prototype.\n\nThe issue permits deletion of prototype properties but does not allow overwriting their original behavior.\n\nPatches:\n\nThis issue is patched in 4.18.0.\n\nWorkarounds:\n\nNone. Upgrade to the patched version.",
           "Severity": "MEDIUM",
@@ -3320,6 +3319,226 @@
       ]
     },
     {
+      "Target": "docs/appendix-scenarios.tex",
+      "Class": "secret",
+      "Secrets": [
+        {
+          "RuleID": "aws-access-key-id",
+          "Category": "AWS",
+          "Severity": "CRITICAL",
+          "Title": "AWS Access Key ID",
+          "StartLine": 327,
+          "EndLine": 327,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 325,
+                "Content": "",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 326,
+                "Content": "# FAKE TEST CREDENTIALS ONLY. These values are intentionally invalid.",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "# FAKE TEST CREDENTIALS ONLY. These values are intentionally invalid.",
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 327,
+                "Content": "export AWS_ACCESS_KEY_ID=\"********************\"",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "export AWS_ACCESS_KEY_ID=\"********************\"",
+                "FirstCause": true,
+                "LastCause": true
+              },
+              {
+                "Number": 328,
+                "Content": "export GITHUB_TOKEN=\"ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ\"",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "export GITHUB_TOKEN=\"ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ\"",
+                "FirstCause": false,
+                "LastCause": false
+              }
+            ]
+          },
+          "Match": "export AWS_ACCESS_KEY_ID=\"********************\"",
+          "Offset": 10441
+        },
+        {
+          "RuleID": "aws-access-key-id",
+          "Category": "AWS",
+          "Severity": "CRITICAL",
+          "Title": "AWS Access Key ID",
+          "StartLine": 338,
+          "EndLine": 338,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 336,
+                "Content": "\\begin{lstlisting}[caption={SEC06-CWE798 vulnerable: app.env}]",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "\\begin{lstlisting}[caption={SEC06-CWE798 vulnerable: app.env}]",
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 337,
+                "Content": "# FAKE TEST CREDENTIALS ONLY.",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "# FAKE TEST CREDENTIALS ONLY.",
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 338,
+                "Content": "AWS_ACCESS_KEY_ID=********************",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "AWS_ACCESS_KEY_ID=********************",
+                "FirstCause": true,
+                "LastCause": true
+              },
+              {
+                "Number": 339,
+                "Content": "GITHUB_TOKEN=ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "GITHUB_TOKEN=ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ",
+                "FirstCause": false,
+                "LastCause": false
+              }
+            ]
+          },
+          "Match": "AWS_ACCESS_KEY_ID=********************",
+          "Offset": 10900
+        },
+        {
+          "RuleID": "stripe-secret-token",
+          "Category": "Stripe",
+          "Severity": "CRITICAL",
+          "Title": "Stripe Secret Key",
+          "StartLine": 329,
+          "EndLine": 329,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 327,
+                "Content": "export AWS_ACCESS_KEY_ID=\"********************\"",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "export AWS_ACCESS_KEY_ID=\"********************\"",
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 328,
+                "Content": "export GITHUB_TOKEN=\"ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ\"",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "export GITHUB_TOKEN=\"ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ\"",
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 329,
+                "Content": "export STRIPE_KEY=\"****************************\"",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "export STRIPE_KEY=\"****************************\"",
+                "FirstCause": true,
+                "LastCause": true
+              },
+              {
+                "Number": 330,
+                "Content": "",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              }
+            ]
+          },
+          "Match": "export STRIPE_KEY=\"****************************\"",
+          "Offset": 10542
+        },
+        {
+          "RuleID": "stripe-secret-token",
+          "Category": "Stripe",
+          "Severity": "CRITICAL",
+          "Title": "Stripe Secret Key",
+          "StartLine": 340,
+          "EndLine": 340,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 338,
+                "Content": "AWS_ACCESS_KEY_ID=********************",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "AWS_ACCESS_KEY_ID=********************",
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 339,
+                "Content": "GITHUB_TOKEN=ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "GITHUB_TOKEN=ghp_4xK9mN2pQr7sT1uV3wY6zA8bC0dE5fGhJ",
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 340,
+                "Content": "STRIPE_KEY=****************************",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "STRIPE_KEY=****************************",
+                "FirstCause": true,
+                "LastCause": true
+              },
+              {
+                "Number": 341,
+                "Content": "\\end{lstlisting}",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": false,
+                "Highlighted": "\\end{lstlisting}",
+                "FirstCause": false,
+                "LastCause": false
+              }
+            ]
+          },
+          "Match": "STRIPE_KEY=****************************",
+          "Offset": 10983
+        }
+      ]
+    },
+    {
       "Target": "scenarios/sec06-credential-hygiene/cwe-798-hardcoded-secret/vulnerable/app.env",
       "Class": "secret",
       "Secrets": [
@@ -3365,7 +3584,7 @@
             ]
           },
           "Match": "AWS_ACCESS_KEY_ID=********************",
-          "Offset": 48
+          "Offset": 49
         },
         {
           "RuleID": "stripe-secret-token",
@@ -3418,7 +3637,7 @@
             ]
           },
           "Match": "STRIPE_KEY=****************************",
-          "Offset": 131
+          "Offset": 134
         }
       ]
     },

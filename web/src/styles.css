@@ -106,6 +106,25 @@ h1 {
   white-space: nowrap;
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 12px;
+  color: #e7eef8;
+  border: 1px solid #2b3444;
+  border-radius: 8px;
+  background: rgba(14, 19, 29, 0.72);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: #4d6e99;
+  background: rgba(24, 34, 51, 0.96);
+}
+
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -447,6 +466,43 @@ dd {
 
 .matrix-wrap {
   overflow-x: auto;
+}
+
+.matrix-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 12px;
+}
+
+.export-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  color: #e7eef8;
+  border: 1px solid #2b3444;
+  border-radius: 8px;
+  background: #111827;
+  cursor: pointer;
+}
+
+.export-button:hover:not(:disabled) {
+  border-color: #4d6e99;
+  background: #182233;
+}
+
+.export-button:disabled {
+  cursor: progress;
+  opacity: 0.72;
+}
+
+.matrix-export-target {
+  display: inline-block;
+  min-width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background: #0c111a;
 }
 
 .matrix-table {
@@ -975,4 +1031,262 @@ dd {
   .radar-chart {
     min-height: 390px;
   }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  background: #f4f7fb;
+  color: #111827;
+}
+
+:root[data-theme="light"] body {
+  background:
+    linear-gradient(180deg, rgba(219, 234, 254, 0.9), rgba(244, 247, 251, 0.98) 340px),
+    #f4f7fb;
+}
+
+:root[data-theme="light"] .eyebrow,
+:root[data-theme="light"] .matrix-table thead th,
+:root[data-theme="light"] .overlap-card span,
+:root[data-theme="light"] .recommendation-tools strong {
+  color: #0369a1;
+}
+
+:root[data-theme="light"] .header-status,
+:root[data-theme="light"] .theme-toggle,
+:root[data-theme="light"] .toolbar,
+:root[data-theme="light"] .tabs,
+:root[data-theme="light"] .tab-panel,
+:root[data-theme="light"] .summary-card,
+:root[data-theme="light"] .finding-card,
+:root[data-theme="light"] .scenario-card,
+:root[data-theme="light"] .diagnostic-card,
+:root[data-theme="light"] .recommendation-card,
+:root[data-theme="light"] .radar-profile,
+:root[data-theme="light"] .overlap-card,
+:root[data-theme="light"] .coverage-columns section,
+:root[data-theme="light"] .recommendation-summary div,
+:root[data-theme="light"] .recommendation-warning,
+:root[data-theme="light"] .selector-heading,
+:root[data-theme="light"] .recommendation-tools div,
+:root[data-theme="light"] .radar-controls > div,
+:root[data-theme="light"] .radar-stage {
+  border-color: #d5deeb;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="light"] .theme-toggle:hover,
+:root[data-theme="light"] .tab.active,
+:root[data-theme="light"] .multi-option:hover,
+:root[data-theme="light"] .clear-filter:hover,
+:root[data-theme="light"] .scenario-choice.selected {
+  background: #e8f2ff;
+  border-color: #8ab9e8;
+}
+
+:root[data-theme="light"] .header-status,
+:root[data-theme="light"] .toolbar-title,
+:root[data-theme="light"] .panel-heading,
+:root[data-theme="light"] .tab,
+:root[data-theme="light"] .theme-toggle {
+  color: #334155;
+}
+
+:root[data-theme="light"] .tab.active {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .summary-card p,
+:root[data-theme="light"] dt,
+:root[data-theme="light"] .matrix-table small,
+:root[data-theme="light"] .scenario-choice small,
+:root[data-theme="light"] .recommendation-summary span {
+  color: #607086;
+}
+
+:root[data-theme="light"] dd,
+:root[data-theme="light"] .summary-card strong,
+:root[data-theme="light"] .finding-card h3,
+:root[data-theme="light"] .scenario-card h3,
+:root[data-theme="light"] .recommendation-card h3,
+:root[data-theme="light"] .coverage-columns h3,
+:root[data-theme="light"] .scenario-choice,
+:root[data-theme="light"] .multi-select summary,
+:root[data-theme="light"] .clear-filter,
+:root[data-theme="light"] .multi-option,
+:root[data-theme="light"] .check-option,
+:root[data-theme="light"] .selector-actions button {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .finding-message,
+:root[data-theme="light"] .finding-note,
+:root[data-theme="light"] .scenario-card p,
+:root[data-theme="light"] .coverage-columns p,
+:root[data-theme="light"] .overlap-card p,
+:root[data-theme="light"] .selector-heading p,
+:root[data-theme="light"] .diagnostic-card p,
+:root[data-theme="light"] .recommendation-tools span,
+:root[data-theme="light"] .radar-controls p,
+:root[data-theme="light"] .radar-profile p,
+:root[data-theme="light"] .empty-state,
+:root[data-theme="light"] .empty-inline {
+  color: #475569;
+}
+
+:root[data-theme="light"] .summary-icon {
+  background: #eef6ff;
+}
+
+:root[data-theme="light"] .multi-select summary,
+:root[data-theme="light"] .multi-select-menu,
+:root[data-theme="light"] .clear-filter,
+:root[data-theme="light"] .export-button,
+:root[data-theme="light"] .check-option,
+:root[data-theme="light"] .selector-actions button,
+:root[data-theme="light"] .scenario-choice {
+  border-color: #d5deeb;
+  background: #ffffff;
+}
+
+:root[data-theme="light"] .export-button {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .export-button:hover:not(:disabled) {
+  background: #e8f2ff;
+  border-color: #8ab9e8;
+}
+
+:root[data-theme="light"] .matrix-export-target {
+  background: #ffffff;
+}
+
+:root[data-theme="light"] .multi-select-menu {
+  box-shadow: 0 20px 52px rgba(15, 23, 42, 0.14);
+}
+
+:root[data-theme="light"] .empty-state,
+:root[data-theme="light"] .empty-inline {
+  border-color: #b8c5d6;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:root[data-theme="light"] .matrix-table th,
+:root[data-theme="light"] .matrix-table td {
+  border-bottom-color: #dbe3ef;
+}
+
+:root[data-theme="light"] .matrix-cell {
+  border-color: #cbd6e5;
+}
+
+:root[data-theme="light"] .matrix-cell.detected {
+  color: #047857;
+  background: #dcfce7;
+}
+
+:root[data-theme="light"] .matrix-cell.missed {
+  color: #64748b;
+  background: #f1f5f9;
+}
+
+:root[data-theme="light"] .matrix-cell em {
+  color: #64748b;
+}
+
+:root[data-theme="light"] .badge.tool {
+  color: #0369a1;
+  background: #e0f2fe;
+}
+
+:root[data-theme="light"] .badge.mapped,
+:root[data-theme="light"] .badge.status.ok {
+  color: #047857;
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+:root[data-theme="light"] .badge.unmapped,
+:root[data-theme="light"] .badge.status.warn {
+  color: #92400e;
+  background: #fef3c7;
+  border-color: #fbbf24;
+}
+
+:root[data-theme="light"] .badge.status.error,
+:root[data-theme="light"] .badge.severity.critical {
+  color: #b91c1c;
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+:root[data-theme="light"] .badge.severity.high {
+  color: #c2410c;
+  background: #ffedd5;
+  border-color: #fdba74;
+}
+
+:root[data-theme="light"] .badge.severity.medium {
+  color: #854d0e;
+  background: #fef9c3;
+  border-color: #fde047;
+}
+
+:root[data-theme="light"] .badge.severity.low {
+  color: #075985;
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+}
+
+:root[data-theme="light"] .badge.severity.info {
+  color: #047857;
+  background: #d1fae5;
+  border-color: #6ee7b7;
+}
+
+:root[data-theme="light"] .badge.severity.unknown,
+:root[data-theme="light"] .badge.noncoverage,
+:root[data-theme="light"] .badge.impact {
+  color: #475569;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+:root[data-theme="light"] .meter-track {
+  background: #dbe3ef;
+}
+
+:root[data-theme="light"] .radar-ring {
+  stroke: #c7d4e5;
+}
+
+:root[data-theme="light"] .radar-ring.zero {
+  stroke: #9eb0c7;
+}
+
+:root[data-theme="light"] .radar-axis {
+  stroke: #d5deeb;
+}
+
+:root[data-theme="light"] .radar-label {
+  fill: #334155;
+}
+
+:root[data-theme="light"] .radar-point {
+  stroke: #ffffff;
+}
+
+:root[data-theme="light"] .radar-point.zero {
+  fill: #ffffff;
+}
+
+:root[data-theme="light"] .radar-center-label,
+:root[data-theme="light"] .radar-center-value {
+  fill: #0f172a;
+}
+
+:root[data-theme="light"] .radar-line.combo {
+  filter: drop-shadow(0 0 8px rgba(15, 23, 42, 0.16));
 }
